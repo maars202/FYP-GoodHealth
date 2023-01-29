@@ -2,6 +2,7 @@
 from flask import request, jsonify
 from __main__ import app,db
 from sqlalchemy import create_engine
+import os, fileinput
   
 user, password, host, database = 'root', 'root', 'localhost', 'SingHealth'
 engine = create_engine(
@@ -40,7 +41,7 @@ class PostingHistory(db.Model):
             result[column] = getattr(self, column)
         return result
 
-# Read Existing personaldetails (R)
+# Read Existing  (R)
 @app.route("/postinghistory")
 def read_postinghistory():
     pdList = PostingHistory.query.all()
@@ -52,23 +53,19 @@ def read_postinghistory():
         }
     ), 200
 
-@app.route("/postinghistory/addcolumn")
+
+### ADD COLUMN, NOT YET OFFICIAL FUNCTION
+@app.route("/postinghistory/addcolumn",methods=['POST'])
 def add_posting_column():
+    data = request.get_json()
+    column=data['column']
     table_name = 'PostingHistory'
     
-    query = f'ALTER TABLE {table_name} ADD pootpoot VARCHAR(50) ;'
+    query = f'ALTER TABLE {table_name} ADD {column} VARCHAR(50) ;'
     connection.execute(query)
-
-
-@app.route("/createtable")
-def create_table():
-    profile = db.Table(
-    'profile',                                        
-    metadata_obj,                                    
-    db.Column('email', db.String(50), primary_key=True),  
-    db.Column('name', db.String(50)),                    
-    db.Column('contact', db.String(50)),                
-    )
-  
-    # Create the profile table
-    metadata_obj.create_all(engine)
+    for line in fileinput.FileInput('postingHistory.py', inplace=True):
+        
+        if line.startswith('    __tablename__'):
+            line += '    '+column+"=db.Column(db.String(100))"+ os.linesep
+            
+        print(line, end="")

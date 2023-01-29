@@ -18,7 +18,9 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `SingHealth`
+drop database if exists `SingHealth`;
+CREATE DATABASE IF NOT EXISTS `SingHealth` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `SingHealth`;
 --
 
 -- --------------------------------------------------------

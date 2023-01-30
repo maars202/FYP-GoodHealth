@@ -29,6 +29,10 @@ USE `SingHealth`;
 -- Table structure for table `Awards`
 --
 
+drop database if exists `SingHealth`;
+CREATE DATABASE IF NOT EXISTS `SingHealth` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `SingHealth`;
+
 CREATE TABLE `Awards` (
   `Award ID` varchar(50) NOT NULL,
   `Employee ID` varchar(50) NOT NULL,

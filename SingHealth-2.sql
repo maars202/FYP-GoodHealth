@@ -198,9 +198,6 @@ CREATE TABLE `TrgExtRemHistory` (
   `End Date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Indexes for dumped tables
---
 
 --
 -- Indexes for table `Awards`
@@ -270,6 +267,7 @@ ALTER TABLE `Publications`
 ALTER TABLE `TrgExtRemHistory`
   ADD PRIMARY KEY (`Trg Ext. Rem ID`),
   ADD KEY `Employee ID` (`Employee ID`);
+
 
 --
 -- Constraints for dumped tables

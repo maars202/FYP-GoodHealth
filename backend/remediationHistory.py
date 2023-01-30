@@ -3,7 +3,7 @@ from __main__ import app,db
 
 
 class RemediationHistory(db.Model):
-    __tablename__ = 'RemediationHistory'
+    __tablename__ = 'TrgExtRemHistory'
 
     Remediation_ID= db.Column(db.String(100), primary_key=True)
     Employee_ID = db.Column(db.String(100),  db.ForeignKey('PersonalDetails.Employee_id'))
@@ -16,7 +16,7 @@ class RemediationHistory(db.Model):
 
 
     __mapper_args__ = {
-        'polymorphic_identity': 'RemediationHistory'
+        'polymorphic_identity': 'TrgExtRemHistory'
     }
 
     def to_dict(self):

@@ -4,7 +4,7 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 # # Mac user ====================================================================
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:root' + \
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:' + \
                                         '@localhost:3306/SingHealth'
 # # =============================================================================
 
@@ -46,52 +46,8 @@ db = SQLAlchemy(app)
 
 CORS(app)
 
-class PersonalDetails(db.Model):
-    __tablename__ = 'PersonalDetails'
+from PersonalDetails import PersonalDetails
 
-    Employee_id = db.Column(db.String(100), primary_key=True)
-    MCR_No = db.Column(db.String(100))
-    Staff_Name = db.Column(db.String(100))
-    designation = db.Column(db.String(100))
-    Department = db.Column(db.String(100))
-    institution = db.Column(db.String(100))
-    BCLS_Expiry_Date = db.Column(db.DateTime)
-    ACLS_Expiry_Date = db.Column(db.DateTime)
- 
-    Covid_19_Vaccination_Status = db.Column(db.String(100))
-    Date_of_First_Dose = db.Column(db.DateTime)
-    Date_of_Second_Dose = db.Column(db.DateTime)
-    Vaccination_Remarks = db.Column(db.String(100))
-
-    Year_of_Graduation = db.Column(db.Integer)
-    Date_of_Graduation = db.Column(db.String(100))
-    Basic_Qualification = db.Column(db.String(100))
-    Medical_School = db.Column(db.String(100))
-
-    Country_of_Graduation = db.Column(db.String(100))
-    IM_Residency_Start_Date = db.Column(db.DateTime)
-    IM_Residency_End_Date = db.Column(db.DateTime)
-    SR_Residency_Programme = db.Column(db.String(100))
-
-    SR_Residency_Start_Date = db.Column(db.DateTime)
-    SR_Residency_End_Date = db.Column(db.DateTime)
-    PG_Year = db.Column(db.Integer)
-
-    __mapper_args__ = {
-        'polymorphic_identity': 'PersonalDetails'
-    }
-
-    def to_dict(self):
-        """
-        'to_dict' converts the object into a dictionary,
-        in which the keys correspond to database columns
-        """
-        columns = self.__mapper__.column_attrs.keys()
-        print(f"columns: {columns}")
-        result = {}
-        for column in columns:
-            result[column] = getattr(self, column)
-        return result
 
 class Awards(db.Model):
     __tablename__ = 'Awards'

@@ -98,7 +98,7 @@ CREATE TABLE `PersonalDetails` (
   `Designation` varchar(50) NOT NULL,
   `Programme` varchar(50) NOT NULL,
   `Year_of_Training` varchar(50) NOT NULL,
-  `Academic_Year` int(50) NOT NULL,
+  `Academic_Year` varchar(50) NOT NULL,
   `Department` varchar(50) NOT NULL,
   `Institution` varchar(50) NOT NULL,
   `Academic_Clinical_Programme` varchar(50) NOT NULL,
@@ -116,12 +116,12 @@ CREATE TABLE `PersonalDetails` (
   `Contact_No_Personal` varchar(50) NOT NULL,
   `Email_Official` varchar(50) NOT NULL,
   `Email_Personal` varchar(50) NOT NULL,
-  `BCLS_Expiry_Date` date NOT NULL,
-  `ACLS_Expiry_Date` date NOT NULL,
-  `Covid_19_Vaccination_Status` varchar(50) NOT NULL,
-  `Date_of_First_Dose` date NOT NULL,
-  `Date_of_Second_Dose` date NOT NULL,
-  `Vaccination_Remarks` varchar(50) NOT NULL
+  `BCLS_Expiry_Date` date NULL,
+  `ACLS_Expiry_Date` date NULL,
+  `Covid_19_Vaccination_Status` varchar(50) NULL,
+  `Date_of_First_Dose` date NULL,
+  `Date_of_Second_Dose` date NULL,
+  `Vaccination_Remarks` varchar(50) NULL
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -214,7 +214,7 @@ INSERT INTO `PersonalDetails` (`Employee_ID`, `MCR_No`, `Staff_Name`, `Designati
 
 ) VALUES
 ('one111', "1A", 'lim', 'doctor', 
-'cardiology', "2010", 2010, 'cardiology',
+'cardiology', "2010", "2010", 'cardiology',
 'institution', 'academic clinical programme', 'employementstatus', 'nationality',
 '2008-11-11', 'Female', 'Registration_Type1','House_Blk_No',
 'Street1', 'Building_Name1', 'Unit_No1', 'Postal_Code',
@@ -225,7 +225,14 @@ INSERT INTO `PersonalDetails` (`Employee_ID`, `MCR_No`, `Staff_Name`, `Designati
 ('MOM12390', 'M11367A', 'Daniel Tyler', 'Senior Resident', 'Gastroenterology', 
 'SR2', '2022', 'Residency', 'MOHH', 'Medicine', 'Active', 'Singaporean', '1989-11-11', 
 'Male', 'Full', '', '11A Tanglin Hill', '', '', '248000', '92343980', '91391470', 
-'daniel.tyler@mohh.com.sg', '', '1919-07-20', '1919-04-29', 'Yes', '21-03-30', '2021-04-20', '');
+'daniel.tyler@mohh.com.sg', '', '1919-07-20', '1919-04-29', 'Yes', '21-03-30', '2021-04-20', ''),
+
+('MOM05690', 'M88791Z', 'Kang Hyun Bin', 
+'Senior Resident', 'Gastroenterology', 'SR3', '2022', 'Residency', 'MOHH', 'Medicine', 'Active', 
+'Singaporean', '1991-12-05', 'Male', 'Full', '', 'Lorong Gambir', '', '', '536000', '', '91515780', 
+'hyunbin.kang@mohh.com.sg', '', NULL, NULL, 'Yes', '2021-02-09', '2021-03-02', '');
+
+
 
 INSERT INTO `Awards` (`Award_ID`, `Employee_ID`, `Award_Category`, 
 `Name_of_Award`, `FY_of_Award_Received`, 

@@ -11,7 +11,7 @@ class PersonalDetails(db.Model):
 
     Programme = db.Column(db.String(100))
     Year_of_Training = db.Column(db.String(100))
-    Academic_Year = db.Column(db.Integer)
+    Academic_Year = db.Column(db.String(100))
     Department = db.Column(db.String(100))
 
     Institution = db.Column(db.String(100))

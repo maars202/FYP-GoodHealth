@@ -4,7 +4,7 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 # # Mac user ====================================================================
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:' + \
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:root' + \
                                         '@localhost:3306/SingHealth'
 # # =============================================================================
 
@@ -50,7 +50,7 @@ class PersonalDetails(db.Model):
     __tablename__ = 'PersonalDetails'
 
     Employee_id = db.Column(db.String(100), primary_key=True)
-    MCR_No = db.Column(db.Integer)
+    MCR_No = db.Column(db.String(100))
     Staff_Name = db.Column(db.String(100))
     designation = db.Column(db.String(100))
     Department = db.Column(db.String(100))
@@ -64,7 +64,7 @@ class PersonalDetails(db.Model):
     Vaccination_Remarks = db.Column(db.String(100))
 
     Year_of_Graduation = db.Column(db.Integer)
-    Date_of_Graduation = db.Column(db.DateTime)
+    Date_of_Graduation = db.Column(db.String(100))
     Basic_Qualification = db.Column(db.String(100))
     Medical_School = db.Column(db.String(100))
 
@@ -74,6 +74,7 @@ class PersonalDetails(db.Model):
     SR_Residency_Programme = db.Column(db.String(100))
 
     SR_Residency_Start_Date = db.Column(db.DateTime)
+    SR_Residency_End_Date = db.Column(db.DateTime)
     PG_Year = db.Column(db.Integer)
 
     __mapper_args__ = {

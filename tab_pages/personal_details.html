@@ -9,6 +9,13 @@
     <!-- Links -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.css" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+        .content-auto {
+        content-visibility: auto;
+        }
+    }
+    </style>
     <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
 
     <title>SingHealth</title>
@@ -18,8 +25,9 @@
 
     <!-- header -->
     <div class="bg-stone-100 border-gray-200 px-2 sm:px-4 py-2.5 rounded ">
-        <div class="container flex flex-wrap items-center justify-between mx-auto" style="width: 100%; overflow: hidden;">
-            <img src="images/SingHealth_Logo.png" class="mr-3 sm:h-15 ml-3 mt-2 mb-2"
+        <div class="container flex flex-wrap items-center justify-between mx-auto"
+            style="width: 100%; overflow: hidden;">
+            <img src="../images/SingHealth_Logo.png" class="mr-3 sm:h-15 ml-3 mt-2 mb-2"
                 style="height: 80px ; width: 100px;" alt="Flowbite Logo" />
 
             <div class="flex md:order-2">
@@ -48,10 +56,16 @@
 
     <!-- Navbar -->
     <nav class="bg-white">
-        <div class="items-center justify-between hidden w-full md:flex md:width-auto  md:order-1" id="navbar-sticky" style="width: 100%; overflow: hidden;">
-            <ul class="md:divide-x md:divide-slate-200 flex flex-col p-2 border border-gray-100 rounded-lg bg-gray-50 md:flex-row  md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white">
+        <div class="items-center justify-between hidden w-full md:flex md:width-auto  md:order-1" id="navbar-sticky"
+            style="width: 100%; overflow: hidden;">
+            <ul
+                class="md:divide-x md:divide-slate-200 flex flex-col p-2 border border-gray-100 rounded-lg bg-gray-50 md:flex-row  md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white">
                 <li>
-                    <a href="#"
+                    <a href="../homepage.html"
+                        class="lg:text-sm md:text-xs ml-5 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">Home</a>
+                </li>
+                <li>
+                    <a href="/tab_pages/personal_details.html"
                         class="lg:text-sm md:text-xs mr-2 ml-4 lg:ml-10 block py-2 pl-3 pr-2 text-white bg-orange-500 rounded md:bg-transparent md:text-orange-500 md:p-0 dark:text-white"
                         aria-current="page">Resident Profiles</a>
                 </li>
@@ -93,6 +107,58 @@
     </nav>
     <!-- Orange Divider -->
     <div class='row' style='height: 8px; background-color: #ff6b00;'></div>
+
+    <!-- Table start -->
+
+
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg m-8">
+        <table class="w-full text-sm text-left text-blue-100 dark:text-blue-100 space-x-4">
+            <thead class="text-xs text-white uppercase bg-blue-600 border-b border-blue-400 dark:text-white">
+                <tr>
+                    <th scope="col" class="px-6 py-3 bg-blue-500">
+                        Product name
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Color
+                    </th>
+                    <th scope="col" class="px-6 py-3 bg-blue-500">
+                        Category
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Price
+                    </th>
+                    <th scope="col" class="px-6 py-3 bg-blue-500">
+                        Action
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="bg-blue-600 border-b border-blue-400">
+                    <th scope="row"
+                        class="px-6 py-4 font-medium bg-blue-500 text-blue-50 whitespace-nowrap dark:text-blue-100">
+                        Apple MacBook Pro 17"
+                    </th>
+                    <td class="px-6 py-4">
+                        Sliver
+                    </td>
+                    <td class="px-6 py-4 bg-blue-500">
+                        Laptop
+                    </td>
+                    <td class="px-6 py-4">
+                        $2999
+                    </td>
+                    <td class="px-6 py-4 bg-blue-500">
+                        <a href="#" class="font-medium text-white hover:underline">Edit</a>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+
+
+
 
 </body>
 

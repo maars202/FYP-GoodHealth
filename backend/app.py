@@ -108,8 +108,10 @@ class '''+table+'''(db.Model):
         print(line, end="")
     return data
 
-
-db.create_all()
+# Uncomment below if create_all
+with app.app_context():
+    db.create_all()
+# db.create_all()
 
 
 if __name__ == '__main__':

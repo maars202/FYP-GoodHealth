@@ -4,8 +4,8 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 # # Mac user ====================================================================
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:' + \
-                                        '@localhost:3306/SingHealth'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:' + \
+#                                         '@localhost:3306/SingHealth'
 # # =============================================================================
 
 
@@ -165,6 +165,12 @@ def read_personaldetails():
         }
     ), 200
 
+#Read PersonalDetails field/column name (R)
+@app.route('/personal_details_fields', methods=['GET'])
+def read_personal_details_fields():
+    fields = get_fields(PersonalDetails)
+    return str(fields)
+
 # Read Existing awards (R)
 @app.route("/awards")
 def read_awards():
@@ -176,6 +182,11 @@ def read_awards():
         }
     ), 200
 
+#Read Awards field/column name (R)
+@app.route('/awards_fields', methods=['GET'])
+def awards_fields():
+    fields = get_fields(Awards)
+    return str(fields)
 
 # Read Existing examhistory (R)
 @app.route("/examhistory")
@@ -211,7 +222,9 @@ def read_involvement():
     ), 200
 
 
-
+def get_fields(model):
+    fields = [field.name for field in model.__table__.columns]
+    return fields
 
 db.create_all()
 

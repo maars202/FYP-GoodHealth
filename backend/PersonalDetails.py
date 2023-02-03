@@ -1,6 +1,7 @@
 
 from __main__ import app,db
 from flask import request, jsonify
+from flask_sqlalchemy import SQLAlchemy
 
 class PersonalDetails(db.Model):
     __tablename__ = 'PersonalDetails'
@@ -54,3 +55,5 @@ class PersonalDetails(db.Model):
         for column in columns:
             result[column] = getattr(self, column)
         return result
+
+    

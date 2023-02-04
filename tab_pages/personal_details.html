@@ -191,11 +191,17 @@
     </div>
 
     <!-- Table start -->
+
+    <!-- Testing div start -->
+    <!-- <div role="status" class="max-w-sm animate-pulse" v-for="(field, field_details) in personal_details_fields">
+        <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-48 mb-4"></div>
+    </div> -->
+    <!-- Testing div end -->
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg mx-8">
         <table class="w-full text-sm text-left text-blue-100 dark:text-blue-100 border-separate">
             <thead class="text-xs text-white bg-orange-500">
                 <tr>
-                    <th scope="col" class="px-6 py-3" v-for="field in personal_details_fields">
+                    <th scope="col" class="px-6 py-3" v-for="(field, field_details) in personal_details_fields">
                         <button id="dropdownRadioButton" data-dropdown-toggle="dropdownEmployee"
                             class="inline-flex items-center bg-orange-500 text-white focus:outline-none font-medium rounded-lg text-sm px-3 py-1.5"
                             type="button">
@@ -208,7 +214,7 @@
                             </svg>
                         </button>
                     </th>
-                    
+
 
                     <th scope="col" class="px-6 py-3">
                         <span
@@ -223,12 +229,6 @@
                     </th>
                     <td class="px-6 py-4 font-medium text-black whitespace-nowrap">
                         Sliver
-                    </td>
-                    <td class="px-6 py-4 font-medium text-black whitespace-nowrap">
-                        Laptop
-                    </td>
-                    <td class="px-6 py-4 font-medium text-black whitespace-nowrap">
-                        $2999
                     </td>
                     <td class="flex items-center px-6 py-4 space-x-3">
                         <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
@@ -265,48 +265,48 @@
                     <div class="flex items-center mb-4">
                         <input id="default-checkbox" type="checkbox" value=""
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
-                        <label for="default-checkbox"
-                            class="ml-2 text-sm font-medium text-gray-900 ">Default checkbox</label>
+                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
+                            checkbox</label>
                     </div>
                 </li>
                 <li>
                     <div class="flex items-center mb-4">
                         <input id="default-checkbox" type="checkbox" value=""
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
-                        <label for="default-checkbox"
-                            class="ml-2 text-sm font-medium text-gray-900 ">Default checkbox</label>
+                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
+                            checkbox</label>
                     </div>
                 </li>
                 <li>
                     <div class="flex items-center mb-4">
                         <input id="default-checkbox" type="checkbox" value=""
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
-                        <label for="default-checkbox"
-                            class="ml-2 text-sm font-medium text-gray-900 ">Default checkbox</label>
+                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
+                            checkbox</label>
                     </div>
                 </li>
                 <li>
                     <div class="flex items-center mb-4">
                         <input id="default-checkbox" type="checkbox" value=""
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
-                        <label for="default-checkbox"
-                            class="ml-2 text-sm font-medium text-gray-900 ">Default checkbox</label>
+                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
+                            checkbox</label>
                     </div>
                 </li>
                 <li>
                     <div class="flex items-center mb-4">
                         <input id="default-checkbox" type="checkbox" value=""
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
-                        <label for="default-checkbox"
-                            class="ml-2 text-sm font-medium text-gray-900 ">Default checkbox</label>
+                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
+                            checkbox</label>
                     </div>
                 </li>
                 <li>
                     <div class="flex items-center mb-4">
                         <input id="default-checkbox" type="checkbox" value=""
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
-                        <label for="default-checkbox"
-                            class="ml-2 text-sm font-medium text-gray-900 ">Default checkbox</label>
+                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
+                            checkbox</label>
                     </div>
                 </li>
             </ul>
@@ -346,48 +346,48 @@
                     <div class="flex items-center mb-4">
                         <input id="default-checkbox" type="checkbox" value=""
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
-                        <label for="default-checkbox"
-                            class="ml-2 text-sm font-medium text-gray-900 ">Default checkbox</label>
+                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
+                            checkbox</label>
                     </div>
                 </li>
                 <li>
                     <div class="flex items-center mb-4">
                         <input id="default-checkbox" type="checkbox" value=""
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
-                        <label for="default-checkbox"
-                            class="ml-2 text-sm font-medium text-gray-900 ">Default checkbox</label>
+                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
+                            checkbox</label>
                     </div>
                 </li>
                 <li>
                     <div class="flex items-center mb-4">
                         <input id="default-checkbox" type="checkbox" value=""
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
-                        <label for="default-checkbox"
-                            class="ml-2 text-sm font-medium text-gray-900 ">Default checkbox</label>
+                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
+                            checkbox</label>
                     </div>
                 </li>
                 <li>
                     <div class="flex items-center mb-4">
                         <input id="default-checkbox" type="checkbox" value=""
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
-                        <label for="default-checkbox"
-                            class="ml-2 text-sm font-medium text-gray-900 ">Default checkbox</label>
+                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
+                            checkbox</label>
                     </div>
                 </li>
                 <li>
                     <div class="flex items-center mb-4">
                         <input id="default-checkbox" type="checkbox" value=""
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
-                        <label for="default-checkbox"
-                            class="ml-2 text-sm font-medium text-gray-900 ">Default checkbox</label>
+                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
+                            checkbox</label>
                     </div>
                 </li>
                 <li>
                     <div class="flex items-center mb-4">
                         <input id="default-checkbox" type="checkbox" value=""
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
-                        <label for="default-checkbox"
-                            class="ml-2 text-sm font-medium text-gray-900 ">Default checkbox</label>
+                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
+                            checkbox</label>
                     </div>
                 </li>
             </ul>
@@ -428,48 +428,48 @@
                     <div class="flex items-center mb-4">
                         <input id="default-checkbox" type="checkbox" value=""
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
-                        <label for="default-checkbox"
-                            class="ml-2 text-sm font-medium text-gray-900 ">Default checkbox</label>
+                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
+                            checkbox</label>
                     </div>
                 </li>
                 <li>
                     <div class="flex items-center mb-4">
                         <input id="default-checkbox" type="checkbox" value=""
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
-                        <label for="default-checkbox"
-                            class="ml-2 text-sm font-medium text-gray-900 ">Default checkbox</label>
+                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
+                            checkbox</label>
                     </div>
                 </li>
                 <li>
                     <div class="flex items-center mb-4">
                         <input id="default-checkbox" type="checkbox" value=""
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
-                        <label for="default-checkbox"
-                            class="ml-2 text-sm font-medium text-gray-900 ">Default checkbox</label>
+                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
+                            checkbox</label>
                     </div>
                 </li>
                 <li>
                     <div class="flex items-center mb-4">
                         <input id="default-checkbox" type="checkbox" value=""
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
-                        <label for="default-checkbox"
-                            class="ml-2 text-sm font-medium text-gray-900 ">Default checkbox</label>
+                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
+                            checkbox</label>
                     </div>
                 </li>
                 <li>
                     <div class="flex items-center mb-4">
                         <input id="default-checkbox" type="checkbox" value=""
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
-                        <label for="default-checkbox"
-                            class="ml-2 text-sm font-medium text-gray-900 ">Default checkbox</label>
+                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
+                            checkbox</label>
                     </div>
                 </li>
                 <li>
                     <div class="flex items-center mb-4">
                         <input id="default-checkbox" type="checkbox" value=""
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
-                        <label for="default-checkbox"
-                            class="ml-2 text-sm font-medium text-gray-900 ">Default checkbox</label>
+                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
+                            checkbox</label>
                     </div>
                 </li>
             </ul>
@@ -509,48 +509,48 @@
                     <div class="flex items-center mb-4">
                         <input id="default-checkbox" type="checkbox" value=""
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
-                        <label for="default-checkbox"
-                            class="ml-2 text-sm font-medium text-gray-900 ">Default checkbox</label>
+                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
+                            checkbox</label>
                     </div>
                 </li>
                 <li>
                     <div class="flex items-center mb-4">
                         <input id="default-checkbox" type="checkbox" value=""
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
-                        <label for="default-checkbox"
-                            class="ml-2 text-sm font-medium text-gray-900 ">Default checkbox</label>
+                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
+                            checkbox</label>
                     </div>
                 </li>
                 <li>
                     <div class="flex items-center mb-4">
                         <input id="default-checkbox" type="checkbox" value=""
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
-                        <label for="default-checkbox"
-                            class="ml-2 text-sm font-medium text-gray-900 ">Default checkbox</label>
+                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
+                            checkbox</label>
                     </div>
                 </li>
                 <li>
                     <div class="flex items-center mb-4">
                         <input id="default-checkbox" type="checkbox" value=""
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
-                        <label for="default-checkbox"
-                            class="ml-2 text-sm font-medium text-gray-900 ">Default checkbox</label>
+                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
+                            checkbox</label>
                     </div>
                 </li>
                 <li>
                     <div class="flex items-center mb-4">
                         <input id="default-checkbox" type="checkbox" value=""
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
-                        <label for="default-checkbox"
-                            class="ml-2 text-sm font-medium text-gray-900 ">Default checkbox</label>
+                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
+                            checkbox</label>
                     </div>
                 </li>
                 <li>
                     <div class="flex items-center mb-4">
                         <input id="default-checkbox" type="checkbox" value=""
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
-                        <label for="default-checkbox"
-                            class="ml-2 text-sm font-medium text-gray-900 ">Default checkbox</label>
+                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
+                            checkbox</label>
                     </div>
                 </li>
             </ul>
@@ -629,10 +629,10 @@
     new Vue({
         el: '#app',
         data: {
-            personal_details_fields: [],
-            personal_details_datas: [],
+            personal_details_fields: [1, 2, 3], //Test value, will be replaced once API is called.
+            personal_details_datas: [2, 3, 4],
         },
-        mounted: async function() {
+        mounted: async function () {
             const API_URL_1 = 'http://localhost:5010/personal_details_fields';
             const API_URL_2 = 'http://localhost:5010/personaldetails';
 
@@ -643,17 +643,20 @@
 
             Promise.all(apiCalls)
                 .then(responses => {
-                    this.personal_details_field = responses[0].data;
+                    this.personal_details_fields = responses[0].data;
                     this.personal_details_datas = responses[1].data.data;
-                    console.log(this.personal_details_field)
-                    console.log(this.personal_details_datas)
-
+                    for ([field, field_details] of Object.entries(this.personal_details_fields)) {
+                        console.log(field)
+                    }
+                    for ([key, value] of Object.entries(this.personal_details_datas)) {
+                        console.log(key, value)
+                    }
                 })
                 .catch(error => {
                     console.error(error);
                 });
 
-            
+
         },
     });
 </script>

@@ -28,7 +28,7 @@ app.app_context().push()
 if __name__ == '__main__':
     # Mac user -------------------------------------------------------------------
     app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:root' + \
-                                            '@localhost:3306/SingHealth'
+                                            '@localhost:3306/SingHealth2'
     # --------------------------------------------------------------------------------
 
     # # Windows user -------------------------------------------------------------------
@@ -48,7 +48,7 @@ db = SQLAlchemy(app)
 CORS(app)
 
 from PersonalDetails import PersonalDetails
-
+from Duty_Hour_Log import Duty_Hour_Log
 
 class Awards(db.Model):
     __tablename__ = 'Awards'
@@ -423,6 +423,16 @@ def get_awards_fields():
 # ============================
 
 
+#Read Awards field/column name (R)
+@app.route('/duty_hour_log', methods=['GET'])
+def get_duty_hour_log():
+    dutyList = Duty_Hour_Log.query.all()
+    return jsonify(
+        {
+            "data": [pd.to_dict()
+                    for pd in dutyList]
+        }
+    ), 200
 
 # ============================
 # █▀▀ █▄░█ █▀▄

@@ -6,9 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Links -->
+    <!-- INSTALLATIONS -->
+    <!-- flowbite -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.css" rel="stylesheet" />
+    <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- ICONIFY -->
+    <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
+    <!-- VUE 3 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
     <style type="text/tailwindcss">
         @layer utilities {
         .content-auto {
@@ -16,621 +24,480 @@
         }
     }
     </style>
-    <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
 
     <title>SingHealth</title>
 </head>
 
 <body>
+    <div id="app">
+        <!-- header -->
+        <div class="bg-stone-100 border-gray-200 px-2 sm:px-4 py-2.5 rounded ">
+            <div class="container flex flex-wrap items-center justify-between mx-auto"
+                style="width: 100%; overflow: hidden;">
+                <img src="../images/SingHealth_Logo.png" class="mr-3 sm:h-15 ml-3 mt-2 mb-2"
+                    style="height: 80px ; width: 100px;" alt="Flowbite Logo" />
 
-    <!-- header -->
-    <div class="bg-stone-100 border-gray-200 px-2 sm:px-4 py-2.5 rounded ">
-        <div class="container flex flex-wrap items-center justify-between mx-auto"
-            style="width: 100%; overflow: hidden;">
-            <img src="../images/SingHealth_Logo.png" class="mr-3 sm:h-15 ml-3 mt-2 mb-2"
-                style="height: 80px ; width: 100px;" alt="Flowbite Logo" />
+                <div class="flex md:order-2">
+                    <a href="../homepage.html" style="margin-right: 10px;">
+                        <iconify-icon icon="ic:round-home" style="color: #ff6b00;" width="40" height="40">
+                        </iconify-icon>
+                    </a>
+                    <a>
+                        <iconify-icon icon="healthicons:ui-user-profile" style="color: #ff6b00;" width="40" height="40">
+                        </iconify-icon>
+                    </a>
 
-            <div class="flex md:order-2">
-                <a href="../homepage.html" style="margin-right: 10px;">
-                    <iconify-icon icon="ic:round-home" style="color: #ff6b00;" width="40" height="40"></iconify-icon>
-                </a>
-                <a>
-                    <iconify-icon icon="healthicons:ui-user-profile" style="color: #ff6b00;" width="40" height="40">
-                    </iconify-icon>
-                </a>
-
-                <button data-collapse-toggle="navbar-sticky" type="button"
-                    class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 "
-                    aria-controls="navbar-cta" aria-expanded="false">
-                    <span class="sr-only">Open main menu</span>
-                    <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd"
-                            d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                            clip-rule="evenodd"></path>
-                    </svg>
-                </button>
+                    <button data-collapse-toggle="navbar-sticky" type="button"
+                        class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 "
+                        aria-controls="navbar-cta" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Navbar -->
-    <nav class="bg-white">
-        <div class="items-center justify-between hidden w-full md:flex md:width-auto  md:order-1" id="navbar-sticky"
-            style="width: 100%; overflow: hidden;">
-            <ul
-                class="md:divide-x md:divide-slate-200 flex flex-col p-2 border border-gray-100 rounded-lg bg-gray-50 md:flex-row  md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white">
-                <li>
-                    <a href="../homepage.html"
-                        class="lg:text-sm md:text-xs ml-5 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">Home</a>
-                </li>
-                <li>
-                    <a href="/tab_pages/personal_details.html"
-                        class="lg:text-sm md:text-xs ml-5 mr-4 block py-2 pl-3 pr-2 text-white bg-orange-500 rounded md:bg-transparent md:text-orange-500 md:p-0 dark:text-white"
-                        aria-current="page">Resident Profiles</a>
-                </li>
-                <li>
-                    <a href="#"
-                        class="lg:text-sm md:text-xs ml-5 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">
-                        History</a>
-                </li>
-                <li>
-                    <a href="#"
-                        class="lg:text-sm md:text-xs ml-5 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">
-                        Involvement</a>
-                </li>
-                <li>
-                    <a href="#"
-                        class="lg:text-sm md:text-xs  ml-5 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">
-                        Grants</a>
-                </li>
-                <li>
-                    <a href="#"
-                        class="lg:text-sm md:text-xs  ml-5 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">
-                        Publications</a>
-                </li>
-                <li>
-                    <a href="#"
-                        class="lg:text-sm md:text-xs  ml-6 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">Presentations</a>
-                </li>
-                <li>
-                    <a href="#"
-                        class="lg:text-sm md:text-xs  ml-6 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">
-                        Awards</a>
-                </li>
-                <li>
-                    <a href="#"
-                        class="lg:text-sm md:text-xs  ml-6 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">Projects</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <!-- Orange Divider -->
-    <div class='row' style='height: 8px; background-color: #ff6b00;'></div>
+        <!-- Navbar -->
+        <nav class="bg-white">
+            <div class="items-center justify-between hidden w-full md:flex md:width-auto  md:order-1" id="navbar-sticky"
+                style="width: 100%; overflow: hidden;">
+                <ul
+                    class="md:divide-x md:divide-slate-200 flex flex-col p-2 border border-gray-100 rounded-lg bg-gray-50 md:flex-row  md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white">
+                    <li>
+                        <a href="../homepage.html"
+                            class="lg:text-sm md:text-xs ml-5 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">Home</a>
+                    </li>
+                    <li>
+                        <a href="/tab_pages/personal_details.html"
+                            class="lg:text-sm md:text-xs ml-5 mr-4 block py-2 pl-3 pr-2 text-white bg-orange-500 rounded md:bg-transparent md:text-orange-500 md:p-0 dark:text-white"
+                            aria-current="page">Resident Profiles</a>
+                    </li>
+                    <li>
+                        <a href="#"
+                            class="lg:text-sm md:text-xs ml-5 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">
+                            History</a>
+                    </li>
+                    <li>
+                        <a href="#"
+                            class="lg:text-sm md:text-xs ml-5 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">
+                            Involvement</a>
+                    </li>
+                    <li>
+                        <a href="#"
+                            class="lg:text-sm md:text-xs  ml-5 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">
+                            Grants</a>
+                    </li>
+                    <li>
+                        <a href="#"
+                            class="lg:text-sm md:text-xs  ml-5 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">
+                            Publications</a>
+                    </li>
+                    <li>
+                        <a href="#"
+                            class="lg:text-sm md:text-xs  ml-6 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">Presentations</a>
+                    </li>
+                    <li>
+                        <a href="#"
+                            class="lg:text-sm md:text-xs  ml-6 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">
+                            Awards</a>
+                    </li>
+                    <li>
+                        <a href="#"
+                            class="lg:text-sm md:text-xs  ml-6 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">Projects</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!-- Orange Divider -->
+        <div class='row' style='height: 8px; background-color: #ff6b00;'></div>
 
-    <!-- filter rows -->
-    <div class="flex items-center justify-between pb-4 mt-6 mx-8">
-        <button id="dropdownRadioButton" data-dropdown-toggle="dropdownRadio"
-            class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-3 py-1.5"
-            type="button">
-            Programme
-            <svg class="w-3 h-3 ml-2" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-        </button>
-
-        <div class="relative">
-            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true" fill="currentColor"
-                    viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd"
-                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                        clip-rule="evenodd"></path>
+        <!-- filter rows -->
+        <div class="flex items-center justify-between pb-4 mt-6 mx-8">
+            <button id="dropdownRadioButton" data-dropdown-toggle="dropdownRadio"
+                class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-3 py-1.5"
+                type="button">
+                Programme
+                <svg class="w-3 h-3 ml-2" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                 </svg>
+            </button>
+
+            <div class="relative">
+                <div class="absolute inset-y-0 left-0 right-12 bottom-2 flex items-center pl-3 pointer-events-none">
+                    <iconify-icon icon="mingcute:file-import-line" style="color: white;" width="20" height="20"></iconify-icon>
+                </div>
+                <button type="button" class="text-white bg-orange-500 hover:bg-orange-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-8 py-2.5  mb-2">Import</button>
             </div>
-            <input type="text" id="table-search"
-                class="inline-flex p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-60 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Employee ID">
         </div>
-    </div>
 
 
-    <!-- Dropdown menu for PROGRAMME -->
-    <div id="dropdownRadio"
-        class="z-10 hidden w-48 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
-        data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top"
-        style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(522.5px, 3847.5px, 0px);">
-        <ul class="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownRadioButton">
-            <li>
-                <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
-                    <input id="filter-radio-example-1" type="radio" value="" name="filter-radio"
-                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                    <label for="filter-radio-example-1"
-                        class="w-full ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">Last
-                        day</label>
-                </div>
-            </li>
-            <li>
-                <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
-                    <input checked="" id="filter-radio-example-2" type="radio" value="" name="filter-radio"
-                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                    <label for="filter-radio-example-2"
-                        class="w-full ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">Last
-                        7 days</label>
-                </div>
-            </li>
-            <li>
-                <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
-                    <input id="filter-radio-example-3" type="radio" value="" name="filter-radio"
-                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                    <label for="filter-radio-example-3"
-                        class="w-full ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">Last
-                        30 days</label>
-                </div>
-            </li>
-            <li>
-                <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
-                    <input id="filter-radio-example-4" type="radio" value="" name="filter-radio"
-                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                    <label for="filter-radio-example-4"
-                        class="w-full ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">Last
-                        month</label>
-                </div>
-            </li>
-            <li>
-                <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
-                    <input id="filter-radio-example-5" type="radio" value="" name="filter-radio"
-                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                    <label for="filter-radio-example-5"
-                        class="w-full ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">Last
-                        year</label>
-                </div>
-            </li>
-        </ul>
-    </div>
+        <!-- Dropdown menu for PROGRAMME -->
+        <div id="dropdownRadio"
+            class="z-10 hidden w-48 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
+            data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top"
+            style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(522.5px, 3847.5px, 0px);">
+            <ul class="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownRadioButton">
+                <li>
+                    <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+                        <input id="filter-radio-example-1" type="radio" value="" name="filter-radio"
+                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                        <label for="filter-radio-example-1"
+                            class="w-full ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">Last
+                            day</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+                        <input checked="" id="filter-radio-example-2" type="radio" value="" name="filter-radio"
+                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                        <label for="filter-radio-example-2"
+                            class="w-full ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">Last
+                            7 days</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+                        <input id="filter-radio-example-3" type="radio" value="" name="filter-radio"
+                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                        <label for="filter-radio-example-3"
+                            class="w-full ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">Last
+                            30 days</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+                        <input id="filter-radio-example-4" type="radio" value="" name="filter-radio"
+                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                        <label for="filter-radio-example-4"
+                            class="w-full ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">Last
+                            month</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+                        <input id="filter-radio-example-5" type="radio" value="" name="filter-radio"
+                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                        <label for="filter-radio-example-5"
+                            class="w-full ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">Last
+                            year</label>
+                    </div>
+                </li>
+            </ul>
+        </div>
 
-    <!-- Table start -->
+        <!-- Table start -->
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg mx-8">
+            <table class="w-full text-sm text-left text-blue-100 dark:text-blue-100 border-separate">
+                <!-- COLUMN NAMES -->
+                <thead class="text-xs text-white bg-orange-500">
+                    <tr>
+                        <th scope="col" class="px-6 py-3" v-for="field in fields_display">
+                            <button id="dropdownRadioButton" data-dropdown-toggle="dropdownEmployee" 
+                                class="inline-flex items-center bg-orange-500 text-white focus:outline-none font-medium rounded-lg text-sm px-3 py-1.5"
+                                type="button">
+                                {{field}}
+                                <svg class="w-3 h-3 ml-2" aria-hidden="true" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                        </th>
+                        <!-- Action col -->
+                        <th scope="col" class="px-6 py-3">
+                            <span
+                                class="inline-flex items-center bg-orange-500 text-white focus:outline-none font-medium rounded-lg text-sm px-3 py-1.5">Action</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- 1 row = 1 reisdent = 1 key -->
+                    <tr class="bg-orange-100 border-b border-blue-400" v-for="(value,key) in personal_details_datas">
+                        <td class="px-6 py-4 font-medium text-black whitespace-nowrap"
+                            v-for="field in personal_details_fields">
+                            <a href="#" v-if="field == 'Employee_id'">{{value[field]}}</a>
+                            <span v-else>{{value[field]}}</span>
+                        </td>
+                        <td class="flex items-center px-6 py-4 space-x-3">
+                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                            <a href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline">Remove</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
 
-    <!-- Testing div start -->
-    <!-- <div role="status" class="max-w-sm animate-pulse" v-for="(field, field_details) in personal_details_fields">
-        <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-48 mb-4"></div>
-    </div> -->
-    <!-- Testing div end -->
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg mx-8">
-        <table class="w-full text-sm text-left text-blue-100 dark:text-blue-100 border-separate">
-            <thead class="text-xs text-white bg-orange-500">
-                <tr>
-                    <th scope="col" class="px-6 py-3" v-for="(field, field_details) in personal_details_fields">
-                        <button id="dropdownRadioButton" data-dropdown-toggle="dropdownEmployee"
-                            class="inline-flex items-center bg-orange-500 text-white focus:outline-none font-medium rounded-lg text-sm px-3 py-1.5"
-                            type="button">
-                            {{field}}
-                            Employee ID
-                            <svg class="w-3 h-3 ml-2" aria-hidden="true" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19 9l-7 7-7-7"></path>
+            <!-- DROPDOWN FOR EMPLOYEE ID -->
+            <div id="dropdownEmployee" class=" z-10 hidden w-60 bg-white divide-y divide-gray-100 rounded-lg shadow"
+                data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top"
+                style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(522.5px, 3847.5px, 0px);">
+                <!-- Search -->
+                <div class="mt-4 flex justify-center">
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                            <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true" fill="currentColor"
+                                viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                                    clip-rule="evenodd"></path>
                             </svg>
-                        </button>
-                    </th>
-
-
-                    <th scope="col" class="px-6 py-3">
-                        <span
-                            class="inline-flex items-center bg-orange-500 text-white focus:outline-none font-medium rounded-lg text-sm px-3 py-1.5">Action</span>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="bg-orange-100 border-b border-blue-400">
-                    <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap">
-                        <a href="">S1234567D</a>
-                    </th>
-                    <td class="px-6 py-4 font-medium text-black whitespace-nowrap">
-                        Sliver
-                    </td>
-                    <td class="flex items-center px-6 py-4 space-x-3">
-                        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                        <a href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline">Remove</a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-        <!-- DROPDOWN FOR EMPLOYEE ID -->
-        <div id="dropdownEmployee" class=" z-10 hidden w-60 bg-white divide-y divide-gray-100 rounded-lg shadow"
-            data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top"
-            style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(522.5px, 3847.5px, 0px);">
-            <!-- Search -->
-            <div class="mt-4 flex justify-center">
-                <div class="relative">
-                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                        <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true" fill="currentColor"
-                            viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                                clip-rule="evenodd"></path>
-                        </svg>
+                        </div>
+                        <input type="text" id="table-search"
+                            class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-50 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 "
+                            placeholder="Employee ID">
                     </div>
-                    <input type="text" id="table-search"
-                        class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-50 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 "
-                        placeholder="Employee ID">
+                </div>
+                <ul class="overflow-y-auto h-48 px-8 pt-3 space-y-1 text-sm text-gray-700 dark:text-gray-200 border-none"
+                    aria-labelledby="dropdownRadioButton">
+                    <li v-for ="employee_id in employee_id_values">
+                        <div class="flex items-center mb-4">
+                            <input id="default-checkbox" type="checkbox" value=""
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
+                            <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">{{employee_id}}</label>
+                        </div>
+                    </li>
+                </ul>
+
+                <div class='row mb-5 border-none'>
+                    <button type="button"
+                        class="ml-5 py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-orange-500 focus:z-10 focus:ring-4 focus:ring-gray-200 ">Done</button>
+                    <button type="button"
+                        class="ml-5 py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-orange-500 focus:z-10 focus:ring-4 focus:ring-gray-200 ">Cancel</button>
                 </div>
             </div>
 
-            <ul class="overflow-y-auto h-48 px-8 pt-3 space-y-1 text-sm text-gray-700 dark:text-gray-200 border-none"
-                aria-labelledby="dropdownRadioButton">
-                <li>
-                    <div class="flex items-center mb-4">
-                        <input id="default-checkbox" type="checkbox" value=""
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
-                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
-                            checkbox</label>
+            <!-- DROPDOWN FOR Staff Name -->
+            <div id="dropdownStaff" class=" z-10 hidden w-60 bg-white divide-y divide-gray-100 rounded-lg shadow"
+                data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top"
+                style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(522.5px, 3847.5px, 0px);">
+                <!-- Search -->
+                <div class="mt-4 flex justify-center">
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                            <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true" fill="currentColor"
+                                viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <input type="text" id="table-search"
+                            class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-50 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 "
+                            placeholder="Staff Name">
                     </div>
-                </li>
-                <li>
-                    <div class="flex items-center mb-4">
-                        <input id="default-checkbox" type="checkbox" value=""
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
-                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
-                            checkbox</label>
-                    </div>
-                </li>
-                <li>
-                    <div class="flex items-center mb-4">
-                        <input id="default-checkbox" type="checkbox" value=""
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
-                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
-                            checkbox</label>
-                    </div>
-                </li>
-                <li>
-                    <div class="flex items-center mb-4">
-                        <input id="default-checkbox" type="checkbox" value=""
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
-                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
-                            checkbox</label>
-                    </div>
-                </li>
-                <li>
-                    <div class="flex items-center mb-4">
-                        <input id="default-checkbox" type="checkbox" value=""
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
-                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
-                            checkbox</label>
-                    </div>
-                </li>
-                <li>
-                    <div class="flex items-center mb-4">
-                        <input id="default-checkbox" type="checkbox" value=""
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
-                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
-                            checkbox</label>
-                    </div>
-                </li>
-            </ul>
+                </div>
 
-            <div class='row mb-5 border-none'>
-                <button type="button"
-                    class="ml-5 py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-orange-500 focus:z-10 focus:ring-4 focus:ring-gray-200 ">Done</button>
-                <button type="button"
-                    class="ml-5 py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-orange-500 focus:z-10 focus:ring-4 focus:ring-gray-200 ">Cancel</button>
-            </div>
-        </div>
+                <ul class="overflow-y-auto h-48 px-8 pt-3 space-y-1 text-sm text-gray-700 dark:text-gray-200 border-none"
+                    aria-labelledby="dropdownRadioButton">
+                    <li>
+                        <div class="flex items-center mb-4">
+                            <input id="default-checkbox" type="checkbox" value=""
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
+                            <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
+                                checkbox</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="flex items-center mb-4">
+                            <input id="default-checkbox" type="checkbox" value=""
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
+                            <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
+                                checkbox</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="flex items-center mb-4">
+                            <input id="default-checkbox" type="checkbox" value=""
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
+                            <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
+                                checkbox</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="flex items-center mb-4">
+                            <input id="default-checkbox" type="checkbox" value=""
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
+                            <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
+                                checkbox</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="flex items-center mb-4">
+                            <input id="default-checkbox" type="checkbox" value=""
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
+                            <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
+                                checkbox</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="flex items-center mb-4">
+                            <input id="default-checkbox" type="checkbox" value=""
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
+                            <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
+                                checkbox</label>
+                        </div>
+                    </li>
+                </ul>
 
-        <!-- DROPDOWN FOR MCR -->
-        <div id="dropdownMCR" class=" z-10 hidden w-60 bg-white divide-y divide-gray-100 rounded-lg shadow"
-            data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top"
-            style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(522.5px, 3847.5px, 0px);">
-            <!-- Search -->
-            <div class="mt-4 flex justify-center">
-                <div class="relative">
-                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                        <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true" fill="currentColor"
-                            viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                                clip-rule="evenodd"></path>
-                        </svg>
-                    </div>
-                    <input type="text" id="table-search"
-                        class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-50 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 "
-                        placeholder="MCR No">
+                <div class='row mb-5 border-none'>
+                    <button type="button"
+                        class="ml-5 py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-orange-500 focus:z-10 focus:ring-4 focus:ring-gray-200 ">Done</button>
+                    <button type="button"
+                        class="ml-5 py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-orange-500 focus:z-10 focus:ring-4 focus:ring-gray-200 ">Cancel</button>
                 </div>
             </div>
 
-            <ul class="overflow-y-auto h-48 px-8 pt-3 space-y-1 text-sm text-gray-700 dark:text-gray-200 border-none"
-                aria-labelledby="dropdownRadioButton">
-                <li>
-                    <div class="flex items-center mb-4">
-                        <input id="default-checkbox" type="checkbox" value=""
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
-                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
-                            checkbox</label>
+            <!-- DROPDOWN FOR Programme -->
+            <div id="dropdownProgramme" class=" z-10 hidden w-60 bg-white divide-y divide-gray-100 rounded-lg shadow"
+                data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top"
+                style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(522.5px, 3847.5px, 0px);">
+                <!-- Search -->
+                <div class="mt-4 flex justify-center">
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                            <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true" fill="currentColor"
+                                viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <input type="text" id="table-search"
+                            class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-50 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 "
+                            placeholder="Designation">
                     </div>
-                </li>
-                <li>
-                    <div class="flex items-center mb-4">
-                        <input id="default-checkbox" type="checkbox" value=""
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
-                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
-                            checkbox</label>
-                    </div>
-                </li>
-                <li>
-                    <div class="flex items-center mb-4">
-                        <input id="default-checkbox" type="checkbox" value=""
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
-                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
-                            checkbox</label>
-                    </div>
-                </li>
-                <li>
-                    <div class="flex items-center mb-4">
-                        <input id="default-checkbox" type="checkbox" value=""
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
-                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
-                            checkbox</label>
-                    </div>
-                </li>
-                <li>
-                    <div class="flex items-center mb-4">
-                        <input id="default-checkbox" type="checkbox" value=""
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
-                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
-                            checkbox</label>
-                    </div>
-                </li>
-                <li>
-                    <div class="flex items-center mb-4">
-                        <input id="default-checkbox" type="checkbox" value=""
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
-                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
-                            checkbox</label>
-                    </div>
-                </li>
-            </ul>
+                </div>
 
-            <div class='row mb-5 border-none'>
-                <button type="button"
-                    class="ml-5 py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-orange-500 focus:z-10 focus:ring-4 focus:ring-gray-200 ">Done</button>
-                <button type="button"
-                    class="ml-5 py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-orange-500 focus:z-10 focus:ring-4 focus:ring-gray-200 ">Cancel</button>
-            </div>
-        </div>
+                <ul class="overflow-y-auto h-48 px-8 pt-3 space-y-1 text-sm text-gray-700 dark:text-gray-200 border-none"
+                    aria-labelledby="dropdownRadioButton">
+                    <li>
+                        <div class="flex items-center mb-4">
+                            <input id="default-checkbox" type="checkbox" value=""
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
+                            <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
+                                checkbox</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="flex items-center mb-4">
+                            <input id="default-checkbox" type="checkbox" value=""
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
+                            <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
+                                checkbox</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="flex items-center mb-4">
+                            <input id="default-checkbox" type="checkbox" value=""
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
+                            <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
+                                checkbox</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="flex items-center mb-4">
+                            <input id="default-checkbox" type="checkbox" value=""
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
+                            <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
+                                checkbox</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="flex items-center mb-4">
+                            <input id="default-checkbox" type="checkbox" value=""
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
+                            <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
+                                checkbox</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="flex items-center mb-4">
+                            <input id="default-checkbox" type="checkbox" value=""
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
+                            <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
+                                checkbox</label>
+                        </div>
+                    </li>
+                </ul>
 
-
-        <!-- DROPDOWN FOR Staff Name -->
-        <div id="dropdownStaff" class=" z-10 hidden w-60 bg-white divide-y divide-gray-100 rounded-lg shadow"
-            data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top"
-            style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(522.5px, 3847.5px, 0px);">
-            <!-- Search -->
-            <div class="mt-4 flex justify-center">
-                <div class="relative">
-                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                        <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true" fill="currentColor"
-                            viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                                clip-rule="evenodd"></path>
-                        </svg>
-                    </div>
-                    <input type="text" id="table-search"
-                        class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-50 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 "
-                        placeholder="Staff Name">
+                <div class='row mb-5 border-none'>
+                    <button type="button"
+                        class="ml-5 py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-orange-500 focus:z-10 focus:ring-4 focus:ring-gray-200 ">Done</button>
+                    <button type="button"
+                        class="ml-5 py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-orange-500 focus:z-10 focus:ring-4 focus:ring-gray-200 ">Cancel</button>
                 </div>
             </div>
 
-            <ul class="overflow-y-auto h-48 px-8 pt-3 space-y-1 text-sm text-gray-700 dark:text-gray-200 border-none"
-                aria-labelledby="dropdownRadioButton">
-                <li>
-                    <div class="flex items-center mb-4">
-                        <input id="default-checkbox" type="checkbox" value=""
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
-                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
-                            checkbox</label>
-                    </div>
-                </li>
-                <li>
-                    <div class="flex items-center mb-4">
-                        <input id="default-checkbox" type="checkbox" value=""
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
-                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
-                            checkbox</label>
-                    </div>
-                </li>
-                <li>
-                    <div class="flex items-center mb-4">
-                        <input id="default-checkbox" type="checkbox" value=""
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
-                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
-                            checkbox</label>
-                    </div>
-                </li>
-                <li>
-                    <div class="flex items-center mb-4">
-                        <input id="default-checkbox" type="checkbox" value=""
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
-                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
-                            checkbox</label>
-                    </div>
-                </li>
-                <li>
-                    <div class="flex items-center mb-4">
-                        <input id="default-checkbox" type="checkbox" value=""
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
-                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
-                            checkbox</label>
-                    </div>
-                </li>
-                <li>
-                    <div class="flex items-center mb-4">
-                        <input id="default-checkbox" type="checkbox" value=""
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
-                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
-                            checkbox</label>
-                    </div>
-                </li>
-            </ul>
-
-            <div class='row mb-5 border-none'>
-                <button type="button"
-                    class="ml-5 py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-orange-500 focus:z-10 focus:ring-4 focus:ring-gray-200 ">Done</button>
-                <button type="button"
-                    class="ml-5 py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-orange-500 focus:z-10 focus:ring-4 focus:ring-gray-200 ">Cancel</button>
-            </div>
+            <!-- Footer -->
+            <!-- <nav class="flex items-center justify-between pt-4 mb-4" aria-label="Table navigation">
+                <span class="mx-2 text-sm font-normal text-gray-500 dark:text-gray-400">Showing <span
+                        class="font-semibold text-gray-900 dark:text-white">1-10</span> of <span
+                        class="font-semibold text-gray-900 dark:text-white">1000</span></span>
+                <ul class="inline-flex items-center -space-x-px mx-2">
+                    <li>
+                        <a href="#"
+                            class="block px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 ">
+                            <span class="sr-only">Previous</span>
+                            <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" aria-current="page"
+                            class="z-10 px-3 py-2 leading-tight text-orange-500 border border-orange-300 bg-orange-50 hover:bg-orange-100 hover:text-orange-500  ">1</a>
+                    </li>
+                    <li>
+                        <a href="#"
+                            class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-30dark0 hover:bg-gray-100 hover:text-gray-700 :bg-gray-800">2</a>
+                    </li>
+                    <li>
+                        <a href="#"
+                            class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ">3</a>
+                    </li>
+                    <li>
+                        <a href="#"
+                            class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">...</a>
+                    </li>
+                    <li>
+                        <a href="#"
+                            class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">100</a>
+                    </li>
+                    <li>
+                        <a href="#"
+                            class="block px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                            <span class="sr-only">Next</span>
+                            <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                        </a>
+                    </li>
+                </ul>
+            </nav> -->
         </div>
-
-        <!-- DROPDOWN FOR Staff Name -->
-        <div id="dropdownDesignation" class=" z-10 hidden w-60 bg-white divide-y divide-gray-100 rounded-lg shadow"
-            data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top"
-            style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(522.5px, 3847.5px, 0px);">
-            <!-- Search -->
-            <div class="mt-4 flex justify-center">
-                <div class="relative">
-                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                        <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true" fill="currentColor"
-                            viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                                clip-rule="evenodd"></path>
-                        </svg>
-                    </div>
-                    <input type="text" id="table-search"
-                        class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-50 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 "
-                        placeholder="Designation">
-                </div>
-            </div>
-
-            <ul class="overflow-y-auto h-48 px-8 pt-3 space-y-1 text-sm text-gray-700 dark:text-gray-200 border-none"
-                aria-labelledby="dropdownRadioButton">
-                <li>
-                    <div class="flex items-center mb-4">
-                        <input id="default-checkbox" type="checkbox" value=""
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
-                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
-                            checkbox</label>
-                    </div>
-                </li>
-                <li>
-                    <div class="flex items-center mb-4">
-                        <input id="default-checkbox" type="checkbox" value=""
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
-                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
-                            checkbox</label>
-                    </div>
-                </li>
-                <li>
-                    <div class="flex items-center mb-4">
-                        <input id="default-checkbox" type="checkbox" value=""
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
-                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
-                            checkbox</label>
-                    </div>
-                </li>
-                <li>
-                    <div class="flex items-center mb-4">
-                        <input id="default-checkbox" type="checkbox" value=""
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
-                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
-                            checkbox</label>
-                    </div>
-                </li>
-                <li>
-                    <div class="flex items-center mb-4">
-                        <input id="default-checkbox" type="checkbox" value=""
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
-                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
-                            checkbox</label>
-                    </div>
-                </li>
-                <li>
-                    <div class="flex items-center mb-4">
-                        <input id="default-checkbox" type="checkbox" value=""
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 ">
-                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Default
-                            checkbox</label>
-                    </div>
-                </li>
-            </ul>
-
-            <div class='row mb-5 border-none'>
-                <button type="button"
-                    class="ml-5 py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-orange-500 focus:z-10 focus:ring-4 focus:ring-gray-200 ">Done</button>
-                <button type="button"
-                    class="ml-5 py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-orange-500 focus:z-10 focus:ring-4 focus:ring-gray-200 ">Cancel</button>
-            </div>
-        </div>
-
-
-
-        <!-- Footer -->
-        <!-- <nav class="flex items-center justify-between pt-4 mb-4" aria-label="Table navigation">
-            <span class="mx-2 text-sm font-normal text-gray-500 dark:text-gray-400">Showing <span
-                    class="font-semibold text-gray-900 dark:text-white">1-10</span> of <span
-                    class="font-semibold text-gray-900 dark:text-white">1000</span></span>
-            <ul class="inline-flex items-center -space-x-px mx-2">
-                <li>
-                    <a href="#"
-                        class="block px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 ">
-                        <span class="sr-only">Previous</span>
-                        <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                                clip-rule="evenodd"></path>
-                        </svg>
-                    </a>
-                </li>
-                <li>
-                    <a href="#"
-                        class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-30dark0 hover:bg-gray-100 hover:text-gray-700 :bg-gray-800">1</a>
-                </li>
-                <li>
-                    <a href="#"
-                        class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ">2</a>
-                </li>
-                <li>
-                    <a href="#" aria-current="page"
-                        class="z-10 px-3 py-2 leading-tight text-orange-500 border border-orange-300 bg-orange-50 hover:bg-orange-100 hover:text-orange-500  ">3</a>
-                </li>
-                <li>
-                    <a href="#"
-                        class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">...</a>
-                </li>
-                <li>
-                    <a href="#"
-                        class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">100</a>
-                </li>
-                <li>
-                    <a href="#"
-                        class="block px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                        <span class="sr-only">Next</span>
-                        <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                                clip-rule="evenodd"></path>
-                        </svg>
-                    </a>
-                </li>
-            </ul>
-        </nav> -->
     </div>
 
 </body>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vue@2.7.14"></script>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
 <script>
-    new Vue({
+    const vm = new Vue({
         el: '#app',
         data: {
-            personal_details_fields: [1, 2, 3], //Test value, will be replaced once API is called.
-            personal_details_datas: [2, 3, 4],
+            personal_details_fields: [],
+            fields_display: [],
+            personal_details_datas: [],
+            employee_id_values: [],
         },
         mounted: async function () {
             const API_URL_1 = 'http://localhost:5010/personal_details_fields';
@@ -643,23 +510,48 @@
 
             Promise.all(apiCalls)
                 .then(responses => {
-                    this.personal_details_fields = responses[0].data;
                     this.personal_details_datas = responses[1].data.data;
-                    for ([field, field_details] of Object.entries(this.personal_details_fields)) {
-                        console.log(field)
-                    }
+                    this.personal_details_fields.push("Employee_id", "Staff_Name", "Gender",
+                        "Date_of_Birth", "Nationality", "Programme",
+                        "ACLS_Expiry_Date", "BCLS_Expiry_Date")
+                    this.fields_display.push("Employee ID" , "Staff Name" , "Gender" , "Date of Birth" , "Nationality" , "Programme" , "ACLS Expiry Date" , "BCLS Expiry Date")
                     for ([key, value] of Object.entries(this.personal_details_datas)) {
-                        console.log(key, value)
+                        // key : number of resident
+                        // value: for each resident 
+                        for (each in value) {
+                            if (each == "Date_of_Birth" || each == "ACLS_Expiry_Date" || each ==
+                                "BCLS_Expiry_Date") {
+                                let date_string = value[each];
+                                let date = new Date(date_string);
+
+                                let year = date.getFullYear();
+                                let month = (date.getMonth() + 1).toString().padStart(2, "0");
+                                let day = date.getDate().toString().padStart(2, "0");
+
+                                let new_date_string = `${year}-${month}-${day}`;
+
+                                value[each] = new_date_string;
+                            }
+                            else if (each == "Employee_id"){
+                                this.employee_id_values.push(value[each])
+                            }
+                        }
                     }
+
                 })
                 .catch(error => {
                     console.error(error);
                 });
-
-
         },
+        methods: {
+
+        }
     });
 </script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.7.14"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 
 

@@ -21,6 +21,10 @@ SET time_zone = "+00:00";
 -- Database: `SingHealth`
 --
 
+-- drop database if exists SingHealth;
+-- CREATE DATABASE IF NOT EXISTS SingHealth DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+-- USE SingHealth;
+
 -- --------------------------------------------------------
 
 --
@@ -66,20 +70,41 @@ CREATE TABLE `Case_Log` (
 -- Table structure for table `Didactic_Attendance`
 --
 
+-- ('MCR Number', 'BillingName', 'Month', 
+-- 'Total tracked sessions', 'Number of sessions attended', 
+-- 'Percentage of sessions attended', 'Mmm/Yyyy', 'Posting Institution', 
+-- 'Posting Department', 'Scheduled Teachings', 'Compliance or not? (>70%)', 'employee_id'),
+
 CREATE TABLE `Didactic_Attendance` (
   `Employee_ID` varchar(50) NOT NULL,
-  `MCR_No` varchar(50) NOT NULL,
-  `Staff_Name` varchar(50) NOT NULL,
-  `Designation` varchar(50) NOT NULL,
-  `Department` varchar(50) NOT NULL,
-  `Institution` varchar(50) NOT NULL,
-  `MMYYYY` varchar(50) NOT NULL,
+  `BillingName` varchar(50) NOT NULL,
+  `Month` varchar(50) NOT NULL,
+  `Total_tracked_sessions` varchar(50) NOT NULL,
+  `Number_of_sessions_attended` varchar(50) NOT NULL,
+  `Percentage_of_sessions_attended` varchar(50) NOT NULL,
+  `MmYyyy` varchar(50) NOT NULL,
   `Posting_Institution` varchar(50) NOT NULL,
   `Posting_Department` varchar(50) NOT NULL,
-  `Attended_Teachings` varchar(50) NOT NULL,
   `Scheduled_Teachings` varchar(50) NOT NULL,
   `Compliance_or_Not` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+INSERT INTO `Didactic_Attendance` (`Employee_ID`, `BillingName`,
+  `Month`,
+  `Total_tracked_sessions`,
+  `Number_of_sessions_attended`,
+  `Percentage_of_sessions_attended`,
+  `MmYyyy`,
+  `Posting_Institution`,
+  `Posting_Department`,
+  `Scheduled_Teachings`,
+  `Compliance_or_Not`)  VALUES
+('MOM12390', 'SGHGasEnt', 'July', '14', '14', '100%', '', '', '', '', ''),
+('MOM05233', 'SGHGasEnt', 'July', '20', '20', '100%', '', '', '', '', ''),
+('MOM07177', 'SGHGasEnt', 'July', '14', '12', '86%', '', '', '', '', ''),
+('MOM05609', 'CGHGasHep', 'July', '12', '9', '75%', '', '', '', '', ''),
+('MOM05690', 'CGHGasHep', 'July', '12', '12', '100%', '', '', '', '', '');
 
 -- --------------------------------------------------------
 

@@ -49,6 +49,7 @@ CORS(app)
 
 from PersonalDetails import PersonalDetails
 from Duty_Hour_Log import Duty_Hour_Log
+from Didactic_Attendance import Didactic_Attendance
 
 class Awards(db.Model):
     __tablename__ = 'Awards'
@@ -366,6 +367,16 @@ def get_awards_fields():
 # ▄█ ░█░ █▀█ █▀▄ ░█░
 # ============================
 
+#Read Awards field/column name (R)
+@app.route('/didactic_attendance', methods=['GET'])
+def get_didactic_attendance():
+    daList = Didactic_Attendance.query.all()
+    return jsonify(
+        {
+            "data": [pd.to_dict()
+                    for pd in daList]
+        }
+    ), 200
 
 
 # ============================

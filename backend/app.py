@@ -1,78 +1,68 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
-from os import environ
 from flask_cors import CORS
-import os, fileinput
-
-
-from sqlalchemy import create_engine
+import json
 
 app = Flask(__name__)
+# # Mac user ====================================================================
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:' + \
+#                                         '@localhost:3306/SingHealth'
+# # =============================================================================
 
-# Remember to add/remove the app config with your php password
-app.config['SQLALCHEMY_DATABASE_URI'] = environ.get(
-    'dbURL') or 'mysql+mysqlconnector://root:root@localhost:3306/SingHealth'
+
+# # Windows user -------------------------------------------------------------------
+# # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:root' + \
+# #                                         '@localhost:3306/SingHealth'
+# # --------------------------------------------------------------------------------
+# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {'pool_size': 100,
+#                                         'pool_recycle': 280}
+
+# db = SQLAlchemy(app)
+
+# CORS(app)
+
+app = Flask(__name__)
+app.app_context().push()
+
+if __name__ == '__main__':
+    # Mac user -------------------------------------------------------------------
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:root' + \
+                                            '@localhost:3306/SingHealth'
+    # --------------------------------------------------------------------------------
+
+    # # Windows user -------------------------------------------------------------------
+    # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:root' + \
+    #                                         '@localhost:3306/SingHealth'
+    # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    # app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {'pool_size': 100,
+    #                                         'pool_recycle': 280}
+else:
+    print("herrr")
+    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite://"
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {'pool_recycle': 299}
-
-  
-user, password, host, database = 'root', 'root', 'localhost', 'SingHealth'
-engine = create_engine(
-    url=f'mysql+pymysql://{user}:{password}@{host}/{database}?charset=utf8')
-  
-connection = engine.connect()
-
-
-
 db = SQLAlchemy(app)
-metadata_obj = db.MetaData()
 
 CORS(app)
 
-import projects
-import postingHistory
-import presentations
-import publications
-import remediationHistory
+from PersonalDetails import PersonalDetails
+from Duty_Hour_Log import Duty_Hour_Log
 
+class Awards(db.Model):
+    __tablename__ = 'Awards'
+    Award_ID = db.Column(db.String(100))
+    Employee_id = db.Column(db.String(100), primary_key=True)
+    Award_Category = db.Column(db.String(100))
+    Name_of_Award = db.Column(db.String(100))
 
-### CREATE NEW TABLE, NOT YET OFFICIAL FUNCTION
-@app.route("/createtable",methods=['POST'])
-def create_table():
-    # CREATE THE SQL TABLE #
-    data = request.get_json()
-    table=data['TableName']
-    columns=data['Columns']
+    FY_of_Award_Received = db.Column(db.String(100))
+    Date_of_Award_Received = db.Column(db.DateTime)
+    Project_ID_Ref = db.Column(db.String(100))
 
-    createdTable = db.Table(
-    table,                                        
-    metadata_obj,
-    db.Column(columns[0], db.String(50))                    
-    )
-    metadata_obj.create_all(engine)
-    for i in range(1,len(columns)):
-        query = f'ALTER TABLE {table} ADD {columns[i]} VARCHAR(50) ;'
-        connection.execute(query)
-    
-    # CREATE THE PY FILE WITH THE FLASK DATABASE OBJECT #
-    fname = table + ".py"
-    pagedata = '''
-from flask import request, jsonify
-from __main__ import app,db
-from sqlalchemy import create_engine
-
-
-
-class '''+table+'''(db.Model):
-    __tablename__ = "'''+table+'''"
-    '''+columns[0]+'''=db.Column(db.String(100),primary_key=True)\n'''
-    
-    for i in range(1,len(columns)):
-        pagedata += '''    '''+columns[i]+'''=db.Column(db.String(100))\n'''
-    pagedata+='''\n
     __mapper_args__ = {
-    'polymorphic_identity': "'''+table+'''"
+        'polymorphic_identity': 'Awards'
     }
 
     def to_dict(self):
@@ -87,32 +77,410 @@ class '''+table+'''(db.Model):
             result[column] = getattr(self, column)
         return result
 
-    @app.route("/'''+table+'''")
-    def read_'''+table+'''():
-        pdList = '''+table+'''.query.all()
-        print (pdList,'oierjngosenrboaeir!!!!!!!!!!!!!!!!!!!!!!OSJNWOJN')
-        return jsonify(
-            {
-                "data": [pd.to_dict()
-                        for pd in pdList]
-            }
-        ), 200
-    '''
-    with open(fname, 'w') as f:
-        f.write(pagedata)
-    for line in fileinput.FileInput('app.py', inplace=True):
-        
-        if line.startswith('import projects'):
-            line += 'import ' +table+ os.linesep
-            
-        print(line, end="")
-    return data
+class ExamHistory(db.Model):
+    __tablename__ = 'ExamHistory'
+    Exam_ID = db.Column(db.String(100))
+    Employee_id = db.Column(db.String(100), primary_key=True)
+    Name_of_Exam = db.Column(db.String(100))
+    Date_of_Attempts = db.Column(db.String(100))
+    Exam_Status = db.Column(db.String(100))
 
-# Uncomment below if create_all
-with app.app_context():
-    db.create_all()
-# db.create_all()
+    __mapper_args__ = {
+        'polymorphic_identity': 'ExamHistory'
+    }
 
+    def to_dict(self):
+        """
+        'to_dict' converts the object into a dictionary,
+        in which the keys correspond to database columns
+        """
+        columns = self.__mapper__.column_attrs.keys()
+        print(f"columns: {columns}")
+        result = {}
+        for column in columns:
+            result[column] = getattr(self, column)
+        return result
+
+
+class Grants(db.Model):
+    __tablename__ = 'Grants'
+    Grant_ID = db.Column(db.String(100))
+    Employee_id = db.Column(db.String(100), primary_key=True)
+    Name_of_Grant = db.Column(db.String(100))
+    Project_Title = db.Column(db.String(100))
+    Project_ID = db.Column(db.String(100))
+    Grant_End_Date = db.Column(db.DateTime)
+
+    __mapper_args__ = {
+        'polymorphic_identity': 'Grants'
+    }
+
+    def to_dict(self):
+        """
+        'to_dict' converts the object into a dictionary,
+        in which the keys correspond to database columns
+        """
+        columns = self.__mapper__.column_attrs.keys()
+        print(f"columns: {columns}")
+        result = {}
+        for column in columns:
+            result[column] = getattr(self, column)
+        return result
+
+
+class Involvement(db.Model):
+    __tablename__ = 'Involvement'
+    Involvement_No = db.Column(db.Integer)
+    Involvement_Type = db.Column(db.String(100))
+    Employee_id = db.Column(db.String(100), primary_key=True)
+    Event = db.Column(db.String(100))
+    Role = db.Column(db.String(100))
+    Start_Date = db.Column(db.DateTime)
+    End_Date = db.Column(db.DateTime)
+
+    __mapper_args__ = {
+        'polymorphic_identity': 'Involvement'
+    }
+
+    def to_dict(self):
+        """
+        'to_dict' converts the object into a dictionary,
+        in which the keys correspond to database columns
+        """
+        columns = self.__mapper__.column_attrs.keys()
+        print(f"columns: {columns}")
+        result = {}
+        for column in columns:
+            result[column] = getattr(self, column)
+        return result
+
+# https://fsymbols.com/generators/tarty/
+# ============================
+# █▀█ █▀▀ █▀█ █▀ █▀█ █▄░█ ▄▀█ █░░   █▀▄ █▀▀ ▀█▀ ▄▀█ █ █░░ █▀  
+# █▀▀ ██▄ █▀▄ ▄█ █▄█ █░▀█ █▀█ █▄▄   █▄▀ ██▄ ░█░ █▀█ █ █▄▄ ▄█  
+# █▀ ▀█▀ ▄▀█ █▀█ ▀█▀
+# ▄█ ░█░ █▀█ █▀▄ ░█░
+# ============================
+# Read Existing personaldetails (R)
+@app.route("/personaldetails")
+def read_personaldetails():
+    pdList = PersonalDetails.query.all()
+    return jsonify(
+        {
+            "data": [pd.to_dict()
+                    for pd in pdList]
+        }
+    ), 200
+
+#Read PersonalDetails field/column name (R)
+@app.route('/personal_details_fields', methods=['GET'])
+def get_personal_details_fields():
+    fields = {}
+    for column in PersonalDetails.__table__.columns:
+        fields[column.name] = str(column.type)
+    return jsonify(fields)
+
+# ============================
+# █▀▀ █▄░█ █▀▄
+# ██▄ █░▀█ █▄▀
+# ============================
+
+# ============================
+# █ █▄░█ █░█ █▀█ █░░ █░█ █▀▀ █▀▄▀█ █▀▀ █▄░█ ▀█▀
+# █ █░▀█ ▀▄▀ █▄█ █▄▄ ▀▄▀ ██▄ █░▀░█ ██▄ █░▀█ ░█░
+# █▀ ▀█▀ ▄▀█ █▀█ ▀█▀
+# ▄█ ░█░ █▀█ █▀▄ ░█░
+# ============================
+# Read Existing involvement (R)
+@app.route("/involvement")
+def read_involvement():
+    involvementList = Involvement.query.all()
+    return jsonify(
+        {
+            "data": [pd.to_dict()
+                    for pd in involvementList]
+        }
+    ), 200
+#Read Involvement field/column name (R)
+@app.route('/involvement_fields', methods=['GET'])
+def get_involvement_fields():
+    fields = {}
+    for column in Involvement.__table__.columns:
+        fields[column.name] = str(column.type)
+    return jsonify(fields)
+# ============================
+# █▀▀ █▄░█ █▀▄
+# ██▄ █░▀█ █▄▀
+# ============================
+
+# ============================
+# █░█ █ █▀ ▀█▀ █▀█ █▀█ █▄█ ▄▄ █▀▀ █▀▄ █░█ █▀▀ ▄▀█ ▀█▀ █ █▀█ █▄░█
+# █▀█ █ ▄█ ░█░ █▄█ █▀▄ ░█░ ░░ ██▄ █▄▀ █▄█ █▄▄ █▀█ ░█░ █ █▄█ █░▀█
+# █▀ ▀█▀ ▄▀█ █▀█ ▀█▀
+# ▄█ ░█░ █▀█ █▀▄ ░█░
+# ============================
+
+
+
+# ============================
+# █▀▀ █▄░█ █▀▄
+# ██▄ █░▀█ █▄▀
+# ============================
+
+# ============================
+# █░█ █ █▀ ▀█▀ █▀█ █▀█ █▄█ ▄▄ █▀█ █▀█ █▀ ▀█▀ █ █▄░█ █▀▀
+# █▀█ █ ▄█ ░█░ █▄█ █▀▄ ░█░ ░░ █▀▀ █▄█ ▄█ ░█░ █ █░▀█ █▄█
+# █▀ ▀█▀ ▄▀█ █▀█ ▀█▀
+# ▄█ ░█░ █▀█ █▀▄ ░█░
+# ============================
+
+
+
+# ============================
+# █▀▀ █▄░█ █▀▄
+# ██▄ █░▀█ █▄▀
+# ============================
+
+# ============================
+# █░█ █ █▀ ▀█▀ █▀█ █▀█ █▄█ ▄▄ █▀▀ ▀▄▀ ▄▀█ █▀▄▀█
+# █▀█ █ ▄█ ░█░ █▄█ █▀▄ ░█░ ░░ ██▄ █░█ █▀█ █░▀░█
+# █▀ ▀█▀ ▄▀█ █▀█ ▀█▀
+# ▄█ ░█░ █▀█ █▀▄ ░█░
+# ============================
+
+
+
+# ============================
+# █▀▀ █▄░█ █▀▄
+# ██▄ █░▀█ █▄▀
+# ============================
+
+
+# ============================
+# █▀▀ ▀▄▀ ▄▀█ █▀▄▀█   █░█ █ █▀ ▀█▀ █▀█ █▀█ █▄█
+# ██▄ █░█ █▀█ █░▀░█   █▀█ █ ▄█ ░█░ █▄█ █▀▄ ░█░
+# █▀ ▀█▀ ▄▀█ █▀█ ▀█▀
+# ▄█ ░█░ █▀█ █▀▄ ░█░
+# ============================
+
+# Read Existing ExamHistory (R)
+@app.route("/examhistory")
+def read_examhistory():
+    examhistoryList = ExamHistory.query.all()
+    return jsonify(
+        {
+            "data": [pd.to_dict()
+                    for pd in examhistoryList]
+        }
+    ), 200
+
+#Read ExamHistory field/column name (R)
+@app.route('/exam_history_fields', methods=['GET'])
+def get_exam_history_fields():
+    fields = {}
+    for column in ExamHistory.__table__.columns:
+        fields[column.name] = str(column.type)
+    return jsonify(fields)
+
+# ============================
+# █▀▀ █▄░█ █▀▄
+# ██▄ █░▀█ █▄▀
+# ============================
+
+# ============================
+# █░█ █ █▀ ▀█▀ █▀█ █▀█ █▄█ ▄▄ ▀█▀ █▀▀ █▀█
+# █▀█ █ ▄█ ░█░ █▄█ █▀▄ ░█░ ░░ ░█░ ██▄ █▀▄
+# █▀ ▀█▀ ▄▀█ █▀█ ▀█▀
+# ▄█ ░█░ █▀█ █▀▄ ░█░
+# ============================
+
+
+
+# ============================
+# █▀▀ █▄░█ █▀▄
+# ██▄ █░▀█ █▄▀
+# ============================
+
+# ============================
+# █▀▀ █▀█ ▄▀█ █▄░█ ▀█▀ █▀
+# █▄█ █▀▄ █▀█ █░▀█ ░█░ ▄█
+# █▀ ▀█▀ ▄▀█ █▀█ ▀█▀
+# ▄█ ░█░ █▀█ █▀▄ ░█░
+# ============================
+# Read Existing grants (R)
+@app.route("/grants")
+def read_grants():
+    grantsList = Grants.query.all()
+    return jsonify(
+        {
+            "data": [pd.to_dict()
+                    for pd in grantsList]
+        }
+    ), 200
+
+#Read Grants field/column name (R)
+@app.route('/grants_fields', methods=['GET'])
+def get_grants_fields():
+    fields = {}
+    for column in Grants.__table__.columns:
+        fields[column.name] = str(column.type)
+    return jsonify(fields)
+# ============================
+# █▀▀ █▄░█ █▀▄
+# ██▄ █░▀█ █▄▀
+# ============================
+
+# ============================
+# ▄▀█ █░█░█ ▄▀█ █▀█ █▀▄ █▀
+# █▀█ ▀▄▀▄▀ █▀█ █▀▄ █▄▀ ▄█
+# █▀ ▀█▀ ▄▀█ █▀█ ▀█▀
+# ▄█ ░█░ █▀█ █▀▄ ░█░
+# ============================
+# Read Existing awards (R)
+@app.route("/awards")
+def read_awards():
+    awardsList = Awards.query.all()
+    return jsonify(
+        {
+            "data": [pd.to_dict()
+                    for pd in awardsList]
+        }
+    ), 200
+
+#Read Awards field/column name (R)
+@app.route('/awards_fields', methods=['GET'])
+def get_awards_fields():
+    fields = {}
+    for column in Awards.__table__.columns:
+        fields[column.name] = str(column.type)
+    return jsonify(fields)
+# ============================
+# █▀▀ █▄░█ █▀▄
+# ██▄ █░▀█ █▄▀
+# ============================
+
+# ============================
+# █▀▄ █ █▀▄ ▄▀█ █▀▀ ▀█▀ █ █▀▀   ▄▀█ ▀█▀ ▀█▀ █▀▀ █▄░█ █▀▄ ▄▀█ █▄░█ █▀▀ █▀▀
+# █▄▀ █ █▄▀ █▀█ █▄▄ ░█░ █ █▄▄   █▀█ ░█░ ░█░ ██▄ █░▀█ █▄▀ █▀█ █░▀█ █▄▄ ██▄
+# █▀ ▀█▀ ▄▀█ █▀█ ▀█▀
+# ▄█ ░█░ █▀█ █▀▄ ░█░
+# ============================
+
+
+
+# ============================
+# █▀▀ █▄░█ █▀▄
+# ██▄ █░▀█ █▄▀
+# ============================
+
+# ============================
+# █▀█ █░█ █▄▄ █░░ █ █▀▀ ▄▀█ ▀█▀ █ █▀█ █▄░█ █▀
+# █▀▀ █▄█ █▄█ █▄▄ █ █▄▄ █▀█ ░█░ █ █▄█ █░▀█ ▄█
+# █▀ ▀█▀ ▄▀█ █▀█ ▀█▀
+# ▄█ ░█░ █▀█ █▀▄ ░█░
+# ============================
+
+
+
+# ============================
+# █▀▀ █▄░█ █▀▄
+# ██▄ █░▀█ █▄▀
+# ============================
+
+# ============================
+# █▀█ █▀█ █▀█ ░░█ █▀▀ █▀▀ ▀█▀ █▀
+# █▀▀ █▀▄ █▄█ █▄█ ██▄ █▄▄ ░█░ ▄█
+# █▀ ▀█▀ ▄▀█ █▀█ ▀█▀
+# ▄█ ░█░ █▀█ █▀▄ ░█░
+# ============================
+
+
+
+# ============================
+# █▀▀ █▄░█ █▀▄
+# ██▄ █░▀█ █▄▀
+# ============================
+
+# ============================
+# █ █░█ █
+# █ █▀█ █
+# █▀ ▀█▀ ▄▀█ █▀█ ▀█▀
+# ▄█ ░█░ █▀█ █▀▄ ░█░
+# ============================
+
+
+
+# ============================
+# █▀▀ █▄░█ █▀▄
+# ██▄ █░▀█ █▄▀
+# ============================
+
+# ============================
+# █▀▄ █░█ ▀█▀ █▄█   █░█ █▀█ █░█ █▀█   █░░ █▀█ █▀▀
+# █▄▀ █▄█ ░█░ ░█░   █▀█ █▄█ █▄█ █▀▄   █▄▄ █▄█ █▄█
+# █▀ ▀█▀ ▄▀█ █▀█ ▀█▀
+# ▄█ ░█░ █▀█ █▀▄ ░█░
+# ============================
+
+
+#Read Awards field/column name (R)
+@app.route('/duty_hour_log', methods=['GET'])
+def get_duty_hour_log():
+    dutyList = Duty_Hour_Log.query.all()
+    return jsonify(
+        {
+            "data": [pd.to_dict()
+                    for pd in dutyList]
+        }
+    ), 200
+
+# ============================
+# █▀▀ █▄░█ █▀▄
+# ██▄ █░▀█ █▄▀
+# ============================
+
+# ============================
+# █▀█ █▀█ █▀█ █▀▀ █▀▀ █▀▄ █░█ █▀█ █▀▀
+# █▀▀ █▀▄ █▄█ █▄▄ ██▄ █▄▀ █▄█ █▀▄ ██▄
+# █▀ ▀█▀ ▄▀█ █▀█ ▀█▀
+# ▄█ ░█░ █▀█ █▀▄ ░█░
+# ============================
+
+
+
+# ============================
+# █▀▀ █▄░█ █▀▄
+# ██▄ █░▀█ █▄▀
+# ============================
+
+# ============================
+# █▀▀ ▄▀█ █▀ █▀▀   █░░ █▀█ █▀▀
+# █▄▄ █▀█ ▄█ ██▄   █▄▄ █▄█ █▄█
+# █▀ ▀█▀ ▄▀█ █▀█ ▀█▀
+# ▄█ ░█░ █▀█ █▀▄ ░█░
+# ============================
+
+
+
+# ============================
+# █▀▀ █▄░█ █▀▄
+# ██▄ █░▀█ █▄▀
+# ============================
+
+# ============================
+# █▀▀ █░█ ▄▀█ █░░ █░█ ▄▀█ ▀█▀ █ █▀█ █▄░█
+# ██▄ ▀▄▀ █▀█ █▄▄ █▄█ █▀█ ░█░ █ █▄█ █░▀█
+# █▀ ▀█▀ ▄▀█ █▀█ ▀█▀
+# ▄█ ░█░ █▀█ █▀▄ ░█░
+# ============================
+
+
+# ============================
+# █▀▀ █▄░█ █▀▄
+# ██▄ █░▀█ █▄▀
+# ============================
+
+db.create_all()
 
 if __name__ == '__main__':
-    app.run(port=5010, debug=True)
+    app.run(host='0.0.0.0', port=5010, debug=True)

@@ -1,6 +1,7 @@
 
 
-from __main__ import app,db
+from app import app,db
+# from __main__ import app,db
 from flask import request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 

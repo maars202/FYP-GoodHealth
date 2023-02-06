@@ -1,9 +1,9 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 import json
 
-app = Flask(__name__)
+# app = Flask(__name__)
 # # Mac user ====================================================================
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:' + \
 #                                         '@localhost:3306/SingHealth'
@@ -23,6 +23,7 @@ app = Flask(__name__)
 # CORS(app)
 
 app = Flask(__name__)
+print("app initialising")
 app.app_context().push()
 
 if __name__ == '__main__':
@@ -47,9 +48,41 @@ db = SQLAlchemy(app)
 
 CORS(app)
 
-from PersonalDetails import PersonalDetails
-from Duty_Hour_Log import Duty_Hour_Log
-from Didactic_Attendance import Didactic_Attendance
+# from PersonalDetails1 import PersonalDetails
+from Duty_Hour_Log1 import Duty_Hour_Log
+# from Didactic_Attendance1 import Didactic_Attendance
+
+
+# class Duty_Hour_Log(db.Model):
+#     __tablename__ = 'Duty_Hour_Log'
+#     Employee_id = db.Column(db.String(100), primary_key=True)
+#     Level = db.Column(db.String(100))
+#     Submitted = db.Column(db.String(100))
+#     Submitted_Proportion = db.Column(db.String(100))
+#     MMYYYY = db.Column(db.String(100))
+#     Logged_for_month = db.Column(db.String(100))
+
+#     __mapper_args__ = {
+#         'polymorphic_identity': 'Duty_Hour_Log'
+#     }
+
+#     def to_dict(self):
+#         """
+#         'to_dict' converts the object into a dictionary,
+#         in which the keys correspond to database columns
+#         """
+#         columns = self.__mapper__.column_attrs.keys()
+#         print(f"columns: {columns}")
+#         result = {}
+#         for column in columns:
+#             result[column] = getattr(self, column)
+#         return result
+
+#Read PersonalDetails field/column name (R)
+@app.route('/', methods=['GET'])
+def display():
+
+    return render_template('../homepage.html')
 
 class Awards(db.Model):
     __tablename__ = 'Awards'
@@ -162,16 +195,16 @@ class Involvement(db.Model):
 # █▀ ▀█▀ ▄▀█ █▀█ ▀█▀
 # ▄█ ░█░ █▀█ █▀▄ ░█░
 # ============================
-# Read Existing personaldetails (R)
-@app.route("/personaldetails")
-def read_personaldetails():
-    pdList = PersonalDetails.query.all()
-    return jsonify(
-        {
-            "data": [pd.to_dict()
-                    for pd in pdList]
-        }
-    ), 200
+# # Read Existing personaldetails (R)
+# @app.route("/personaldetails")
+# def read_personaldetails():
+#     pdList = PersonalDetails.query.all()
+#     return jsonify(
+#         {
+#             "data": [pd.to_dict()
+#                     for pd in pdList]
+#         }
+#     ), 200
 
 #Read PersonalDetails field/column name (R)
 @app.route('/personal_details_fields', methods=['GET'])
@@ -367,16 +400,16 @@ def get_awards_fields():
 # ▄█ ░█░ █▀█ █▀▄ ░█░
 # ============================
 
-#Read Awards field/column name (R)
-@app.route('/didactic_attendance', methods=['GET'])
-def get_didactic_attendance():
-    daList = Didactic_Attendance.query.all()
-    return jsonify(
-        {
-            "data": [pd.to_dict()
-                    for pd in daList]
-        }
-    ), 200
+# #Read Awards field/column name (R)
+# @app.route('/didactic_attendance', methods=['GET'])
+# def get_didactic_attendance():
+#     daList = Didactic_Attendance.query.all()
+#     return jsonify(
+#         {
+#             "data": [pd.to_dict()
+#                     for pd in daList]
+#         }
+#     ), 200
 
 
 # ============================

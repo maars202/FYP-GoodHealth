@@ -1,6 +1,7 @@
 
 from flask import request, jsonify
-from __main__ import app,db
+from app import app,db
+# from __main__ import app,db
 from sqlalchemy import create_engine
 import os, fileinput
   

@@ -1,7 +1,10 @@
 
-from app import app,db
-from flask import request, jsonify
-from flask_sqlalchemy import SQLAlchemy
+from app import db
+# from __main__ import app,db
+# from flask import request, jsonify
+# from flask_sqlalchemy import SQLAlchemy
+
+
 
 class Duty_Hour_Log(db.Model):
     __tablename__ = 'Duty_Hour_Log'
@@ -13,7 +16,7 @@ class Duty_Hour_Log(db.Model):
     Logged_for_month = db.Column(db.String(100))
 
     __mapper_args__ = {
-        'polymorphic_identity': 'Involvement'
+        'polymorphic_identity': 'Duty_Hour_Log'
     }
 
     def to_dict(self):

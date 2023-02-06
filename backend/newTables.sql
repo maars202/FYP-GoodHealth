@@ -308,6 +308,12 @@ CREATE TABLE `Procedure_Log` (
     REFERENCES Personal_Details(Employee_ID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+INSERT INTO `Procedure_Log` (`Employee_ID`,`Procedure_Name`,`Date_of_Completion`,`CPT`,`Total`,`Performed`,`Observed`,`Verified`,`Certified`,`Procedure_Log_deleted`) VALUES
+('MOM05690','Procedure_Name111','Date_of_Completion111','CPT111','Total111','Performed111','Observed111','Verified111','Certified111',0),
+('one111','Procedure_Name222','Date_of_Completion111','CPT111','Total111','Performed111','Observed111','Verified111','Certified111',0);
+
+
 -- --------------------------------------------------------
 
 --
@@ -324,32 +330,57 @@ CREATE TABLE `Projects` (
   `End_Date` varchar(50) NOT NULL,
   `Date_of_QI_Certification` varchar(50) DEFAULT NULL,
   `PMID` varchar(50) DEFAULT NULL,
-  `Grants_deleted` tinyint(1) DEFAULT '0',
+  `Project_deleted` tinyint(1) DEFAULT '0',
   primary key (id),
   CONSTRAINT FK_PersonOrder11 FOREIGN KEY (Employee_ID)
     REFERENCES Personal_Details(Employee_ID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+INSERT INTO `Projects` (`Employee_ID`,`Project_Type`,`Project_Title`,`Project_ID`,
+`Start_Date`,`End_Date`,`Date_of_QI_Certification`,`PMID`,`Project_deleted`) VALUES
+('MOM05690','Project_Type111','Project_Title111','Project_ID111','Start_Date111','End_Date111','Date_of_QI_Certification111','PMID111',0),
+('one111','Project_Type222','Project_Title111','Project_ID111','Start_Date111','End_Date111','Date_of_QI_Certification111','PMID111',0);
 
 
--- ALTER TABLE `Case_Log`
---   ADD KEY `Employee_ID` (`Employee_ID`);
+
+CREATE TABLE `Publications` (
+  `id` INT AUTO_INCREMENT NOT NULL,
+  `Employee_ID` varchar(50) NOT NULL,
+  `Publication_Title` varchar(50) NOT NULL,
+  `Journal_Title` varchar(50) NOT NULL,
+  `PMID` varchar(50) NOT NULL,
+  `Publication_Date` varchar(50) NOT NULL,
+  `Publication_deleted` tinyint(1) DEFAULT '0',
+  primary key (id),
+  CONSTRAINT FK_PersonOrder12 FOREIGN KEY (Employee_ID)
+    REFERENCES Personal_Details(Employee_ID)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `Publications` (`Employee_ID`,`Publication_Title`,`Journal_Title`,`PMID`,`Publication_Date`,`Publication_deleted`) VALUES
+('MOM05690','Publication_Title111','Journal_Title111','PMID111','Publication_Date111',0),
+('one111','Publication_Title111','Journal_Title111','PMID111','Publication_Date111',0);
+
+
+CREATE TABLE `TrgExtRemHistory` (
+  `id` INT AUTO_INCREMENT NOT NULL,
+  `Employee_ID` varchar(100) DEFAULT ' ',
+  `LOAPIP` varchar(100) DEFAULT NULL,
+  `StartDate` varchar(50) DEFAULT NULL,
+  `EndDate` varchar(50) DEFAULT NULL,
+  `TrgExtRemHistory_deleted` tinyint(1) DEFAULT '0',
+  primary key (id),
+  CONSTRAINT FK_PersonOrder13 FOREIGN KEY (Employee_ID)
+    REFERENCES Personal_Details(Employee_ID)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `TrgExtRemHistory` (`Employee_ID`,`LOAPIP`,`StartDate`,`EndDate`,`TrgExtRemHistory_deleted`) VALUES
+('MOM05690','LOAPIP111','StartDate111','EndDate111',0),
+('one111','LOAPIP222','StartDate111','EndDate111',0);
 
 -- COMMENTS:
 -- only able to insert information for other tables if employee id exists in personal details table -- is that ok
 -- so the excel file will be completely reject if the employee id does not match any existing 
 -- residents in personal details table
-
-
-
-
-
-
--- INSERT INTO `Post` (`title`, `content`)  VALUES
--- ("hellooooo", "this is the content");
-
--- INSERT INTO `Comment` (`content`, `post_id`)  VALUES
--- ("hellooooo comment", 1);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

@@ -80,6 +80,20 @@ CREATE TABLE `Didactic_Attendance` (
     REFERENCES Personal_Details(Employee_ID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `Awards` (
+  `id` INT AUTO_INCREMENT NOT NULL,
+  `Employee_ID` varchar(50) NOT NULL,
+  `Award_Category` varchar(50) NOT NULL,
+  `Name_of_Award` varchar(50) NOT NULL,
+  `FY_of_Award_Received` varchar(50) NOT NULL,
+  `Date_of_Award_Received` varchar(50) NOT NULL,
+  `Project_ID` varchar(50) NOT NULL,
+  `Awards_deleted` varchar(1) DEFAULT '0',
+  primary key (id),
+   CONSTRAINT FK_PersonOrder14 FOREIGN KEY (Employee_ID)
+    REFERENCES Personal_Details(Employee_ID)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Indexes for table `Awards`
 --
@@ -289,6 +303,33 @@ INSERT INTO `Involvement` (`Employee_ID`, `Involvement_Type`, `Event`,
 ('one111','Involvement_Type111','Event111','Role111','Start_Date111','End_Date111',0);
 
 
+CREATE TABLE `Posting_History` (
+  `id` INT AUTO_INCREMENT NOT NULL,
+  `Employee_ID` varchar(50) NOT NULL,
+  `Posting_Institution` varchar(50) NOT NULL,
+  `Posting_Department` varchar(50) NOT NULL,
+  `Posting_StartDate` varchar(50) NOT NULL,
+  `Posting_EndDate` varchar(50) NOT NULL,
+  `Posting_History_deleted` int(11) NOT NULL DEFAULT '0',
+  primary key (id),
+  CONSTRAINT FK_PersonOrder15 FOREIGN KEY (Employee_ID)
+    REFERENCES Personal_Details(Employee_ID)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `Presentations` (
+  `id` INT AUTO_INCREMENT NOT NULL,
+  `Employee_ID` varchar(50) NOT NULL,
+    `Title` varchar(50) NOT NULL,
+  `Type` varchar(50) NOT NULL,
+  `Project_ID` varchar(50) NOT NULL,
+  `Conference_Name` varchar(50) NOT NULL,
+  `Country` varchar(50) NOT NULL,
+  `Presentation_Date` varchar(50) NOT NULL,
+  `Presentation_deleted` int(11) NOT NULL DEFAULT '0',
+  primary key (id),
+  CONSTRAINT FK_PersonOrder15 FOREIGN KEY (Employee_ID)
+    REFERENCES Personal_Details(Employee_ID)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE `Procedure_Log` (

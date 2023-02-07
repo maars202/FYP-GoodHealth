@@ -29,10 +29,19 @@ else:
     app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite://"
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SECRET_KEY'] = 'secret-key-goes-here'
 
 db = SQLAlchemy(app)
 
 CORS(app)
+
+from auth import auth as auth_blueprint
+app.register_blueprint(auth_blueprint)
+
+# blueprint for non-auth parts of app
+from main import main as main_blueprint
+app.register_blueprint(main_blueprint)
+
 
 class Personal_Details(db.Model):
     __tablename__ = 'Personal_Details'

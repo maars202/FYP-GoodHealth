@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, send_file
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 import json
@@ -78,11 +78,6 @@ from Duty_Hour_Log1 import Duty_Hour_Log
 #             result[column] = getattr(self, column)
 #         return result
 
-#Read PersonalDetails field/column name (R)
-@app.route('/', methods=['GET'])
-def display():
-
-    return render_template('../homepage.html')
 
 class Awards(db.Model):
     __tablename__ = 'Awards'

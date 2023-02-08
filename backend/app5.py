@@ -1,9 +1,14 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, send_file
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 import json
 import pandas as pd
 import traceback
+import pypandoc
+import pathlib
+from pathlib import Path
+from pypandoc.pandoc_download import download_pandoc
+
 
 app = Flask(__name__)
 # # Mac user ====================================================================
@@ -51,11 +56,83 @@ CORS(app)
 # from Duty_Hour_Log import Duty_Hour_Log
 # from Personal_Details import Personal_Details
 
+
+#Read PersonalDetails field/column name (R)
+@app.route('/downloadpandoc', methods=['GET'])
+def downloadpandoc():
+    download_pandoc()
+    return "done"
     
 #Read PersonalDetails field/column name (R)
-@app.route('/', methods=['GET'])
+@app.route('/home', methods=['GET'])
 def display():
-    return render_template('homepage2.html')
+
+    return render_template('homepage.html')
+
+@app.route('/')
+def upload_form():
+	return render_template('download.html')
+
+@app.route('/dummy_page')
+def dummy_page():
+    page = """<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+    <title>Flask File Download Example</title>
+    <h2>Download a file</h2>
+
+    <p>
+        
+    </p>
+        
+    </body>
+    </html>"""
+    # return page
+    # Creating an HTML file
+    Func = open("GFG-1.html","w")
+    
+    # Adding input data to the HTML file
+    Func.write(page)
+                
+    # Saving the data into the HTML file
+    Func.close()
+    return page
+
+@app.route('/download')
+def download_file():
+    
+	#path = "html2pdf.pdf"
+	#path = "info.xlsx"
+    path = "simple.docx"
+	#path = "sample.txt"
+    return send_file(path, as_attachment=True)
+
+@app.route('/convert')
+def convert_file():
+    # print("current path: ", pathlib.Path().absolute())
+    # input = Path('somefile.md')
+    # output = input.with_suffix('.docx')
+    # pypandoc.convert_file(input, 'docx', outputfile=output)
+
+    print("current path: ", pathlib.Path().absolute())
+    input = Path('cv_template.html')
+    output = input.with_suffix('.docx')
+    pypandoc.convert_file(input, 'docx', outputfile=output)
+    return "done"
+
+# @app.route('/convertdocx')
+# def convert_file_html_docx():
+#     output = pypandoc.convert_text(
+#     '<h1>Primary Heading</h1>',
+#     'md', format='html',
+#     extra_args=['--atx-headers'])
+#     return "done"
 
 
 class Personal_Details(db.Model):

@@ -172,6 +172,8 @@ class Personal_Details(db.Model):
     Date_of_Second_Dose = db.Column(db.String(50))
     Vaccination_Remarks = db.Column(db.String(50))
 
+
+
     presentations = db.relationship('Presentations', backref='Personal_Details')
     posting_histories = db.relationship('Posting_History', backref='Personal_Details')
     duty_hour_logs = db.relationship('Duty_Hour_Log', backref='Personal_Details')
@@ -605,6 +607,364 @@ def read_personaldetails():
                     for pd in pdList]
         }
     ), 200
+
+
+# AKA Personal_Details table routes:
+# Read Existing personaldetails (R)
+@app.route("/personaldetails_cv/<id>")
+def read_personaldetailssd(id):
+    person = Personal_Details.query.get_or_404(id)
+    presentations = person.presentations
+    posting_histories = person.posting_histories
+    duty_hour_logs = person.duty_hour_logs
+    case_logs = person.case_logs
+    procedure_logs = person.procedure_logs
+    exam_histories = person.exam_histories
+    publications = person.publications
+    evaluations = person.evaluations
+    trgExtRem_Histories = person.trgExtRem_Histories
+    projects = person.projects
+    awards = person.awards
+    grants = person.grants
+    ihis = person.ihis
+    involvements = person.involvements
+
+    return jsonify(
+        {
+            "data": {
+                "presentations": [pd.to_dict()
+                    for pd in presentations],
+
+                 "posting_histories": [pd.to_dict()
+                    for pd in posting_histories],
+
+                 "duty_hour_logs": [pd.to_dict()
+                    for pd in duty_hour_logs],
+
+                     "case_logs": [pd.to_dict()
+                    for pd in case_logs],
+
+                     "procedure_logs": [pd.to_dict()
+                    for pd in procedure_logs],
+
+                     "exam_histories": [pd.to_dict()
+                    for pd in exam_histories],
+
+                    "publications": [pd.to_dict()
+                    for pd in publications],
+
+                    "evaluations": [pd.to_dict()
+                    for pd in evaluations],
+
+                    "trgExtRem_Histories": [pd.to_dict()
+                    for pd in trgExtRem_Histories],
+
+                    "projects": [pd.to_dict()
+                    for pd in projects],
+
+                    "awards": [pd.to_dict()
+                    for pd in awards],
+
+                    "grants": [pd.to_dict()
+                    for pd in grants],
+
+                    "ihis": [pd.to_dict()
+                    for pd in ihis],
+
+                    "involvements": [pd.to_dict()
+                    for pd in involvements],
+                    }
+        }
+    ), 200
+
+
+from docx import Document
+from docx.shared import Inches
+
+# AKA Personal_Details table routes:
+# Read Existing personaldetails (R)
+@app.route("/personaldetails_cv_generate2/<id>")
+def generate_cv_2(id):
+    document = Document()
+    h = document.add_heading('Document Title', 0)
+    p = document.add_paragraph('A plain paragraph having some ')
+    p.add_run('bold').bold = True
+    p.add_run(' and some ')
+    p.add_run('italic.').italic = True
+
+
+    records = (
+        (3, '101', 'Spam'),
+        (7, '422', 'Eggs'),
+        (4, '631', 'Spam, spam, eggs, and spam')
+    )
+
+    table = document.add_table(rows=1, cols=3)
+    hdr_cells = table.rows[0].cells
+    hdr_cells[0].text = 'Qty'
+    hdr_cells[1].text = 'Id'
+    hdr_cells[2].text = 'Desc'
+    for qty, id, desc in records:
+        row_cells = table.add_row().cells
+        row_cells[0].text = str(qty)
+        row_cells[1].text = id
+        row_cells[2].text = desc
+
+    document.add_page_break()
+
+    document.save('demo.docx')
+    return "done"
+
+
+# AKA Personal_Details table routes:
+# Read Existing personaldetails (R)
+@app.route("/personaldetails_cv_generate/<id>")
+def generate_cv(id):
+    person = Personal_Details.query.get_or_404(id)
+    presentations = person.presentations
+    posting_histories = person.posting_histories
+    duty_hour_logs = person.duty_hour_logs
+    case_logs = person.case_logs
+    procedure_logs = person.procedure_logs
+    exam_histories = person.exam_histories
+    publications = person.publications
+    evaluations = person.evaluations
+    trgExtRem_Histories = person.trgExtRem_Histories
+    projects = person.projects
+    awards = person.awards
+    print("awards: ", awards)
+    grants = person.grants
+    ihis = person.ihis
+    involvements = [i.to_dict() for i in person.involvements]
+    mcrno = person.MCR_No
+    name = person.Staff_Name
+    awardsRows = "\n".join([f"""<tr id="regtable">
+                <td id="regtable">
+                    <p>{i.Name_of_Award}</p>
+                </td>
+                <td>
+                    <p style="text-align: center;">{i.Date_of_Award_Received}</p>
+                </td>
+            </tr>""" for i in awards])
+
+    projectRows = "\n".join([f"""<tr id="regtable">
+                <td id="regtable">
+                    <p>{i.Project_Title}</p>
+                </td>
+                <td id="regtable" style="text-align:center">
+                    <p>{i.Start_Date}</p>
+                </td>
+                <td id="regtable" style="text-align:center">
+                    <p>{i.End_Date}</p>
+                </td>
+                <td id="regtable" style="text-align:center">
+                    <p>{i.Date_of_QI_Certification if i.Date_of_QI_Certification != "" else "Ongoing"}</p>
+                </td>
+            </tr>""" for i in projects])
+    bordertableStyle = "{border: 1px solid;}"
+    page = f"""<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+            <style>
+        #regtable {
+            bordertableStyle
+        }
+        </style>
+    </head>
+    
+    <body style="justify-content: center;">
+
+    <div id="main" style="width:850px">
+    <div align="left" >
+    <table >
+        <tbody>
+            <tr>
+                <td>
+                    <p style="text-align: center;"><strong><span style="font-size: 24px;">&nbsp; &nbsp; &nbsp; &nbsp;<u>&nbsp; SingHealth Internal Medicine Residency Programme&nbsp;</u></span></strong></p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p style="text-align: center;"><strong><span style="font-size: 24px;"><u>Professional Development Portfolio</u></span></strong></p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<hr>
+<p><br></p>
+<div align="left" >
+    <table>
+        <tbody>
+            <tr>
+                <td>
+                    <p><span style="font-size: 24px;">Name&nbsp;</span></p>
+                </td>
+                <td>
+                    <p><span style="font-size: 24px;">:&nbsp;{name}&nbsp;</span></p>
+                </td>
+                <td rowspan="2"><span style="font-size: 24px;"><br></span></td>
+            </tr>
+            <tr>
+                <td>
+                    <p><span style="font-size: 24px;">MCR Number</span></p>
+                </td>
+                <td>
+                    <p><span style="font-size: 24px;">: {mcrno}</span></p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<p><strong><span style="background-color: rgb(0, 0, 0); color: rgb(239, 239, 239);">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;EMPLOYMENT HISTORY&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></strong></p>
+<p><br></p>
+<p><span style="font-size: 20px;"><u><strong>Core Postings</strong></u></span></p>
+<div align="left" >
+    <table style="width: 100%;" >
+        <tbody>
+            <tr>
+                <td style="width: 75%;">
+                    <p><strong><u>Posting</u></strong></p>
+                    
+                </td>
+            
+                <td style="width: 25%;">
+                    <p><strong><u>Period</u></strong></p><br>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 75%;">
+                    <p><strong>Singapore General Hospital</strong></p>
+                    <p><em>Resident, Dept of Neurology</em></p><br>
+                </td>
+                
+                <td style="width: 25%;">
+                    <p>Jul 2018 &ndash; Sep 2018</p>
+                </td>
+            </tr>
+            
+
+
+        </tbody>
+    </table>
+
+
+
+    <!-- AWARD SECTION: -->
+
+    <p><span style="color: rgb(255, 255, 255); background-color: rgb(0, 0, 0);">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;AWARDS &amp; RECOGNITION&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp; &nbsp;</span></p>
+<p><br></p>
+<p>Examples: RISE Award, best HO/MO during a particular posting, best oral speaker</p>
+<p><br></p>
+<div align="left">
+    <table style="margin-right: calc(6%); width: 94%; border-color: black; width: 100%;border-collapse: collapse;">
+        <tbody id="regtable">
+            <tr id="regtable">
+                <td style="background-color: rgb(209, 213, 216);" id="regtable">
+                    <p style="text-align: center;">Name of Award</p>
+                </td>
+                <td style="background-color: rgb(209, 213, 216);" id="regtable">
+                    <p style="text-align: center;">Date Received</p>
+                </td>
+            </tr>
+            <tr id="regtable">
+                <td id="regtable">
+                    <p>RISE Awards &ndash; Outstanding Performance at 2013 ITE</p>
+                </td>
+                <td>
+                    <p style="text-align: center;">25 Sep 2013</p>
+                </td>
+            </tr>
+            {awardsRows}
+            
+        </tbody>
+    </table>
+</div>
+
+
+<!-- Projects SECTION: -->
+
+<p><span style="color: rgb(255, 255, 255); background-color: rgb(0, 0, 0);">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; RESEARCH PROJECTS&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp; &nbsp;</span></p>
+<p><br></p>
+<p>Examples: RISE Award, best HO/MO during a particular posting, best oral speaker</p>
+<p><br></p>
+<div align="left">
+    <table style="margin-right: calc(6%); width: 94%; border-color: black; width: 100%;border-collapse: collapse;">
+        <tbody id="regtable">
+            <tr id="regtable">
+                <td style="background-color: rgb(209, 213, 216); width:50%" id="regtable">
+                    <p style="text-align: center;">Details of Research</p>
+                </td>
+                <td style="background-color: rgb(209, 213, 216);" id="regtable">
+                    <p style="text-align: center;">Start Date</p>
+                </td>
+                <td style="background-color: rgb(209, 213, 216);" id="regtable">
+                    <p style="text-align: center;">End Date</p>
+                </td>
+                <td style="background-color: rgb(209, 213, 216);" id="regtable">
+                    <p style="text-align: center;">Status (Completed/On-going)</p>
+                </td>
+            </tr>
+            <tr id="regtable">
+                <td id="regtable">
+                    <p>Pemphigus and Pemphigoid comparison</p>
+                </td>
+                <td id="regtable" style="text-align:center">
+                    <p>1 Jan 2015</p>
+                </td>
+                <td id="regtable" style="text-align:center">
+                    <p>31 Apr 2016</p>
+                </td>
+                <td id="regtable" style="text-align:center">
+                    <p>Completed</p>
+                </td>
+            </tr>
+            {projectRows}
+            
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+</div>
+
+</div>
+</body>
+    </html>"""
+
+    html_file_name = "GFG-1.html"
+    Func = open(html_file_name,"w")
+    Func.write(page)
+    Func.close()
+
+    # input = Path(html_file_name)
+    # output = input.with_suffix('.docx')
+    # pypandoc.convert_file(input, 'docx', outputfile=output)
+
+    # input = Path(html_file_name)
+    # output = "output.pdf"
+    # pypandoc.convert_file("./demo.md", 'pdf', outputfile=output)
+
+    import pdfkit
+    input = Path(html_file_name)
+    print(input)
+    pdfkit.from_file(html_file_name, 
+    'out.pdf')
+
+    return "done"
+
+    # path = html_file_name[:-4] + "docx"
+    # return send_file(path, as_attachment=True)
+
+
+
 
 # Read PersonalDetails field/column name (R)
 @app.route('/personal_details_fields', methods=['GET'])

@@ -981,6 +981,7 @@ def parse_personalDetails(excel):
     return True
 
 
+
 import pandas as pd
 from flask import abort
 @app.route('/view', methods=['POST'])
@@ -1015,6 +1016,48 @@ def view():
 
     print("valid: ", parse_personalDetails(personalDetails))
     if parse_personalDetails(personalDetails) == False:
+        # max_col = 3
+        # max_row = 3
+        # # Apply a conditional format to the required cell range.
+        # personalDetails.conditional_format(1, max_col, max_row, max_col,
+        #                             {'type': '3_color_scale'})
+
+        # Create a Pandas Excel writer using XlsxWriter as the engine.
+        writer = pd.ExcelWriter("error.xlsx", engine='xlsxwriter')
+        # personalDetails.style.applymap(lambda x: 'background-color : yellow')
+
+        # https://xlsxwriter.readthedocs.io/working_with_conditional_formats.html
+        # Convert the dataframe to an XlsxWriter Excel object.
+        personalDetails.to_excel(writer, sheet_name='Sheet1')
+
+        # Get the xlsxwriter workbook and worksheet objects.
+        workbook  = writer.book
+        worksheet = writer.sheets['Sheet1']
+
+        # Add a format.
+        format1 = workbook.add_format({'bg_color': '#FF8080'})
+        # https://www.excelsupersite.com/what-are-the-56-colorindex-colors-in-excel/
+
+        # Get the dimensions of the dataframe.
+        (max_row, max_col) = personalDetails.shape
+        nullrows = personalDetails[personalDetails[["MCR_No"]].isnull().any(axis=1)]
+        print("narows:", personalDetails)
+        print("narows:", nullrows.index)
+        print(personalDetails.iloc[nullrows.index])
+
+        for row in nullrows.index:
+            actualrow = row+2
+            ran = "A"+ str(actualrow) + ":BA" + str(actualrow)
+            # Apply a conditional format to the required cell range.
+            worksheet.conditional_format(ran,
+                                    {'type':     'cell',
+                                    'criteria': 'not equal to',
+                                    'value': '"mnmo"',
+                                    'format':   format1})
+
+        # # Close the Pandas Excel writer and output the Excel file.
+        writer.save()
+
         abort(404, description="Invalid excel submitted")
 
     personalDetails = personalDetails.fillna('')

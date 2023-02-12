@@ -137,6 +137,7 @@ def convert_file():
 
 class Personal_Details(db.Model):
     __tablename__ = 'Personal_Details'
+
     Employee_ID = db.Column(db.String(50), primary_key=True)
     MCR_No = db.Column(db.String(50))
     Staff_Name = db.Column(db.String(50))
@@ -152,6 +153,10 @@ class Personal_Details(db.Model):
     Employment_Status = db.Column(db.String(50))
     Nationality = db.Column(db.String(50))
     Date_of_Birth = db.Column(db.String(50))
+    # Employee_ID,MCR_No,Staff_Name,Designation,Programme,Year_of_Training,Academic_Year,Department
+    # Institution,Academic_Clinical_Programme,Employment_Status,Nationality,Date_of_Birth,Gender,
+    # Registration_Type,House_Blk_No,Street,Building_Name,Unit_No,Postal_Code,Contact_No_Work,
+    # Contact_No_Personal,Email_Official,Email_Personal,BCLS_Expiry_Date,ACLS_Expiry_Date
 
     Gender = db.Column(db.String(50))
     Registration_Type = db.Column(db.String(50))
@@ -967,7 +972,7 @@ def generate_cv(id):
 def parse_personalDetails(excel):
     # primary keys and foreign keys cannot be empty :
     # print(excel[["MCR No", "Employee ID/ MOHH Employee No"]])
-    if excel['MCR No'].isnull().sum() > 0 or excel['Employee ID/ MOHH Employee No'].isnull().sum() > 0:
+    if excel['MCR_No'].isnull().sum() > 0 or excel['Employee_ID'].isnull().sum() > 0:
     # or excel['Employee id'].isnull().sum() > 0:
         return False
 
@@ -988,11 +993,57 @@ def view():
     tabs = pd.ExcelFile(file).sheet_names
     print(tabs)
 
-    personalDetails = pd.read_excel(file, sheet_name="Personal Details")
-    print(personalDetails)
+    personalDetails = pd.read_excel(file, sheet_name="Personal Details", dtype=str)
+    print("personalDetails.columns:", personalDetails.columns)
+
+    # # if required column in database not present in excel add it in or throw error as missing
+    # for i in Personal_Details.__table__.columns.keys():
+    #     if i not in personalDetails.columns:
+    #         abort(404, description=i+" column missing from excel submitted")
+
+    # if in wrong order will mess up also and wouldnt be detected above:-- if they can give spaces correctly 
+    # like Employee ID instad of Employee ID/ MOHH Employee No -- can reorder without messing up
+    personalDetails.columns = ['Employee_ID', 'MCR_No', 'Staff_Name', 'Designation',
+       'Programme', 'Year_of_Training', 'Academic_Year', 'Department',
+       'Institution', 'Academic_Clinical_Programme', 'Employment_Status',
+       'Nationality', 'Date_of_Birth', 'Gender', 'Registration_Type',
+       'House_Blk_No', 'Street', 'Building_Name', 'Unit_No', 'Postal_Code',
+       'Contact_No_Work', 'Contact_No_Personal', 'Email_Official',
+       'Email_Personal', 'BCLS_Expiry_Date', 'ACLS_Expiry_Date',
+       'Covid_19_Vaccination_Status', 'Date_of_First_Dose',
+       'Date_of_Second_Dose', 'Vaccination_Remarks']
+
     print("valid: ", parse_personalDetails(personalDetails))
     if parse_personalDetails(personalDetails) == False:
-        abort(404, description="Invalid excel submitteed")
+        abort(404, description="Invalid excel submitted")
+
+    personalDetails = personalDetails.fillna('')
+
+    # insert data here:
+    for i in range(len(personalDetails)):
+        print("current_row:", dict(personalDetails.iloc[i]))
+        data = dict(personalDetails.iloc[i])
+        print("before presentation")
+        presentation = Personal_Details(**data)
+        print("correct presentation")
+        try:
+            if Personal_Details.query.filter_by(MCR_No=data["MCR_No"]).first() != None:
+                Personal_Details.query.filter_by(MCR_No=data["MCR_No"]).update(data)
+            else:
+                db.session.add(presentation)
+                print("committing")
+                db.session.commit()
+                print("committed")
+                
+            
+        except Exception as e:
+            print("An error occurred:", e)
+            print("Stack trace:")
+            traceback.print_exc()
+
+
+    
+
 
     # Return HTML snippet that will render the table
     return personalDetails.to_html()

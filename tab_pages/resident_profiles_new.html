@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- INSTALLATIONS -->
+    <!-- flowbite -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.css" rel="stylesheet" />
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- ICONIFY -->
+    <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
+    <!-- VUE 3 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.6/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
+
+    <style type="text/tailwindcss">
+        @layer utilities {
+        .content-auto {
+        content-visibility: auto;
+        }
+    }
+    </style>
+
+    <title>SingHealth</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- header -->
+        <div class="bg-stone-100 border-gray-200 px-2 sm:px-4 py-2.5 rounded ">
+            <div class="container flex flex-wrap items-center justify-between mx-auto"
+                style="width: 100%; overflow: hidden;">
+                <img src="../images/SingHealth_Logo.png" class="mr-3 sm:h-15 ml-3 mt-2 mb-2"
+                    style="height: 80px ; width: 100px;" alt="Flowbite Logo" />
+
+                <div class="flex md:order-2">
+                    <a href="../homepage.html" style="margin-right: 10px;">
+                        <iconify-icon icon="ic:round-home" style="color: #ff6b00;" width="40" height="40">
+                        </iconify-icon>
+                    </a>
+                    <a>
+                        <iconify-icon icon="healthicons:ui-user-profile" style="color: #ff6b00;" width="40" height="40">
+                        </iconify-icon>
+                    </a>
+
+                    <button data-collapse-toggle="navbar-sticky" type="button"
+                        class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 "
+                        aria-controls="navbar-cta" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navbar -->
+        <nav class="bg-white">
+            <div class="items-center justify-between hidden w-full md:flex md:width-auto  md:order-1" id="navbar-sticky"
+                style="width: 100%; overflow: hidden;">
+                <ul
+                    class="md:divide-x md:divide-slate-200 flex flex-col p-2 border border-gray-100 rounded-lg bg-gray-50 md:flex-row  md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white">
+                    <li>
+                        <a href="../homepage.html"
+                            class="lg:text-sm md:text-xs ml-5 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">Home</a>
+                    </li>
+                    <li>
+                        <a href="../tab_pages/resident_profiles.html"
+                            class="lg:text-sm md:text-xs ml-5 mr-4 block py-2 pl-3 pr-2 text-white bg-orange-500 rounded md:bg-transparent md:text-orange-500 md:p-0 dark:text-white"
+                            aria-current="page">Resident Profiles</a>
+                    </li>
+                    <li>
+                        <a href="../tab_pages/personal_details.html"
+                            class="lg:text-sm md:text-xs ml-5 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">
+                            Personal Details</a>
+                    </li>
+                    <li>
+                        <a href="#"
+                            class="lg:text-sm md:text-xs ml-5 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">
+                            History</a>
+                    </li>
+                    <li>
+                        <a href="#"
+                            class="lg:text-sm md:text-xs ml-5 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">
+                            Involvement</a>
+                    </li>
+                    <li>
+                        <a href="#"
+                            class="lg:text-sm md:text-xs  ml-5 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">
+                            Grants</a>
+                    </li>
+                    <li>
+                        <a href="#"
+                            class="lg:text-sm md:text-xs  ml-5 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">
+                            Publications</a>
+                    </li>
+                    <li>
+                        <a href="#"
+                            class="lg:text-sm md:text-xs  ml-6 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">Presentations</a>
+                    </li>
+                    <li>
+                        <a href="#"
+                            class="lg:text-sm md:text-xs  ml-6 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">
+                            Awards</a>
+                    </li>
+                    <li>
+                        <a href="#"
+                            class="lg:text-sm md:text-xs  ml-6 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">Projects</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!-- Orange Divider -->
+        <div class='row' style='height: 8px; background-color: #ff6b00;'></div>
+
+
+        <!-- <select id="projectfilter" name="projectfilter" class="table-filter form-control" data-col="2">
+            <option value=""  v-for = "program in programme_values">{{program}}</option>
+        </select> -->
+
+        <div id="smallertables">
+
+        <div id="mainbody" class="flex py-5">
+        <div id="leftside" class="w-1/2">
+
+        <!-- Table start -->
+        <div class="relative overflow-x-auto mx-8 mt-10" v-if="profile_data.length != 0">
+
+            <p class="underline underline-offset-8 font-bold text-lg mt-10">Employer Details</p>
+
+            <table class="w-full text-sm text-left text-blue-100 dark:text-blue-100 my-5">
+                <!-- COLUMN NAMES -->
+                <thead class="text-xs text-white bg-orange-500">
+                    <tr>
+
+                        
+                        <!--   -->
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <!-- 1 row = 1 reisdent = 1 key -->
+                    <tr class="border border-black" v-for="(value,key) in profile_data[0].personaldetails">
+                        <td class="w-2/5 text-center bg-orange-300 border-slate-700 px-1 py-4 font-medium text-black"
+                            >
+                            <!-- <a href="#" v-if="field == 'Employee_id'">{{value[field]}}</a>
+                            <span v-else>{{value[field]}}</span> -->
+                            
+                            <h1>{{key}}</h1>
+                        </td>
+                        <!-- bg-orange-100 -->
+                        <td class=" border-slate-700 flex text-black items-center px-6 py-4">
+                            <h1>{{value}}</h1>
+                        </td>
+                    </tr>
+
+
+
+                </tbody>
+            </table>
+
+            
+            <p class="underline underline-offset-8 font-bold text-lg mt-10">Awards</p>
+
+            <table class="w-full text-sm text-left text-blue-100 dark:text-blue-100 my-5">
+                <!-- COLUMN NAMES -->
+                <thead class="text-xs text-white bg-orange-500">
+                    <th scope="col" class="px-6 py-3" v-for="title in ['Name of Award', 'Date of Award Received', 'FY of Award Received','Project ID', 'Award Category']">
+                        <span
+                            class="inline-flex items-center bg-orange-500 text-white focus:outline-none font-medium rounded-lg text-sm px-3 py-1.5">
+                            {{title}}</span>
+                    </th>
+                </thead>
+                <tbody>
+                    <!-- 1 row = 1 reisdent = 1 key -->
+                    <tr class="border" v-for="award in profile_data[0].awards">
+                        <td class="bg-orange-100 text-center px-1 py-4 font-medium text-black">
+                            <p>{{award.Name_of_Award}}</p>
+                        </td>
+                        <td class="bg-orange-200 border text-black items-center px-6 py-4">
+                            <p>{{award.Date_of_Award_Received}}</p>
+                        </td>
+                        <td class="bg-orange-100 border text-black items-center px-6 py-4">
+                            <p>{{award.FY_of_Award_Received}}</p>
+                        </td>
+                        <td class="bg-orange-200 border text-black items-center px-6 py-4">
+                            <p>{{award.Project_ID}}</p>
+                        </td>
+                        <td class="bg-orange-100 border text-black items-center px-6 py-4">
+                            <p>{{award.Award_Category}}</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+
+        
+
+            
+
+        </div>
+
+    </div>
+
+
+    <div id="rightside" class="md:w-1/2">
+
+
+
+    </div>
+    </div>
+
+    <div id="biggerTables" class="mx-5">
+
+        
+        <p class="underline underline-offset-8 font-bold text-lg mt-10">Case Logs</p>
+        <table class="w-full text-sm text-left text-blue-100 dark:text-blue-100 my-5">
+            <!-- COLUMN NAMES -->
+            <thead class="text-xs text-white bg-orange-500">
+                <th scope="col" class="px-6 py-3" v-for="title in ['Case_Name', 'CPT', 'Certified',
+                 'Date of Log', 'Observed', 'Performed', 'Subspecialty', 'Total', 
+                 'Type_of_Case_Log','Verified']">
+                    <span
+                        class="inline-flex items-center bg-orange-500 text-white focus:outline-none font-medium rounded-lg text-sm px-3 py-1.5">
+                        {{title}}</span>
+                </th>
+            </thead>
+            <tbody>
+                <!-- 1 row = 1 reisdent = 1 key -->
+                <tr class="border" v-for="case_log in profile_data[0].case_logs">
+                    <td class="bg-orange-100 text-center px-1 py-4 font-medium text-black">
+                        <p>{{case_log.Case_Name}}</p>
+                    </td>
+                    <td class="bg-orange-200 border text-black items-center px-6 py-4">
+                        <p>{{case_log.CPT}}</p>
+                    </td>
+
+                    <td class="bg-orange-100 border text-black items-center px-6 py-4">
+                        <p>{{case_log.Certified}}</p>
+                    </td>
+                    <td class="bg-orange-200 border text-black items-center px-6 py-4">
+                        <p>{{case_log.Date_of_Log}}</p>
+                    </td>
+                    <td class="bg-orange-100 border text-black items-center px-6 py-4">
+                        <p>{{case_log.Observed}}</p>
+                    </td>
+                    <td class="bg-orange-200 border text-black items-center px-6 py-4">
+                        <p>{{case_log.Performed}}</p>
+                    </td>
+                    <td class="bg-orange-100 border text-black items-center px-6 py-4">
+                        <p>{{case_log.Subspecialty}}</p>
+                    </td>
+                    <td class="bg-orange-200 border text-black items-center px-6 py-4">
+                        <p>{{case_log.Total}}</p>
+                    </td>
+                    <td class="bg-orange-100 border text-black items-center px-6 py-4">
+                        <p>{{case_log.Type_of_Case_Log}}</p>
+                    </td>
+                    <td class="bg-orange-200 border text-black items-center px-6 py-4">
+                        <p>{{case_log.Verified}}</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+           
+
+    </div>
+
+    </div>
+
+</div>
+
+</body>
+
+<script>
+    const Excel = window.ExcelJS;
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            personal_details_fields: [],
+            fields_display: [],
+            personal_details_datas: [],
+            employee_id_values: [],
+            programme_values: [],
+            file: "",
+            profile_data: [],
+            val: " "
+        },
+        mounted: async function () {
+            const API_URL_1 = 'http://127.0.0.1:5011/profile/1234o18';
+            const API_URL_2 = 'http://127.0.0.1:5011/profile/1234o18';
+
+            const apiCalls = [
+                axios.get(API_URL_1),
+                // axios.get(API_URL_2),
+            ];
+            let personalProfile = {}
+            Promise.all(apiCalls)
+                .then(responses => {
+                    
+                    
+                    personalProfile = responses[0].data
+                    this.profile_data.push(responses[0].data.data)
+                    //  console.log(personalProfile)
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+            // this.profile_data = personalProfile;
+            console.log("profile: ", this.profile_data);
+        },
+        methods: {
+            importExcel(event) {
+                this.file = event.target.files ? event.target.files[0] : null;
+                const wb = new Excel.Workbook();
+                const reader = new FileReader()
+
+                reader.readAsArrayBuffer(this.file)
+                reader.onload = () => {
+                    const buffer = reader.result;
+                    wb.xlsx.load(buffer).then(workbook => {
+                        //console.log(workbook, 'workbook instance')
+                        workbook.eachSheet((sheet, id) => {
+                            console.log(sheet.name) //sheet name (eg: personal details)
+                            if (sheet.name == "Personal Details") {
+                                sheet.eachRow((row, rowIndex) => {
+                                    if (rowIndex != 1) {
+                                        console.log(row.values)
+                                        var url =
+                                            'http://localhost:5010/personal_detail'
+                                        axios.post(url, {
+                                                Employee_id: row.values[1],
+                                                MCR_No: row.values[2],
+                                                Staff_Name: row.values[3],
+                                                Designation: row.values[4],
+
+                                                Programme: row.values[5],
+                                                Year_of_Training: row.values[6],
+                                                Academic_Year: row.values[7],
+                                                Department: row.values[8],
+
+                                                Institution: row.values[9],
+                                                Academic_Clinical_Programme: row.values[10],
+                                                Employment_Status: row.values[11],
+                                                Nationality: row.values[12],
+                                                Date_of_Birth: row.values[13],
+
+                                                Gender: row.values[14],
+                                                Registration_Type: row.values[15],
+                                                House_Blk_No: row.values[16],
+                                                Street: row.values[17],
+                                                Building_Name: row.values[18],
+
+                                                Unit_No: row.values[19],
+                                                Postal_Code: row.values[20],
+                                                Contact_No_Work: row.values[21],
+                                                Contact_No_Personal: row.values[22],
+
+                                                Email_Official: row.values[23],
+                                                Email_Personal: row.values[24],
+                                                BCLS_Expiry_Date: row.values[25],
+                                                ACLS_Expiry_Date: row.values[26],
+                                                Covid_19_Vaccination_Status: row.values[27],
+                                                Date_of_First_Dose: row.values[28],
+                                                Date_of_Second_Dose: row.values[29],
+                                                Vaccination_Remarks: row.values[30]
+                                            })
+                                            .then(response => {
+                                                console.log(response.data)
+                                            })
+                                            .catch(error => {
+                                                this.error = error.response.data
+                                                    .message
+                                            });
+                                    }
+                                })
+                            }
+                            else{
+                                console.log('hi')
+                            }
+                        })
+                    })
+                }
+            },
+        }
+    });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.7.14"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+
+
+</html>

@@ -4,10 +4,10 @@ from flask_cors import CORS
 import json
 import pandas as pd
 import traceback
-import pypandoc
+# import pypandoc
 import pathlib
 from pathlib import Path
-from pypandoc.pandoc_download import download_pandoc
+# from pypandoc.pandoc_download import download_pandoc
 
 
 app = Flask(__name__)
@@ -678,42 +678,42 @@ def read_personaldetailssd(id):
     ), 200
 
 
-from docx import Document
-from docx.shared import Inches
+# from docx import Document
+# from docx.shared import Inches
 
-# AKA Personal_Details table routes:
-# Read Existing personaldetails (R)
-@app.route("/personaldetails_cv_generate2/<id>")
-def generate_cv_2(id):
-    document = Document()
-    h = document.add_heading('Document Title', 0)
-    p = document.add_paragraph('A plain paragraph having some ')
-    p.add_run('bold').bold = True
-    p.add_run(' and some ')
-    p.add_run('italic.').italic = True
+# # AKA Personal_Details table routes:
+# # Read Existing personaldetails (R)
+# @app.route("/personaldetails_cv_generate2/<id>")
+# def generate_cv_2(id):
+#     document = Document()
+#     h = document.add_heading('Document Title', 0)
+#     p = document.add_paragraph('A plain paragraph having some ')
+#     p.add_run('bold').bold = True
+#     p.add_run(' and some ')
+#     p.add_run('italic.').italic = True
 
 
-    records = (
-        (3, '101', 'Spam'),
-        (7, '422', 'Eggs'),
-        (4, '631', 'Spam, spam, eggs, and spam')
-    )
+#     records = (
+#         (3, '101', 'Spam'),
+#         (7, '422', 'Eggs'),
+#         (4, '631', 'Spam, spam, eggs, and spam')
+#     )
 
-    table = document.add_table(rows=1, cols=3)
-    hdr_cells = table.rows[0].cells
-    hdr_cells[0].text = 'Qty'
-    hdr_cells[1].text = 'Id'
-    hdr_cells[2].text = 'Desc'
-    for qty, id, desc in records:
-        row_cells = table.add_row().cells
-        row_cells[0].text = str(qty)
-        row_cells[1].text = id
-        row_cells[2].text = desc
+#     table = document.add_table(rows=1, cols=3)
+#     hdr_cells = table.rows[0].cells
+#     hdr_cells[0].text = 'Qty'
+#     hdr_cells[1].text = 'Id'
+#     hdr_cells[2].text = 'Desc'
+#     for qty, id, desc in records:
+#         row_cells = table.add_row().cells
+#         row_cells[0].text = str(qty)
+#         row_cells[1].text = id
+#         row_cells[2].text = desc
 
-    document.add_page_break()
+#     document.add_page_break()
 
-    document.save('demo.docx')
-    return "done"
+#     document.save('demo.docx')
+#     return "done"
 
 
 # AKA Personal_Details table routes:
@@ -962,6 +962,40 @@ def generate_cv(id):
 
     # path = html_file_name[:-4] + "docx"
     # return send_file(path, as_attachment=True)
+
+
+def parse_personalDetails(excel):
+    # primary keys and foreign keys cannot be empty :
+    # print(excel[["MCR No", "Employee ID/ MOHH Employee No"]])
+    if excel['MCR No'].isnull().sum() > 0 or excel['Employee ID/ MOHH Employee No'].isnull().sum() > 0:
+    # or excel['Employee id'].isnull().sum() > 0:
+        return False
+
+    # future check if datetime is correct format:
+
+    return True
+
+
+import pandas as pd
+from flask import abort
+@app.route('/view', methods=['POST'])
+def view():
+ 
+    # Read the File using Flask request
+    file = request.files['file']
+    # save file in local directory
+    file.save(file.filename)
+    tabs = pd.ExcelFile(file).sheet_names
+    print(tabs)
+
+    personalDetails = pd.read_excel(file, sheet_name="Personal Details")
+    print(personalDetails)
+    print("valid: ", parse_personalDetails(personalDetails))
+    if parse_personalDetails(personalDetails) == False:
+        abort(404, description="Invalid excel submitteed")
+
+    # Return HTML snippet that will render the table
+    return personalDetails.to_html()
 
 
 

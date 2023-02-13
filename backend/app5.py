@@ -135,11 +135,11 @@ def convert_file():
 #     return "done"
 
 
+
 class Personal_Details(db.Model):
     __tablename__ = 'Personal_Details'
-
-    Employee_ID = db.Column(db.String(50), primary_key=True)
-    MCR_No = db.Column(db.String(50))
+    Employee_ID = db.Column(db.String(50))
+    MCR_No = db.Column(db.String(50), primary_key=True)
     Staff_Name = db.Column(db.String(50))
     Designation = db.Column(db.String(50))
 
@@ -153,10 +153,6 @@ class Personal_Details(db.Model):
     Employment_Status = db.Column(db.String(50))
     Nationality = db.Column(db.String(50))
     Date_of_Birth = db.Column(db.String(50))
-    # Employee_ID,MCR_No,Staff_Name,Designation,Programme,Year_of_Training,Academic_Year,Department
-    # Institution,Academic_Clinical_Programme,Employment_Status,Nationality,Date_of_Birth,Gender,
-    # Registration_Type,House_Blk_No,Street,Building_Name,Unit_No,Postal_Code,Contact_No_Work,
-    # Contact_No_Personal,Email_Official,Email_Personal,BCLS_Expiry_Date,ACLS_Expiry_Date
 
     Gender = db.Column(db.String(50))
     Registration_Type = db.Column(db.String(50))
@@ -176,8 +172,6 @@ class Personal_Details(db.Model):
     Date_of_First_Dose = db.Column(db.String(50))
     Date_of_Second_Dose = db.Column(db.String(50))
     Vaccination_Remarks = db.Column(db.String(50))
-
-
 
     presentations = db.relationship('Presentations', backref='Personal_Details')
     posting_histories = db.relationship('Posting_History', backref='Personal_Details')
@@ -210,6 +204,7 @@ class Personal_Details(db.Model):
         for column in columns:
             result[column] = getattr(self, column)
         return result
+
 
 class Presentations(db.Model):
     __tablename__ = 'Presentations'
@@ -725,7 +720,9 @@ def read_personaldetailssd(id):
 # Read Existing personaldetails (R)
 @app.route("/personaldetails_cv_generate/<id>")
 def generate_cv(id):
+    print("person not founddd")
     person = Personal_Details.query.get_or_404(id)
+    print("person founddd")
     presentations = person.presentations
     posting_histories = person.posting_histories
     duty_hour_logs = person.duty_hour_logs
@@ -984,8 +981,8 @@ def parse_personalDetails(excel):
 
 import pandas as pd
 from flask import abort
-@app.route('/view', methods=['POST'])
-def view():
+@app.route('/view2', methods=['POST'])
+def view2():
  
     # Read the File using Flask request
     file = request.files['file']
@@ -1091,6 +1088,91 @@ def view():
     # Return HTML snippet that will render the table
     return personalDetails.to_html()
 
+
+
+
+import pandas as pd
+from flask import abort
+@app.route('/view', methods=['POST'])
+def view():
+ 
+    file = request.files['file']
+    file.save(file.filename)
+    personalDetails = pd.read_excel(file, sheet_name="Personal Details", dtype=str)
+    personalDetails.columns = ['Employee_ID', 'MCR_No', 'Staff_Name', 'Designation',
+       'Programme', 'Year_of_Training', 'Academic_Year', 'Department',
+       'Institution', 'Academic_Clinical_Programme', 'Employment_Status',
+       'Nationality', 'Date_of_Birth', 'Gender', 'Registration_Type',
+       'House_Blk_No', 'Street', 'Building_Name', 'Unit_No', 'Postal_Code',
+       'Contact_No_Work', 'Contact_No_Personal', 'Email_Official',
+       'Email_Personal', 'BCLS_Expiry_Date', 'ACLS_Expiry_Date',
+       'Covid_19_Vaccination_Status', 'Date_of_First_Dose',
+       'Date_of_Second_Dose', 'Vaccination_Remarks']
+
+    if personalDetails['MCR_No'].isnull().sum() > 0 or personalDetails['Employee_ID'].isnull().sum() > 0:
+        writer = pd.ExcelWriter("error.xlsx", engine='xlsxwriter')
+        personalDetails.to_excel(writer, sheet_name='Personal_Details_error')
+        workbook  = writer.book
+        worksheet = writer.sheets['Personal_Details_error']
+        format1 = workbook.add_format({'bg_color': '#FF8080'})
+        nullrows = personalDetails[personalDetails[["MCR_No"]].isnull().any(axis=1)]
+
+        for row in nullrows.index:
+            ran = "A"+ str(row+2) + ":BA" + str(row+2)
+            worksheet.conditional_format(ran,
+                                    {'type':     'cell',
+                                    'criteria': 'not equal to',
+                                    'value': '"o1"',
+                                    'format':   format1})
+        writer.save()
+        abort(404, description="Invalid excel submitted")
+
+    personalDetails = personalDetails.fillna('')
+    for i in range(len(personalDetails)):
+        data = dict(personalDetails.iloc[i])
+        presentation = Personal_Details(**data)
+        try:
+            if Personal_Details.query.filter_by(MCR_No=data["MCR_No"]).first() != None:
+                Personal_Details.query.filter_by(MCR_No=data["MCR_No"]).update(data)
+            else:
+                db.session.add(presentation)
+                db.session.commit()
+
+        except Exception as e:
+            print("An error occurred:", e)
+            print("Stack trace:")
+            traceback.print_exc()
+
+    # didactic = pd.read_excel(file, sheet_name="Didactic", dtype=str)
+    # print(didactic.columns)
+    # didactic.columns = ['Resident Name', 'MCR_No', 'BillingName', 'Month',
+    #    'Total_tracked_sessions', 'Number_of_sessions_attended',
+    #    'Percentage_of_sessions_attended', 'MmYyyy', 'Posting Institution',
+    #    'Posting Department', 'Scheduled Teachings',
+    #    'Compliance_or_Not', 'Employee ID/ MOHH Employee No']
+
+    # didactic = didactic[['MCR_No','Month',
+    #    'Total_tracked_sessions', 'Number_of_sessions_attended',
+    #    'Percentage_of_sessions_attended', 'MmYyyy',
+    #    'Compliance_or_Not']]
+
+    # didactic = didactic.fillna('')
+    # for i in range(len(didactic)):
+    #     data = dict(didactic.iloc[i])
+    #     didactic_attendance = Didactic_Attendance(**data)
+    #     try:
+    #         if Personal_Details.query.filter_by(MCR_No=data["MCR_No"]).first() != None:
+    #             # Didactic_Attendance.query.filter_by(MCR_No=data["MCR_No"]).update(data)
+    #         # else:
+    #             db.session.add(didactic_attendance)
+    #             db.session.commit()
+
+    #     except Exception as e:
+    #         print("An error occurred:", e)
+    #         print("Stack trace:")
+    #         traceback.print_exc()
+
+    return personalDetails.to_html()
 
 
 

@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- INSTALLATIONS -->
+    <!-- flowbite -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.css" rel="stylesheet" />
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- ICONIFY -->
+    <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
+    <!-- VUE 2 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- ExcelJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.6/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
+    <!-- Tabulator  -->
+    <!-- LOCAL Tabulator  -->
+    <link href="../node_modules/tabulator-tables/dist/css/tabulator_semanticui.css" rel="stylesheet">
+    <script type="text/javascript" src="../node_modules/tabulator-tables/dist/js/tabulator.js"></script>
+
+
+    <style type="text/tailwindcss">
+        @layer utilities {
+        .content-auto {
+        content-visibility: auto;
+        }
+    }
+    </style>
+    <style>
+        #example-table {
+            font-size: 13.5px;
+            text-align: center;
+        }
+
+        .tabulator-col-title {
+            text-align: center;
+        }
+
+        .tabulator-cell {
+            border-left: 1px solid #e6e6e6;
+            border-right: 1px solid #d6d6d6;
+        }
+
+        .tabulator-cell:first-child {
+            border-left: none;
+        }
+
+        .tabulator-cell:last-child {
+            border-right: none;
+        }
+    </style>
+
+    <title>SingHealth</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- header -->
+        <div class="bg-stone-100 border-gray-200 px-2 sm:px-4 py-2.5 rounded ">
+            <div class="container flex flex-wrap items-center justify-between mx-auto"
+                style="width: 100%; overflow: hidden;">
+                <img src="../images/SingHealth_Logo.png" class="mr-3 sm:h-15 ml-3 mt-2 mb-2"
+                    style="height: 80px ; width: 100px;" alt="Flowbite Logo" />
+
+                <div class="flex md:order-2">
+                    <a href="../homepage.html" style="margin-right: 10px;">
+                        <iconify-icon icon="ic:round-home" style="color: #ff6b00;" width="40" height="40">
+                        </iconify-icon>
+                    </a>
+                    <a>
+                        <iconify-icon icon="healthicons:ui-user-profile" style="color: #ff6b00;" width="40" height="40">
+                        </iconify-icon>
+                    </a>
+
+                    <button data-collapse-toggle="navbar-sticky" type="button"
+                        class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 "
+                        aria-controls="navbar-cta" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navbar -->
+        <nav class="bg-white">
+            <div class="items-center justify-between hidden w-full md:flex md:width-auto  md:order-1" id="navbar-sticky"
+                style="width: 100%; overflow: hidden;">
+                <ul
+                    class="md:divide-x md:divide-slate-200 flex flex-col p-2 border border-gray-100 rounded-lg bg-gray-50 md:flex-row  md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white">
+                    <li>
+                        <a href="../homepage.html"
+                            class="lg:text-sm md:text-xs ml-5 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">
+                            Home</a>
+                    </li>
+                    <li>
+                        <a href="../tab_pages/personal_details.html"
+                            class="lg:text-sm md:text-xs ml-5 mr-4 block py-2 pl-3 pr-2 text-white bg-orange-500 rounded md:bg-transparent md:text-orange-500 md:p-0 dark:text-white"
+                            aria-current="page">Personal
+                            Details</a>
+                    </li>
+                    <li>
+                        <button data-dropdown-toggle="dropdownDelay" data-dropdown-delay="500"
+                            data-dropdown-trigger="hover">
+                            <span
+                                class="lg:text-sm md:text-xs ml-5 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">
+                                History</span>
+                        </button>
+                    </li>
+                    <li>
+                        <a href="../tab_pages/involvement.html"
+                            class="lg:text-sm md:text-xs ml-5 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">
+                            Involvement</a>
+                    </li>
+                    <li>
+                        <a href="../tab_pages/grants.html"
+                            class="lg:text-sm md:text-xs  ml-5 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">
+                            Grants</a>
+                    </li>
+                    <li>
+                        <a href="../tab_pages/publications.html"
+                            class="lg:text-sm md:text-xs  ml-5 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">
+                            Publications</a>
+                    </li>
+                    <li>
+                        <a href="../tab_pages/presentations.html"
+                            class="lg:text-sm md:text-xs  ml-6 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">Presentations</a>
+                    </li>
+                    <li>
+                        <a href="../tab_pages/awards.html"
+                            class="lg:text-sm md:text-xs ml-5 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">
+                            Awards</a>
+                    </li>
+                    <li>
+                        <a href="../tab_pages/projects.html"
+                            class="lg:text-sm md:text-xs  ml-6 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">Projects</a>
+                    </li>
+                    <li>
+                        <a href="../tab_pages/ihi.html"
+                            class="lg:text-sm md:text-xs  ml-6 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">IHI</a>
+                    </li>
+                    <li>
+                        <a href="../tab_pages/duty_hour_log.html"
+                            class="lg:text-sm md:text-xs ml-5 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">Duty
+                            Hour Log</a>
+                    </li>
+                    <li>
+                        <a href="../tab_pages/procedure_log.html"
+                            class="lg:text-sm md:text-xs  ml-6 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">Procedure
+                            Log</a>
+                    </li>
+                    <li>
+                        <a href="../tab_pages/case_log.html"
+                            class="lg:text-sm md:text-xs  ml-6 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">Case
+                            Log</a>
+                    </li>
+                    <li>
+                        <a href="../tab_pages/evaluations.html"
+                            class="lg:text-sm md:text-xs  ml-6 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">Evaluation</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!-- Orange Divider -->
+        <div class='row' style='height: 8px; background-color: #ff6b00;'></div>
+
+        <!-- History menu -->
+        <div id="dropdownDelay"
+            class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDelayButton">
+                <li>
+                    <a href="./history_education.html" class="block px-4 py-2 hover:bg-gray-100 ">Education</a>
+                </li>
+                <li>
+                    <a href="./history_posting.html" class="block px-4 py-2 hover:bg-gray-100 ">Posting</a>
+                </li>
+                <li>
+                    <a href="./history_exam.html" class="block px-4 py-2 hover:bg-gray-100 ">Exam</a>
+                </li>
+                <li>
+                    <a href="./history_trg_ext_remediation.html" class="block px-4 py-2 hover:bg-gray-100 ">Trg Ext. &
+                        Remediation</a>
+                </li>
+            </ul>
+        </div>
+
+
+        <!-- filter rows -->
+        <div class="flex items-center justify-between pb-4 mt-6 mx-8">
+            <div class="relative">
+                <div class="absolute inset-y-0 left-0 right-12 bottom-2 flex items-center pl-3 pointer-events-none">
+                    <iconify-icon icon="mingcute:file-import-line" style="color: white;" width="20" height="20">
+                    </iconify-icon>
+                </div>
+                <button data-modal-target="import-modal" data-modal-toggle="import-modal" type="button"
+                    class="text-white bg-orange-500 hover:bg-orange-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-8 py-2.5  mb-2">
+                    <label class="ml-2">Import</label>
+                </button>
+            </div>
+        </div>
+
+        <!-- Import modal -->
+        <div id="import-modal" tabindex="-1" aria-hidden="true"
+            class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
+            <div class="relative w-full h-full max-w-md md:h-auto">
+                <!-- Modal content -->
+                <div class="relative bg-white rounded-lg shadow ">
+                    <button type="button"
+                        class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+                        data-modal-hide="import-modal">
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                    <!-- IMPORT -->
+                    <div class="px-6 py-6 lg:px-8">
+                        <h3 class="mb-4 text-xl font-medium text-gray-900 ">Upload Excel Sheet</h3>
+                        <form class="space-y-6" method="post" enctype="multipart/form-data">
+                            <input 
+                                class="block w-full text-md text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
+                                id="large_size" type="file" name="file" @change="importExcel">
+                            <input type="submit" value="Upload"
+                                class="w-full text-white bg-orange-500 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TABLE START (tabulator)-->
+        <div class="relative overflow-x-auto shadow-lg sm:rounded-lg mx-8 ">
+            <table id="example-table"></table>
+        </div>
+
+    </div>
+
+</body>
+
+<script>
+    const Excel = window.ExcelJS;
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            personal_details_fields: [],
+            fields_display: [],
+            personal_details_datas: [],
+            employee_id_values: [],
+            programme_values: [],
+            file: "",
+        },
+        mounted: async function () {
+            const API_URL_2 = 'http://localhost:5011/personaldetails';
+
+            axios.get(API_URL_2)
+                .then(response => {
+                    //console.log(response.data,'response data')
+                    var table = new Tabulator("#example-table", {
+                        layout: "fitDataTable",
+                        data: response.data.data,
+                        index: "Employee_ID",
+                        columns: [{
+                                title: "Employee ID",
+                                field: "Employee_ID",
+                                sorter: "string",
+                                headerFilter: "input",
+                                headerFilter: "list",
+                                headerFilterParams: {
+                                    valuesLookup: true,
+                                    clearable: true
+                                },
+                                editor: true,
+
+                            },
+                            {
+                                title: "MCR No",
+                                field: "MCR_No",
+                                sorter: "string",
+                                headerFilter: "input",
+                                headerFilter: "list",
+                                headerFilterParams: {
+                                    valuesLookup: true,
+                                    clearable: true
+                                },
+                                editor: true,
+
+                            },
+
+                            {
+                                title: "Staff Name",
+                                field: "Staff_Name",
+                                sorter: "string",
+                                headerFilter: "input",
+                                headerFilter: "list",
+                                headerFilterParams: {
+                                    valuesLookup: true,
+                                    clearable: true
+                                },
+                                editor: true,
+                            },
+                            {
+                                title: "Designation",
+                                field: "Designation",
+                                sorter: "string",
+                                headerFilter: "list",
+                                headerFilterParams: {
+                                    valuesLookup: true,
+                                    clearable: true
+                                }
+                            },
+                            {
+                                title: "Programme",
+                                field: "Programme",
+                                sorter: "string",
+                                headerFilter: "list",
+                                headerFilterParams: {
+                                    valuesLookup: true,
+                                    clearable: true
+                                }
+                            },
+                            {
+                                title: "Year of Training",
+                                field: "Year_of_Training",
+                                sorter: "string",
+                                headerFilter: "list",
+                                headerFilterParams: {
+                                    valuesLookup: true,
+                                    clearable: true
+                                }
+                            },
+                            {
+                                title: "Academic Year",
+                                field: "Academic_Year",
+                                sorter: "string",
+                                headerFilter: "list",
+                                headerFilterParams: {
+                                    valuesLookup: true,
+                                    clearable: true
+                                }
+                            },
+                            {
+                                title: "Department",
+                                field: "Department",
+                                sorter: "string",
+                                headerFilter: "list",
+                                headerFilterParams: {
+                                    valuesLookup: true,
+                                    clearable: true
+                                }
+                            },
+                            {
+                                title: "Institution",
+                                field: "Institution",
+                                sorter: "string",
+                                headerFilter: "list",
+                                headerFilterParams: {
+                                    valuesLookup: true,
+                                    clearable: true
+                                }
+                            },
+                            {
+                                title: "Academic Clinical Programme",
+                                field: "Academic_Clinical_Programme",
+                                sorter: "string",
+                                headerFilter: "list",
+                                headerFilterParams: {
+                                    valuesLookup: true,
+                                    clearable: true
+                                }
+                            },
+                            {
+                                title: "Employment Status",
+                                field: "Employment_Status",
+                                sorter: "string",
+                                headerFilter: "list",
+                                headerFilterParams: {
+                                    valuesLookup: true,
+                                    clearable: true
+                                }
+                            },
+                            {
+                                title: "Nationality",
+                                field: "Nationality",
+                                sorter: "string",
+                                headerFilter: "list",
+                                headerFilterParams: {
+                                    valuesLookup: true,
+                                    clearable: true
+                                }
+                            },
+                            {
+                                title: "Date of Birth",
+                                field: "Date_of_Birth",
+                                sorter: "string",
+                                headerFilter: "list",
+                                headerFilterParams: {
+                                    valuesLookup: true,
+                                    clearable: true
+                                }
+                            },
+                            {
+                                title: "Registration Type",
+                                field: "Registration_Type",
+                                sorter: "string",
+                                headerFilter: "list",
+                                headerFilterParams: {
+                                    valuesLookup: true,
+                                    clearable: true
+                                }
+                            },
+                            {
+                                title: "House Blk No",
+                                field: "House_Blk_No",
+                                sorter: "string",
+                                headerFilter: "list",
+                                headerFilterParams: {
+                                    valuesLookup: true,
+                                    clearable: true
+                                }
+                            },
+                            {
+                                title: "Street",
+                                field: "Street",
+                                sorter: "string",
+                                headerFilter: "list",
+                                headerFilterParams: {
+                                    valuesLookup: true,
+                                    clearable: true
+                                }
+                            },
+                            {
+                                title: "Building Name",
+                                field: "Building_Name",
+                                sorter: "string",
+                                headerFilter: "list",
+                                headerFilterParams: {
+                                    valuesLookup: true,
+                                    clearable: true
+                                }
+                            },
+                            {
+                                title: "Unit No",
+                                field: "Unit_No",
+                                sorter: "string",
+                                headerFilter: "list",
+                                headerFilterParams: {
+                                    valuesLookup: true,
+                                    clearable: true
+                                }
+                            },
+                            {
+                                title: "Postal Code",
+                                field: "Postal_Code",
+                                sorter: "string",
+                                headerFilter: "list",
+                                headerFilterParams: {
+                                    valuesLookup: true,
+                                    clearable: true
+                                }
+                            },
+                            {
+                                title: "Contact No Work",
+                                field: "Contact_No_Work",
+                                sorter: "string",
+                                headerFilter: "list",
+                                headerFilterParams: {
+                                    valuesLookup: true,
+                                    clearable: true
+                                }
+                            },
+                            {
+                                title: "Contact No Personal",
+                                field: "Contact_No_Personal",
+                                sorter: "string",
+                                headerFilter: "list",
+                                headerFilterParams: {
+                                    valuesLookup: true,
+                                    clearable: true
+                                }
+                            },
+                            {
+                                title: "Email Official",
+                                field: "Email_Official",
+                                sorter: "string",
+                                headerFilter: "list",
+                                headerFilterParams: {
+                                    valuesLookup: true,
+                                    clearable: true
+                                }
+                            },
+                            {
+                                title: "Email Personal",
+                                field: "Email_Personal",
+                                sorter: "string",
+                                headerFilter: "list",
+                                headerFilterParams: {
+                                    valuesLookup: true,
+                                    clearable: true
+                                }
+                            },
+                            {
+                                title: "BCLS Expiry Date",
+                                field: "BCLS_Expiry_Date",
+                                sorter: "string",
+                                headerFilter: "list",
+                                headerFilterParams: {
+                                    valuesLookup: true,
+                                    clearable: true
+                                }
+                            },
+                            {
+                                title: "ACLS Expiry Date",
+                                field: "ACLS_Expiry_Date",
+                                sorter: "string",
+                                headerFilter: "list",
+                                headerFilterParams: {
+                                    valuesLookup: true,
+                                    clearable: true
+                                }
+                            },
+                            {
+                                title: "Covid_19 Vaccination Status",
+                                field: "Covid_19_Vaccination_Status",
+                                sorter: "string",
+                                headerFilter: "list",
+                                headerFilterParams: {
+                                    valuesLookup: true,
+                                    clearable: true
+                                }
+                            },
+                            {
+                                title: "Date of First Dose",
+                                field: "Date_of_First_Dose",
+                                sorter: "string",
+                                headerFilter: "list",
+                                headerFilterParams: {
+                                    valuesLookup: true,
+                                    clearable: true
+                                }
+                            },
+                            {
+                                title: "Date of Second Dose",
+                                field: "Date_of_Second_Dose",
+                                sorter: "string",
+                                headerFilter: "list",
+                                headerFilterParams: {
+                                    valuesLookup: true,
+                                    clearable: true
+                                }
+                            },
+                            {
+                                title: "Vaccination Remarks",
+                                field: "Vaccination_Remarks",
+                                sorter: "string",
+                                headerFilter: "list",
+                                headerFilterParams: {
+                                    valuesLookup: true,
+                                    clearable: true
+                                }
+                            },
+                        ],
+                    });
+
+                    table.on("cellEdited", function (cell) {
+                        //cell - cell component
+                        var value = cell.getValue()
+                        var field = cell.getColumn().getDefinition()['field']
+                        console.log(cell.getRow().getData()['MCR_No'], 'row')
+                        var row = cell.getRow().getData()['MCR_No']
+                        var data1 = {
+                            "Table": "Personal_Details",
+                            "Field": field,
+                            "Value": value,
+                            "Row": row
+                        }
+
+                        axios({
+                                url: "http://localhost:5011/edit_field_value",
+                                data: data1,
+                                method: 'post'
+                            })
+                            .then(response => {
+                                console.log(response)
+                            })
+                            .catch(error => {
+                                console.log(error);
+                            });
+
+                    });
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        },
+        methods: {
+            importExcel(event) {
+                this.file = event.target.files ? event.target.files[0] : null;
+                var data = this.file;
+                console.log(data)
+
+                var data = new FormData();
+                print("formdata: ", data)
+                data.append('file', this.file);
+
+                var url = 'http://localhost:5011/';
+                // axios.post(url , {"file": this.file})
+                //     .then(response => {
+                //         console.log("posting")
+                //         console.log(response.data)
+                //     })
+                //     .catch(error => {
+                //         this.error = error.response.data.message
+                //     });
+
+                // var data = new FormData();
+                // data.append('file', fs.createReadStream('/Users/maarunipandithurai/Downloads/(BE Request)Database Template for Residency (1).xlsx'));
+
+                var config = {
+                method: 'post',
+                maxBodyLength: Infinity,
+                url: 'http://127.0.0.1:5011/',
+                header: { 
+                    'Content-Type' : 'multipart/form-data'
+                },
+                data : data
+                };
+
+                axios(config)
+                .then(function (response) {
+                console.log(JSON.stringify(response.data));
+                })
+                .catch(function (error) {
+                console.log(error);
+                });
+
+
+
+            
+
+
+            // const wb = new Excel.Workbook();
+            // const reader = new FileReader()
+
+            // reader.readAsArrayBuffer(this.file)
+            // reader.onload = () => {
+            //     const buffer = reader.result;
+            //     wb.xlsx.load(buffer).then(workbook => {
+            //         //console.log(workbook, 'workbook instance')
+            //         workbook.eachSheet((sheet, id) => {
+            //             //console.log(sheet.name) //sheet name (eg: personal details)
+            //             if (sheet.name == "Personal Details") {
+            //                 sheet.eachRow((row, rowIndex) => {
+            //                     if (rowIndex > 1) {
+            //                         var url =
+            //                             'http://localhost:5011/add_personal_detail';
+            //                         var data = {};
+            //                         data.Employee_ID = row.values[1] || '';
+            //                         data.MCR_No = row.values[2] || '';
+            //                         data.Staff_Name = row.values[3] || '';
+            //                         data.Designation = row.values[4] || '';
+            //                         data.Programme = row.values[5] || '';
+            //                         data.Year_of_Training = row.values[6] || '';
+            //                         data.Academic_Year = String(row.values[
+            //                             7]) || '';
+            //                         data.Department = row.values[8] || '';
+            //                         data.Institution = row.values[9] || '';
+            //                         data.Academic_Clinical_Programme = row
+            //                             .values[10] || '';
+            //                         data.Employment_Status = row.values[11] ||
+            //                             '';
+            //                         data.Nationality = row.values[12] || '';
+            //                         data.Date_of_Birth = row.values[13] || '';
+            //                         data.Gender = row.values[14] || '';
+            //                         data.Registration_Type = row.values[15] ||
+            //                             '';
+            //                         data.House_Blk_No = row.values[16] || '';
+            //                         data.Street = row.values[17] || '';
+            //                         data.Building_Name = row.values[18] || '';
+            //                         data.Unit_No = row.values[19] || '';
+            //                         data.Postal_Code = String(row.values[20]) ||
+            //                             '';
+            //                         data.Contact_No_Work = String(row.values[
+            //                             21]) || '';
+            //                         data.Contact_No_Personal = String(row
+            //                             .values[22]) || '';
+            //                         data.Email_Official = row.values[23].text ||
+            //                             '';
+            //                         data.Email_Personal = row.values[24] || '';
+            //                         data.BCLS_Expiry_Date = row.values[25] ||
+            //                             '';
+            //                         data.ACLS_Expiry_Date = row.values[26] ||
+            //                             '';
+            //                         data.Covid_19_Vaccination_Status = row
+            //                             .values[27] || '';
+            //                         data.Date_of_First_Dose = row.values[28] ||
+            //                             '';
+            //                         data.Date_of_Second_Dose = row.values[29] ||
+            //                             '';
+            //                         data.Vaccination_Remarks = row.values[30] ||
+            //                             '';
+            //                         axios.post(url, data)
+            //                             .then(response => {
+            //                                 console.log(response.data)
+            //                             })
+            //                             .catch(error => {
+            //                                 this.error = error.response.data
+            //                                     .message
+            //                             });
+            //                     }
+            //                 })
+            //             }
+            //             // else if (sheet.name == "Awards") {
+            //             //     sheet.eachRow((row, rowIndex) => {
+            //             //         if (rowIndex > 1) {
+            //             //             console.log(row)
+            //             //             var url =
+            //             //                 'http://localhost:5010/add_award';
+            //             //             var data = {};
+            //             //             data.Award_ID = row.values[1] || '';
+            //             //             data.Employee_id = row.values[2] || '';
+            //             //             data.Award_Category = row.values[3] || '';
+            //             //             data.Name_of_Award = row.values[4] || '';
+            //             //             data.FY_of_Award_Received = row.values[5] || '';
+            //             //             data.Date_of_Award_Received = row.values[6] || '';
+            //             //             data.Project_ID_Ref = row.values[7] || '';
+            //             //             axios.post(url, data)
+            //             //                 .then(response => {
+            //             //                     console.log(response.data)
+            //             //                 })
+            //             //                 .catch(error => {
+            //             //                     this.error = error.response.data
+            //             //                         .message
+            //             //                 });
+            //             //         }
+            //             //     })
+            //             // }
+            //         })
+            //     })
+            // }
+        },
+    }
+    });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.7.14"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+
+
+</html>

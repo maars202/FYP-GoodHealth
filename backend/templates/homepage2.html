@@ -122,6 +122,19 @@
                     <a href="#"
                         class="lg:text-sm md:text-xs  ml-6 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">Projects</a>
                 </li>
+                <li>
+                    {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('auth.logout') }}" class="navbar-item">
+                            Logout
+                        </a>
+                        {% endif %}
+                </li>
+                <li class="ml-80">
+                    
+                    {% if current_user.is_authenticated %}
+                    <h1>Hi {{current_user.name}}!</h1>
+                        {% endif %}
+                </li>
             </ul>
         </div>
     </nav>

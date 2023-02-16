@@ -72,7 +72,7 @@ def display2():
     return render_template('hello.html')
 
 @main.route('/homepage', methods=['GET'])
-# @login_required
+@login_required
 def homepage():
     return render_template('homepage2.html')
 
@@ -91,6 +91,11 @@ from flask_login import LoginManager
 
 login_manager = LoginManager() # Create a Login Manager instance
 login_manager.login_view = 'auth.login' # define the redirection path when login required and we attempt to access without being logged in
+# login_mgr.login_view = 'login'
+login_manager.refresh_view = 'auth.login'
+login_manager.needs_refresh_message = (u"Session timedout, please re-login")
+login_manager.needs_refresh_message_category = "info"
+
 login_manager.init_app(app) # configure it for login
 from models import User
 @login_manager.user_loader
@@ -105,6 +110,14 @@ app.register_blueprint(auth_blueprint)
 # from main import main as main_blueprint
 app.register_blueprint(main)
 print("registerddd")
+
+from flask import session
+from datetime import timedelta
+@app.before_request
+def before_request():
+    print("before request")
+    session.permanent = True
+    app.permanent_session_lifetime = timedelta(minutes=1)
 
 
 

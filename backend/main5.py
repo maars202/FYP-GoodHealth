@@ -111,6 +111,7 @@ app.register_blueprint(auth_blueprint)
 app.register_blueprint(main)
 print("registerddd")
 
+
 from flask import session
 from datetime import timedelta
 @app.before_request

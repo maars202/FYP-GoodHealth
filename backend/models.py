@@ -25,7 +25,8 @@ class Role(db.Model, RoleMixin):
     id = Column(Integer(), primary_key=True)
     name = Column(String(80), unique=True)
     description = Column(String(255))
-    
+
+
 
 
 class User(db.Model, UserMixin):

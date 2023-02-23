@@ -39,6 +39,7 @@ INSERT INTO `User` (`id`, `email`, `username`, `PASSWORD`, `active`) VALUES
 (2, 'paarunip.2020@scis.smu.edu.sg', 'ppp', 'sha256$QD1RcpBg5uZgwMkP$1854213e1b9e7782429694838a0a0786d4c4486fdca0ce2b25435bea7f7d7ac7', 1);
 
 
+
     CONSTRAINT FK_PersonOrder2 FOREIGN KEY(role_id) REFERENCES Role(id),
     CONSTRAINT FK_PersonOrder1 FOREIGN KEY(user_id) REFERENCES User(id)
 

@@ -141,6 +141,7 @@ def before_request():
     session.permanent = True
     app.permanent_session_lifetime = timedelta(minutes=1)
 
+
 class Personal_Details(db.Model):
     __tablename__ = 'Personal_Details'
     Employee_ID = db.Column(db.String(50))

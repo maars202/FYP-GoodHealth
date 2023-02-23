@@ -11,6 +11,8 @@ from __init__ import db
 
 auth = Blueprint('auth', __name__) # create a Blueprint object that we name 'auth'
 
+
+
 @auth.route('/login', methods=['GET', 'POST']) # define login page path
 def login(): # define login page fucntion
     if request.method=='GET': # if the request is a GET we return the login page
@@ -33,12 +35,16 @@ def login(): # define login page fucntion
         # return redirect(url_for('main.profile'))
         return redirect(url_for('main.display'))
 
+
+from flask_security import roles_accepted
+@roles_accepted('Admin')
 @auth.route('/signup', methods=['GET', 'POST'])# we define the sign up path
 def signup(): # define the sign up function
     if request.method=='GET': # If the request is GET we return the sign up page and forms
         return render_template('signup.html')
     else: # if the request is POST, then we check if the email doesn't already exist and then we save data
         email = request.form.get('email')
+        # name = request.form.get('name')
         name = request.form.get('name')
         password = request.form.get('password')
         user = User.query.filter_by(email=email).first() # if this returns a user, then the email already exists in database
@@ -46,8 +52,14 @@ def signup(): # define the sign up function
             flash('Email address already exists')
             return redirect(url_for('auth.signup'))
         # create a new user with the form data. Hash the password so the plaintext version isn't saved.
-        new_user = User(email=email, name=name, password=generate_password_hash(password, method='sha256')) #
+        new_user = User(email=email, username=name, password=generate_password_hash(password, method='sha256'), active=True) #
         # add the new user to the database
+        from models import Role
+        # role = Role.query.filter_by(id=request.form['options']).first()
+        role = Role.query.filter_by(id=1).first()
+        # role = "Resident"
+        # role = "Admin"
+        new_user.roles.append(role)
         db.session.add(new_user)
         db.session.commit()
         return redirect(url_for('auth.login'))

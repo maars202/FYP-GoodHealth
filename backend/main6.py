@@ -26,7 +26,16 @@ app.app_context().push()
 
 if __name__ == '__main__':
     # Mac user -------------------------------------------------------------------
-    app.config['SECRET_KEY'] = 'secret-key-goes-here' # it is used by Flask and extensions to keep data safe
+    # app.config['SECRET_KEY'] = 'secret-key-goes-here' # it is used by Flask and extensions to keep data safe
+    import os
+    app.config["SECRET_KEY"] = os.environ.get(
+    "SECRET_KEY", "0aedgaii451cef0af8bd6432ec4b317c8999a9f8g77f5f3cb49fb9a8acds51d"
+)   
+    import os
+    app.config["SECURITY_PASSWORD_SALT"] = os.environ.get(
+        "SECURITY_PASSWORD_SALT",
+        "ab3d3a0f6984c4f5hkao41509b097a7bd498e903f3c9b2eea667h16",
+    )
     app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:root' + \
                                            '@localhost:3306/SingHealth'
     engine = create_engine('mysql+pymysql://root:root@localhost/SingHealth?charset=utf8')
@@ -63,7 +72,8 @@ def index():
 @main.route('/profile2', methods=['GET'])
 @login_required
 def display():
-    return render_template('profile2.html', name=current_user.name)
+    # return render_template('profile2.html', name=current_user.name)
+    return render_template('profile2.html', name=current_user.username)
     # return "hello"
 
 @main.route('/r', methods=['GET'])
@@ -71,8 +81,10 @@ def display():
 def display2():
     return render_template('hello.html')
 
+from flask_security import roles_accepted
 @main.route('/homepage', methods=['GET'])
-@login_required
+# @login_required
+@roles_accepted('Admin')
 def homepage():
     return render_template('homepage2.html')
 
@@ -80,11 +92,11 @@ def homepage():
 from flask_login import UserMixin
 # from __init__ import db
 
-class User2(UserMixin, db.Model):
-    id = db.Column(db.Integer, primary_key=True) # primary keys are required by SQLAlchemy
-    email = db.Column(db.String(100), unique=True)
-    password = db.Column(db.String(100))
-    name = db.Column(db.String(1000))
+# class User2(UserMixin, db.Model):
+#     id = db.Column(db.Integer, primary_key=True) # primary keys are required by SQLAlchemy
+#     email = db.Column(db.String(100), unique=True)
+#     password = db.Column(db.String(100))
+#     name = db.Column(db.String(1000))
 
 
 from flask_login import LoginManager
@@ -97,11 +109,12 @@ login_manager.needs_refresh_message = (u"Session timedout, please re-login")
 login_manager.needs_refresh_message_category = "info"
 
 login_manager.init_app(app) # configure it for login
-from models import User
-@login_manager.user_loader
-def load_user(user_id): #reload user object from the user ID stored in the session
-    # since the user_id is just the primary key of our user table, use it in the query for the user
-    return User.query.get(int(user_id))
+
+# added:
+from flask_security import SQLAlchemySessionUserDatastore, Security
+from models import User, Role
+user_datastore = SQLAlchemySessionUserDatastore(db.session, User, Role)
+
 # blueprint for auth routes in our app
 # blueprint allow you to orgnize your flask app
 from auth import auth as auth_blueprint
@@ -111,6 +124,15 @@ app.register_blueprint(auth_blueprint)
 app.register_blueprint(main)
 print("registerddd")
 
+
+security = Security(app, user_datastore)
+from models import User
+@login_manager.user_loader
+def load_user(user_id): #reload user object from the user ID stored in the session
+    # since the user_id is just the primary key of our user table, use it in the query for the user
+    return User.query.get(int(user_id))
+
+
 from flask import session
 from datetime import timedelta
 @app.before_request
@@ -118,8 +140,6 @@ def before_request():
     print("before request")
     session.permanent = True
     app.permanent_session_lifetime = timedelta(minutes=1)
-
-
 
 class Personal_Details(db.Model):
     __tablename__ = 'Personal_Details'

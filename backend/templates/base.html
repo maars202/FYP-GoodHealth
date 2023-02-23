@@ -7,17 +7,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Flask Auth Example</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" />
+    <link rel="stylesheet" href='/static/style.css' />
 </head>
 
 <body>
-    <section class="hero is-primary is-fullheight">
+    <section class="hero is-fullheight" >
 
         <div class="hero-head">
             <nav class="navbar">
                 <div class="container">
                     <div id="navbarMenuHeroA" class="navbar-menu">
                         {% if current_user.is_authenticated %}
-                        {{current_user.name}}!
+                        {{current_user.username}}!
+                        ur role is : {{current_user.roles[0].id}}
                         {% endif %}
                         <div class="navbar-end">
                             <a href="{{ url_for('main.index') }}" class="navbar-item">
@@ -25,23 +27,24 @@
                             </a>
                             {% if current_user.is_authenticated %}
                             <a href="{{ url_for('main.display') }}" class="navbar-item">
-                                Profile hello
+                                Profile
                             </a>
                             {% endif %}
                             {% if not current_user.is_authenticated %}
                         <a href="{{ url_for('auth.login') }}" class="navbar-item">
                             Login
                         </a>
+                        {% endif %}
                         <a href="{{ url_for('auth.signup') }}" class="navbar-item">
                             Sign Up
                         </a>
-                        {% endif %}
+                        
                         {% if current_user.is_authenticated %}
                         <a href="{{ url_for('auth.logout') }}" class="navbar-item">
                             Logout
                         </a>
                         {% endif %}
-                        {% if current_user.is_authenticated %}
+                        {% if current_user.is_authenticated and current_user.roles[0].id %}
                         <a href="{{ url_for('main.homepage') }}" class="navbar-item">
                             Homepage
                         </a>

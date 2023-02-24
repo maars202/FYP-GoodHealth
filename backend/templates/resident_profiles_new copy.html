@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- INSTALLATIONS -->
+    <!-- flowbite -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.css" rel="stylesheet" />
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- ICONIFY -->
+    <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
+    <!-- VUE 3 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.6/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
+
+    <style type="text/tailwindcss">
+        @layer utilities {
+        .content-auto {
+        content-visibility: auto;
+        }
+    }
+    </style>
+
+    <title>SingHealth</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- header -->
+        <div class="bg-stone-100 border-gray-200 px-2 sm:px-4 py-2.5 rounded ">
+            <div class="container flex flex-wrap items-center justify-between mx-auto"
+                style="width: 100%; overflow: hidden;">
+                <img src="../images/SingHealth_Logo.png" class="mr-3 sm:h-15 ml-3 mt-2 mb-2"
+                    style="height: 80px ; width: 100px;" alt="Flowbite Logo" />
+
+                <div class="flex md:order-2">
+                    <a href="../homepage.html" style="margin-right: 10px;">
+                        <iconify-icon icon="ic:round-home" style="color: #ff6b00;" width="40" height="40">
+                        </iconify-icon>
+                    </a>
+                    <a>
+                        <iconify-icon icon="healthicons:ui-user-profile" style="color: #ff6b00;" width="40" height="40">
+                        </iconify-icon>
+                    </a>
+
+                    <button data-collapse-toggle="navbar-sticky" type="button"
+                        class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 "
+                        aria-controls="navbar-cta" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navbar -->
+        <nav class="bg-white">
+            <div class="items-center justify-between hidden w-full md:flex md:width-auto  md:order-1" id="navbar-sticky"
+                style="width: 100%; overflow: hidden;">
+                <ul
+                    class="overflow-x-auto md:divide-x md:divide-slate-200 flex flex-col p-2 border border-gray-100 rounded-lg bg-gray-50 md:flex-row  md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white">
+                    <li>
+                        <a href="../homepage.html"
+                            class="lg:text-sm md:text-xs ml-5 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">Home</a>
+                    </li>
+                    <li>
+                        <a href="../tab_pages/resident_profiles.html"
+                            class="lg:text-sm md:text-xs ml-5 mr-4 block py-2 pl-3 pr-2 text-white bg-orange-500 rounded md:bg-transparent md:text-orange-500 md:p-0 dark:text-white"
+                            aria-current="page">Resident Profiles</a>
+                    </li>
+                    <li>
+                        <a href="../tab_pages/personal_details.html"
+                            class="lg:text-sm md:text-xs ml-5 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">
+                            Personal Details</a>
+                    </li>
+                    <li>
+                        <a href="#"
+                            class="lg:text-sm md:text-xs ml-5 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">
+                            History</a>
+                    </li>
+                    <li>
+                        <a href="#"
+                            class="lg:text-sm md:text-xs ml-5 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">
+                            Involvement</a>
+                    </li>
+                    <li>
+                        <a href="#"
+                            class="lg:text-sm md:text-xs  ml-5 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">
+                            Grants</a>
+                    </li>
+                    <li>
+                        <a href="#"
+                            class="lg:text-sm md:text-xs  ml-5 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">
+                            Publications</a>
+                    </li>
+                    <li>
+                        <a href="#"
+                            class="lg:text-sm md:text-xs  ml-6 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">Presentations</a>
+                    </li>
+                    <li>
+                        <a href="#"
+                            class="lg:text-sm md:text-xs  ml-6 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">
+                            Awards</a>
+                    </li>
+                    <li>
+                        <a href="#"
+                            class="lg:text-sm md:text-xs  ml-6 mr-4 block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0">Projects</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!-- Orange Divider -->
+        <div class='row' style='height: 8px; background-color: #ff6b00;'></div>
+
+
+        <!-- <select id="projectfilter" name="projectfilter" class="table-filter form-control" data-col="2">
+            <option value=""  v-for = "program in programme_values">{{program}}</option>
+        </select> -->
+
+        <div id="errorpage" v-if="error">
+            <main class="h-screen w-full flex flex-col justify-center items-center bg-[#1A2238]">
+            <h1 class="text-9xl font-extrabold text-white tracking-widest">404</h1>
+            <div class="bg-[#FF6A3D] px-2 text-lg rounded rotate-12 absolute">
+                Profile not found
+            </div>
+            <!-- <a class="mt-5">
+              <a
+                class="relative inline-block text-sm font-medium text-[#FF6A3D] group active:text-orange-500 focus:outline-none focus:ring"
+              >
+                <span
+                  class="absolute inset-0 transition-transform translate-x-0.5 translate-y-0.5 bg-[#FF6A3D] group-hover:translate-y-0 group-hover:translate-x-0"
+                ></span>
+        
+                <span class="relative block px-8 py-3 bg-[#1A2238] border border-current">
+
+                  <a class="bg-orange-200" href="../tab_pages/personal_details.html">Go Home</a>
+                </span>
+              </a>
+            </a> -->
+            <button class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded">
+                <a class="" href="../tab_pages/personal_details.html">Go Home</a>
+              </button>
+        </main>
+    </div>
+        <div id="profiletables" class="" v-else>
+
+            <div class="flex items-right justify-end mt-10 mr-10" id="one">
+                <!-- <button type="button" id="loading"
+                    class="hidden inline-flex items-center px-4 py-2 text-sm font-semibold leading-6 text-white transition duration-150 ease-in-out bg-indigo-500 rounded-md shadow cursor-not-allowed hover:bg-indigo-400"
+                    disabled="">
+                    <svg class="w-5 h-5 mr-3 -ml-1 text-white animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                        </path>
+                    </svg>
+                    Loading...
+                </button> -->
+    
+                <a class="mb-10 inline-flex items-center px-4 py-2 text-sm font-semibold 
+                leading-6 text-white transition duration-150 ease-in-out bg-red-500 
+                rounded-md shadow cursor-not-allowed hover:bg-red-400" 
+                :href="currpage[0] + '/' + mcr_no" target="_blank"  
+                style="margin-right: 5px;">Download PDF 
+            </a>
+    
+            <a class="mb-10 inline-flex items-center px-4 py-2 text-sm font-semibold leading-6 
+            text-white transition duration-150 ease-in-out bg-blue-500 rounded-md shadow 
+            cursor-not-allowed hover:bg-blue-400" 
+                :href="currpage[1] + '/' + mcr_no" target="_blank"  
+                style="margin-right: 5px;">Download Word 
+            </a>
+            </div>
+
+
+        <div id="smallertables">
+
+        <div id="mainbody" class="flex py-5">
+        <div id="leftside" class="md:w-1/2">
+
+            <div class="flex relative width-full mx-8 justify-center ">
+                <!-- h-60 w-96 ml-40 -->
+                <!-- rounded-lg vs rounded-full -->
+                <img class="object-cover w-1/3 shadow-md rounded-full" src="../profileimg/mr101.jpeg">
+                
+              </div>
+
+        <!-- Personal details Table start -->
+        <div class="relative overflow-x-auto mx-8 mt-5" v-if="profile_data.length != 0">
+
+            <p class="underline underline-offset-8 font-bold text-lg mt-10">Personal Details</p>
+
+            <table class="w-full text-sm text-left text-blue-100 dark:text-blue-100 my-5">
+                <!-- COLUMN NAMES -->
+                <thead class="text-xs text-white bg-orange-500">
+                    <tr></tr>
+                </thead>
+                <tbody>
+                    <tr class="border border-black" v-for="(value,key) in profile_data[0]">
+                        <td class="w-2/5 text-center bg-orange-300 border-slate-700 px-1 py-4 font-medium text-black"
+                            >
+                            <h1>{{key}}</h1>
+                        </td>
+                        <!-- bg-orange-100 -->
+                        <td class=" border-slate-700 flex text-black items-center px-6 py-4">
+                            <h1>{{value}}</h1>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p class="underline underline-offset-8 font-bold text-lg mt-10">SMC and Employer Details</p>
+
+            <table class="w-full text-sm text-left text-blue-100 dark:text-blue-100 my-5">
+                <!-- COLUMN NAMES -->
+                <thead class="text-xs text-white bg-orange-500">
+                    <tr></tr>
+                </thead>
+                <tbody>
+                    <tr class="border border-black" v-for="(value,key) in employer_details[0]">
+                        <td class="w-2/5 text-center bg-orange-300 border-slate-700 px-1 py-4 font-medium text-black"
+                            >
+                            <h1>{{key}}</h1>
+                        </td>
+                        <!-- bg-orange-100 -->
+                        <td class=" border-slate-700 flex text-black items-center px-6 py-4">
+                            <h1>{{value}}</h1>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <div id="rightside" class="md:w-1/2 mr-10">
+
+        <p class="underline underline-offset-8 font-bold text-lg mt-10">Residency Details</p>
+
+        <table class="w-full text-left text-blue-100 dark:text-blue-100 my-5">
+            <!-- COLUMN NAMES -->
+            <thead class="text-md text-white bg-orange-500">
+                <tr>
+                    <th>Specialty Programme</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border border-black" v-for="item in profile_data_original">
+                    <td class="w-2/5 text-center bg-orange-300 border-slate-700 px-1 py-4 font-medium text-black"
+                        >
+                        <!-- got only one programme but why example got so many:?? -->
+                        <p>{{item.personaldetails.Programme}}</p>
+                    </td>
+                    <!-- bg-orange-100 -->
+                    <td class=" border-slate-700 flex text-black items-center px-6 py-4">
+                        <!-- where to get start and end date?? -->
+                        <h1></h1>
+                    </td>
+                    <td class=" border-slate-700 flex text-black items-center px-6 py-4">
+                        <!-- where to get start and end date?? -->
+                        <h1></h1>
+                    </td>
+                </tr>
+                <tr class="border border-black" v-for="item in profile_data_original">
+                    <td class="w-2/5 text-center bg-orange-300 border-slate-700 px-1 py-4 font-medium text-black"
+                        >
+                        <!-- got only one programme but why example got so many:?? -->
+                        <p>{{item.personaldetails.Programme}}</p>
+                    </td>
+                    <!-- bg-orange-100 -->
+                    <td class=" border-slate-700 flex text-black items-center px-6 py-4">
+                        <!-- where to get start and end date?? -->
+                        <h1></h1>
+                    </td>
+                    <td class=" border-slate-700 flex text-black items-center px-6 py-4">
+                        <!-- where to get start and end date?? -->
+                        <h1></h1>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="underline underline-offset-8 font-bold text-lg mt-10">Medical School Details</p>
+
+        <table class="w-full text-left text-blue-100 dark:text-blue-100 my-5">
+            <!-- COLUMN NAMES -->
+            <thead class="text-md text-white bg-orange-500">
+                <tr>
+                   
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border border-black" v-for="personaldetails in profile_data_original">
+                    <td class="w-2/5 text-center bg-orange-300 border-slate-700 px-1 py-4 font-medium text-black"
+                        >
+                        <!-- got only one programme but why example got so many:?? -->
+                        <p>{{personaldetails.personaldetails.Programme}}</p>
+                    </td>
+                    <!-- bg-orange-100 -->
+                    <td class=" border-slate-700 flex text-black items-center px-6 py-4">
+                        <!-- where to get start and end date?? -->
+                        <h1></h1>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="underline underline-offset-8 font-bold text-lg mt-10">Contact Details</p>
+
+        <table class="w-full text-left text-blue-100 dark:text-blue-100 my-5">
+            <!-- COLUMN NAMES -->
+            <thead class="text-md text-white bg-orange-500">
+                <tr>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border border-black" v-for="(value, key) in contact_details[0]">
+                    <td class="w-2/5 text-center bg-orange-300 border-slate-700 px-1 py-4 font-medium text-black"
+                        >
+                        <!-- got only one programme but why example got so many:?? -->
+                        <p>{{key}}</p>
+                    </td>
+                    <!-- bg-orange-100 -->
+                    <td class=" border-slate-700 flex text-black items-center px-6 py-4">
+                        <!-- where to get start and end date?? -->
+                        <p>{{value}}</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+    </div>
+    </div>
+
+    <div id="biggerTables" class="mx-5">
+
+        
+        <p class="underline underline-offset-8 font-bold text-lg mt-10">Case Logs</p>
+        <table class="w-full text-sm text-left text-blue-100 dark:text-blue-100 my-5">
+            <!-- COLUMN NAMES -->
+            <thead class="text-xs text-white bg-orange-500">
+                <th scope="col" class="px-6 py-3" v-for="title in ['Case_Name', 'CPT', 'Certified',
+                 'Date of Log', 'Observed', 'Performed', 'Subspecialty', 'Total', 
+                 'Type_of_Case_Log','Verified']">
+                    <span
+                        class="inline-flex items-center bg-orange-500 text-white focus:outline-none font-medium rounded-lg text-sm px-3 py-1.5">
+                        {{title}}</span>
+                </th>
+            </thead>
+            <tbody>
+                <!-- 1 row = 1 reisdent = 1 key -->
+                <tr class="border" v-for="case_log in profile_data_original[0].case_logs">
+                    <td class="bg-orange-100 text-center px-1 py-4 font-medium text-black">
+                        <p>{{case_log.Case_Name}}</p>
+                    </td>
+                    <td class="bg-orange-200 border text-black items-center px-6 py-4">
+                        <p>{{case_log.CPT}}</p>
+                    </td>
+
+                    <td class="bg-orange-100 border text-black items-center px-6 py-4">
+                        <p>{{case_log.Certified}}</p>
+                    </td>
+                    <td class="bg-orange-200 border text-black items-center px-6 py-4">
+                        <p>{{case_log.Date_of_Log}}</p>
+                    </td>
+                    <td class="bg-orange-100 border text-black items-center px-6 py-4">
+                        <p>{{case_log.Observed}}</p>
+                    </td>
+                    <td class="bg-orange-200 border text-black items-center px-6 py-4">
+                        <p>{{case_log.Performed}}</p>
+                    </td>
+                    <td class="bg-orange-100 border text-black items-center px-6 py-4">
+                        <p>{{case_log.Subspecialty}}</p>
+                    </td>
+                    <td class="bg-orange-200 border text-black items-center px-6 py-4">
+                        <p>{{case_log.Total}}</p>
+                    </td>
+                    <td class="bg-orange-100 border text-black items-center px-6 py-4">
+                        <p>{{case_log.Type_of_Case_Log}}</p>
+                    </td>
+                    <td class="bg-orange-200 border text-black items-center px-6 py-4">
+                        <p>{{case_log.Verified}}</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+         
+        <p class="underline underline-offset-8 font-bold text-lg mt-10">Awards</p>
+
+        <table class="w-full text-sm text-left text-blue-100 dark:text-blue-100 my-5">
+            <!-- COLUMN NAMES -->
+            <thead class="text-xs text-white bg-orange-500">
+                <th scope="col" class="px-6 py-3" v-for="title in ['Name of Award', 'Date of Award Received', 'FY of Award Received','Project ID', 'Award Category']">
+                    <span
+                        class="inline-flex items-center bg-orange-500 text-white focus:outline-none font-medium rounded-lg text-sm px-3 py-1.5">
+                        {{title}}</span>
+                </th>
+            </thead>
+            <tbody>
+                <!-- 1 row = 1 reisdent = 1 key -->
+                <tr class="border" v-for="award in profile_data_original[0].awards">
+                    <td class="bg-orange-100 text-center px-1 py-4 font-medium text-black">
+                        <p>{{award.Name_of_Award}}</p>
+                    </td>
+                    <td class="bg-orange-200 border text-black items-center px-6 py-4">
+                        <p>{{award.Date_of_Award_Received}}</p>
+                    </td>
+                    <td class="bg-orange-100 border text-black items-center px-6 py-4">
+                        <p>{{award.FY_of_Award_Received}}</p>
+                    </td>
+                    <td class="bg-orange-200 border text-black items-center px-6 py-4">
+                        <p>{{award.Project_ID}}</p>
+                    </td>
+                    <td class="bg-orange-100 border text-black items-center px-6 py-4">
+                        <p>{{award.Award_Category}}</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+        <p class="underline underline-offset-8 font-bold text-lg mt-10">presentations</p>
+
+        <table class="w-full text-sm text-left text-blue-100 dark:text-blue-100 my-5">
+            <!-- COLUMN NAMES -->
+            <thead class="text-xs text-white bg-orange-500">
+                <th scope="col" class="px-6 py-3" v-for="title in ['Title', 'Conference_Name', 
+                'Type', 'Project_ID', 'Country', 'Presentation_Date']">
+                    <span
+                        class="inline-flex items-center bg-orange-500 text-white focus:outline-none font-medium rounded-lg text-sm px-3 py-1.5">
+                        {{title}}</span>
+                </th>
+            </thead>
+            <tbody>
+                <!-- 1 row = 1 reisdent = 1 key -->
+                <tr class="border" v-for="present in profile_data_original[0].presentations">
+                    <td class="bg-orange-100 text-center px-1 py-4 font-medium text-black">
+                        <p>{{present.Title}}</p>
+                    </td>
+                    <td class="bg-orange-200 border text-black items-center px-6 py-4">
+                        <p>{{present.Conference_Name}}</p>
+                    </td>
+                    <td class="bg-orange-100 border text-black items-center px-6 py-4">
+                        <p>{{present.Type}}</p>
+                    </td>
+                    <td class="bg-orange-200 border text-black items-center px-6 py-4">
+                        <p>{{present.Project_ID}}</p>
+                    </td>
+                    <td class="bg-orange-100 border text-black items-center px-6 py-4">
+                        <p>{{present.Country}}</p>
+                    </td>
+                    <td class="bg-orange-100 border text-black items-center px-6 py-4">
+                        <p>{{present.Presentation_Date}}</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="underline underline-offset-8 font-bold text-lg mt-10">Posting Histories</p>
+        <table class="w-full text-sm text-left text-blue-100 dark:text-blue-100 my-5">
+            <!-- COLUMN NAMES -->
+            <thead class="text-xs text-white bg-orange-500">
+                <th scope="col" class="px-6 py-3" v-for="title in ['Posting_Institution', 
+                'Posting_Department', 'Posting_StartDate', 'Posting_EndDate']">
+                    <span
+                        class="inline-flex items-center bg-orange-500 text-white focus:outline-none font-medium rounded-lg text-sm px-3 py-1.5">
+                        {{title}}</span>
+                </th>
+            </thead>
+            <tbody>
+                <!-- 1 row = 1 reisdent = 1 key -->
+                <tr class="border" v-for="posting in profile_data_original[0].posting_histories">
+
+                    <td class="bg-orange-100 text-center px-1 py-4 font-medium text-black"
+                    v-for="title in ['Posting_Institution', 'Posting_Department', 
+                    'Posting_StartDate', 'Posting_EndDate']">
+                        <p>{{posting[title]}}</p>
+                    </td>
+                    
+                </tr>
+            </tbody>
+        </table>
+
+
+        <p class="underline underline-offset-8 font-bold text-lg mt-10">Duty Hour Logs</p>
+        <table class="w-full text-sm text-left text-blue-100 dark:text-blue-100 my-5">
+            <!-- COLUMN NAMES -->
+            <thead class="text-xs text-white bg-orange-500">
+                <th scope="col" class="px-6 py-3" v-for="title in ['Level', 'Submitted', 
+                'Submitted_Proportion', 'MMYYYY', 'Logged_for_month']">
+                    <span
+                        class="inline-flex items-center bg-orange-500 text-white focus:outline-none font-medium rounded-lg text-sm px-3 py-1.5">
+                        {{title}}</span>
+                </th>
+            </thead>
+            <tbody>
+                <!-- 1 row = 1 reisdent = 1 key -->
+                <tr class="border" v-for="posting in profile_data_original[0].duty_hour_logs">
+
+                    <td class="bg-orange-100 text-center px-1 py-4 font-medium text-black"
+                    v-for="title in ['Level', 'Submitted', 'Submitted_Proportion', 
+                    'MMYYYY', 'Logged_for_month']">
+                        <p>{{posting[title]}}</p>
+                    </td>
+                    
+                </tr>
+            </tbody>
+        </table>
+
+
+        <p class="underline underline-offset-8 font-bold text-lg mt-10">Exam Histories</p>
+        <table class="w-full text-sm text-left text-blue-100 dark:text-blue-100 my-5">
+            <!-- COLUMN NAMES -->
+            <thead class="text-xs text-white bg-orange-500">
+                <th scope="col" class="px-6 py-3" v-for="title in ['Name_of_Exam', 'Date_of_Attempt', 'Exam_Status']">
+                    <span
+                        class="inline-flex items-center bg-orange-500 text-white focus:outline-none font-medium rounded-lg text-sm px-3 py-1.5">
+                        {{title}}</span>
+                </th>
+            </thead>
+            <tbody>
+                <!-- 1 row = 1 reisdent = 1 key -->
+                <tr class="border" v-for="posting in profile_data_original[0].exam_histories">
+
+                    <td class="bg-orange-100 text-center px-1 py-4 font-medium text-black"
+                    v-for="title in ['Name_of_Exam', 'Date_of_Attempt', 'Exam_Status']">
+                        <p>{{posting[title]}}</p>
+                    </td>
+                    
+                </tr>
+            </tbody>
+        </table>
+
+
+        <p class="underline underline-offset-8 font-bold text-lg mt-10">Publications</p>
+        <table class="w-full text-sm text-left text-blue-100 dark:text-blue-100 my-5">
+            <!-- COLUMN NAMES -->
+            <thead class="text-xs text-white bg-orange-500">
+                <th scope="col" class="px-6 py-3" v-for="title in ['Publication_Title', 
+                'Journal_Title', 'PMID', 'Publication_Date']">
+                    <span
+                        class="inline-flex items-center bg-orange-500 text-white focus:outline-none font-medium rounded-lg text-sm px-3 py-1.5">
+                        {{title}}</span>
+                </th>
+            </thead>
+            <tbody>
+                <!-- 1 row = 1 reisdent = 1 key -->
+                <tr class="border" v-for="posting in profile_data_original[0].publications">
+
+                    <td class="bg-orange-100 text-center px-1 py-4 font-medium text-black"
+                    v-for="title in ['Publication_Title', 'Journal_Title', 'PMID', 
+                    'Publication_Date']">
+                        <p>{{posting[title]}}</p>
+                    </td>
+                    
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="underline underline-offset-8 font-bold text-lg mt-10">Evaluations</p>
+        <table class="w-full text-sm text-left text-blue-100 dark:text-blue-100 my-5">
+            <!-- COLUMN NAMES -->
+            <thead class="text-xs text-white bg-orange-500">
+                <th scope="col" class="px-6 py-3" v-for="title in ['Year_of_Training', 
+                'Rotation_Period', 'Name_of_Evaluation_Form',
+                'Question_Number', 'Score', 'Evaluator', 'Service', 'Answer']">
+                    <span
+                        class="inline-flex items-center bg-orange-500 text-white focus:outline-none font-medium rounded-lg text-sm px-3 py-1.5">
+                        {{title}}</span>
+                </th>
+            </thead>
+            <tbody>
+                <!-- 1 row = 1 reisdent = 1 key -->
+                <tr class="border" v-for="item in profile_data_original[0].evaluations">
+
+                    <td class="bg-orange-100 text-center px-1 py-4 font-medium text-black"
+                    v-for="title in ['Year_of_Training', 'Rotation_Period', 
+                    'Name_of_Evaluation_Form', 'Question_Number', 'Score', 
+                    'Evaluator', 'Service', 'Answer']">
+                        <p>{{item[title]}}</p>
+                    </td>
+                    
+                </tr>
+            </tbody>
+        </table>
+
+
+        <p class="underline underline-offset-8 font-bold text-lg mt-10">Trg ExtRem Histories</p>
+        <table class="w-full text-sm text-left text-blue-100 dark:text-blue-100 my-5">
+            <!-- COLUMN NAMES -->
+            <thead class="text-xs text-white bg-orange-500">
+                <th scope="col" class="px-6 py-3" v-for="title in ['LOAPIP', 
+                'StartDate', 'EndDate']">
+                    <span
+                        class="inline-flex items-center bg-orange-500 text-white focus:outline-none font-medium rounded-lg text-sm px-3 py-1.5">
+                        {{title}}</span>
+                </th>
+            </thead>
+            <tbody>
+                <!-- 1 row = 1 reisdent = 1 key -->
+                <tr class="border" v-for="item in profile_data_original[0].trgExtRem_Histories">
+
+                    <td class="bg-orange-100 text-center px-1 py-4 font-medium text-black"
+                    v-for="title in ['LOAPIP', 'StartDate', 'EndDate']">
+                        <p>{{item[title]}}</p>
+                    </td>
+                    
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="underline underline-offset-8 font-bold text-lg mt-10">Projects</p>
+        <table class="w-full text-sm text-left text-blue-100 dark:text-blue-100 my-5">
+            <!-- COLUMN NAMES -->
+            <thead class="text-xs text-white bg-orange-500">
+                <th scope="col" class="px-6 py-3" v-for="title in ['Project_Type', 
+                'Project_Title', 'Project_ID', 'Start_Date', 'End_Date', 
+                'Date_of_QI_Certification', 'PMID']">
+                    <span
+                        class="inline-flex items-center bg-orange-500 text-white focus:outline-none font-medium rounded-lg text-sm px-3 py-1.5">
+                        {{title}}</span>
+                </th>
+            </thead>
+            <tbody>
+                <!-- 1 row = 1 reisdent = 1 key -->
+                <tr class="border" v-for="item in profile_data_original[0].projects">
+
+                    <td class="bg-orange-100 text-center px-1 py-4 font-medium text-black"
+                    v-for="title in ['Project_Type', 'Project_Title', 'Project_ID', 
+                    'Start_Date', 'End_Date', 'Date_of_QI_Certification', 'PMID']">
+                        <p>{{item[title]}}</p>
+                    </td>
+                    
+                </tr>
+            </tbody>
+        </table>
+
+
+        <p class="underline underline-offset-8 font-bold text-lg mt-10">Grants</p>
+        <table class="w-full text-sm text-left text-blue-100 dark:text-blue-100 my-5">
+            <!-- COLUMN NAMES -->
+            <thead class="text-xs text-white bg-orange-500">
+                <th scope="col" class="px-6 py-3" v-for="title in ['Name_of_Grant', 
+                'Project_Title', 'Project_ID', 'Grant_End_Date', 'Grant_Start_Date']">
+                    <span
+                        class="inline-flex items-center bg-orange-500 text-white focus:outline-none font-medium rounded-lg text-sm px-3 py-1.5">
+                        {{title}}</span>
+                </th>
+            </thead>
+            <tbody>
+                <!-- 1 row = 1 reisdent = 1 key -->
+                <tr class="border" v-for="item in profile_data_original[0].grants">
+
+                    <td class="bg-orange-100 text-center px-1 py-4 font-medium text-black"
+                    v-for="title in ['Name_of_Grant', 'Project_Title', 'Project_ID', 
+                    'Grant_End_Date', 'Grant_Start_Date']">
+                        <p>{{item[title]}}</p>
+                    </td>
+                    
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="underline underline-offset-8 font-bold text-lg mt-10">IHIs</p>
+        <table class="w-full text-sm text-left text-blue-100 dark:text-blue-100 my-5">
+            <!-- COLUMN NAMES -->
+            <thead class="text-xs text-white bg-orange-500">
+                <th scope="col" class="px-6 py-3" v-for="title in ['Completion_of_Emodules', 'Date']">
+                    <span
+                        class="inline-flex items-center bg-orange-500 text-white focus:outline-none font-medium rounded-lg text-sm px-3 py-1.5">
+                        {{title}}</span>
+                </th>
+            </thead>
+            <tbody>
+                <!-- 1 row = 1 reisdent = 1 key -->
+                <tr class="border" v-for="item in profile_data_original[0].grants">
+
+                    <td class="bg-orange-100 text-center px-1 py-4 font-medium text-black"
+                    v-for="title in ['Completion_of_Emodules', 'Date']">
+                        <p>{{item[title]}}</p>
+                    </td>
+                    
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="underline underline-offset-8 font-bold text-lg mt-10">Involvements</p>
+        <table class="w-full text-sm text-left text-blue-100 dark:text-blue-100 my-5">
+            <!-- COLUMN NAMES -->
+            <thead class="text-xs text-white bg-orange-500">
+                <th scope="col" class="px-6 py-3" v-for="title in ['Involvement_Type', 
+                'Event', 'Role', 'Start_Date', 'End_Date']">
+                    <span
+                        class="inline-flex items-center bg-orange-500 text-white focus:outline-none font-medium rounded-lg text-sm px-3 py-1.5">
+                        {{title}}</span>
+                </th>
+            </thead>
+            <tbody>
+                <!-- 1 row = 1 reisdent = 1 key -->
+                <tr class="border" v-for="item in profile_data_original[0].involvements">
+
+                    <td class="bg-orange-100 text-center px-1 py-4 font-medium text-black"
+                    v-for="title in ['Involvement_Type', 'Event', 'Role', 'Start_Date', 'End_Date']">
+                        <p>{{item[title]}}</p>
+                    </td>
+                    
+                </tr>
+            </tbody>
+        </table>
+
+
+        <p class="underline underline-offset-8 font-bold text-lg mt-10">Didactic Attendence</p>
+        <table class="w-full text-sm text-left text-blue-100 dark:text-blue-100 my-5">
+            <!-- COLUMN NAMES -->
+            <thead class="text-xs text-white bg-orange-500">
+                <th scope="col" class="px-6 py-3" v-for="title in ['Month', 
+                'Total_tracked_sessions', 'Number_of_sessions_attended', 'MmYyyy', 
+                'Percentage_of_sessions_attended', 'Compliance_or_Not']">
+                    <span
+                        class="inline-flex items-center bg-orange-500 text-white focus:outline-none font-medium rounded-lg text-sm px-3 py-1.5">
+                        {{title}}</span>
+                </th>
+            </thead>
+            <tbody>
+                <!-- 1 row = 1 reisdent = 1 key -->
+                <tr class="border" v-for="item in profile_data_original[0].didactic_attendance">
+
+                    <td class="bg-orange-100 text-center px-1 py-4 font-medium text-black"
+                    v-for="title in ['Month', 'Total_tracked_sessions', 
+                    'Number_of_sessions_attended', 'MmYyyy', 
+                    'Percentage_of_sessions_attended', 'Compliance_or_Not']">
+                        <p>{{item[title]}}</p>
+                    </td>
+                    
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="underline underline-offset-8 font-bold text-lg mt-10">Education History</p>
+        <table class="w-full text-sm text-left text-blue-100 dark:text-blue-100 my-5">
+            <!-- COLUMN NAMES -->
+            <thead class="text-xs text-white bg-orange-500">
+                <th scope="col" class="px-6 py-3" v-for="title in [
+                'Year_of_Graduation', 'Date_of_Graduation', 'Basic_Qualification',
+                'Medical_School', 'Country_of_Graduation', 'IM_Residency_Start_Date',
+                'IM_Residency_End_Date', 'SR_Residency_Programme', 'SR_Residency_Start_Date',
+                'SR_Residency_End_Date', 'PG_Year']">
+                    <span
+                        class="inline-flex items-center bg-orange-500 text-white focus:outline-none font-medium rounded-lg text-sm px-3 py-1.5">
+                        {{title}}</span>
+                </th>
+            </thead>
+            <tbody>
+                <!-- 1 row = 1 reisdent = 1 key -->
+                <tr class="border" v-for="item in profile_data_original[0].education_history">
+
+                    <td class="bg-orange-100 text-center px-1 py-4 font-medium text-black"
+                    v-for="title in [
+                    'Year_of_Graduation', 'Date_of_Graduation', 'Basic_Qualification',
+                    'Medical_School', 'Country_of_Graduation', 'IM_Residency_Start_Date',
+                    'IM_Residency_End_Date', 'SR_Residency_Programme', 'SR_Residency_Start_Date',
+                    'SR_Residency_End_Date', 'PG_Year'
+                    ]">
+                        <p>{{item[title]}}</p>
+                    </td>
+                    
+                </tr>
+            </tbody>
+        </table>
+
+
+
+
+        <div role="status" class="mb-10">
+            <svg aria-hidden="true" class="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-orange-600 hidden" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+                <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+            </svg>
+            <span class="sr-only">Loading...</span>
+        </div>
+
+
+
+
+
+    </div>
+</div>
+
+    </div>
+
+    <!-- end of profiles div -->
+
+</div>
+
+</body>
+
+<script>
+    const Excel = window.ExcelJS;
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            count: 0,
+            personal_details_fields: [],
+            fields_display: [],
+            personal_details_datas: [],
+            employee_id_values: [],
+            programme_values: [],
+            file: "",
+            profile_data_original: [],
+            profile_data: [],
+            val: " ",
+            contact_details: [],
+            employer_details: [],
+            error: false,
+            mcr_no:[""],
+            currpage: ["http://127.0.0.1:5011/cv_pdf/", "http://127.0.0.1:5011/cv_word/"]
+        },
+        mounted: async function () {
+            const queryString = window.location.search;
+            error = true;
+            if (queryString.length >= 7){
+                error = false;
+            }
+            this.error = error;
+            if (this.error){
+                return
+            }
+            // const API_URL_1_old = 'http://127.0.0.1:5011/profile/M16782H';
+            const API_URL_1 = 'http://127.0.0.1:5011/profile/' + queryString.substring(8);
+            
+            const apiCalls = [
+                axios.get(API_URL_1)
+            ];
+            let personalProfile = {}
+            let currpage = this.currpage[0]
+            let mcr_no = "";
+            await Promise.all(apiCalls)
+                .then(responses => {
+                    personalProfile = responses[0].data
+                    this.profile_data_original.push(responses[0].data.data)
+                    
+                    console.log("case logs:",responses[0].data.data)
+                    let object = responses[0].data.data.personaldetails
+                    console.log("object:", object)
+                    currpage = currpage + responses[0].data.data.personaldetails.MCR_No
+                    this.mcr_no = responses[0].data.data.personaldetails.MCR_No;
+
+                    picked = (({ Staff_Name, Nationality, Date_of_Birth, Gender, BCLS_Expiry_Date, ACLS_Expiry_Date }) => 
+                    ({ Staff_Name, Nationality, Date_of_Birth, Gender, BCLS_Expiry_Date, ACLS_Expiry_Date }))(object);
+                    this.profile_data.push(picked)
+
+                    picked = (({ MCR_No,Registration_Type, Employment_Status }) => 
+                    ({ MCR_No,Registration_Type, Employment_Status }))(object);
+                    this.employer_details.push(picked)
+                    
+                    picked = (({ House_Blk_No, Street, Building_Name, Unit_No, Postal_Code, Contact_No_Personal, Contact_No_Work, Email_Official, Email_Personal }) => 
+                    ({ House_Blk_No, Street, Building_Name, Unit_No, Postal_Code, Contact_No_Personal, Contact_No_Work, Email_Official, Email_Personal }))(object);
+                    this.contact_details.push(picked)
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+            this.mcr_no.pop()
+            this.mcr_no.push(mcr_no)
+            console.log("profile: ", this.profile_data);
+        },
+        methods: {
+        }
+    });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.7.14"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+
+
+</html>

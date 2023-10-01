@@ -44,7 +44,7 @@ matplotlib-inline==0.1.6
 mysql-connector-python==8.0.29
 nest-asyncio==1.5.6
 numpy==1.24.1
-opencv-python==4.7.0.68
+opencv-python==4.8.1.78.68
 openpyxl==3.1.0
 packaging==23.0
 pandas==1.5.3

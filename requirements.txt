@@ -81,7 +81,7 @@ tomli==2.0.1
 tornado==6.2
 traitlets==5.9.0
 wcwidth==0.2.6
-Werkzeug==2.2.2
+Werkzeug==3.0.1
 WTForms==3.0.1
 XlsxWriter==3.0.8
 zipp==3.8.1

@@ -84,4 +84,4 @@ wcwidth==0.2.6
 Werkzeug==2.2.2
 WTForms==3.0.1
 XlsxWriter==3.0.8
-zipp==3.8.1
+zipp==3.19.1
